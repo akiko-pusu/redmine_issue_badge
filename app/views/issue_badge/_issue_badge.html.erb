@@ -1,0 +1,13 @@
+<%-
+base_url = Redmine::Utils.relative_url_root
+content_url = base_url + "/issue_badge/load_badge_contents"
+%>
+<% if @all_issues_count %>
+    <div id="issue_badge">
+      <li class="starting_point">
+        <a style="cursor: pointer" onclick="display_badge_contents('<%= content_url %>');" id="link_issue_badge">
+          <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
+        </a>
+      </li>
+    </div>
+<% end %>

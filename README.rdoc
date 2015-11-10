@@ -1,0 +1,35 @@
+= Redmine Issue Badge Plugin
+
+Plugin to show the number of assigned issues with badge on top menu.
+
+=== Plugin installation
+
+1. Copy the plugin directory into the vendor/plugins directory.
+   Please note that plugin's folder name should be "redmine_issue_badge".
+   If changed, some migration task will be failed.
+2. Do migration task.
+  e.g. rake db:migrate_plugins RAILS_ENV=production
+3. (Re)Start Redmine.
+
+=== Uninstall
+
+Try this:
+
+* rake db:migrate_plugins NAME=redmine_issue_badge VERSION=0 RAILS_ENV=production
+
+=== Required Settings
+
+This feature is activated as one of the user preferences.
+
+1. Login to your Redmine and go to "/my/account" page.
+2. Enable the option, described as "Show number of assigned issues with badge".
+3. After that, if you have assigned and opened issues, the number of issues is shown
+   with badge.
+4. Click badge and firt 5 issues are displayed.
+
+That's all.
+
+
+=== Repository
+
+* https://github.com/akiko-pusu/redmine_issue_badge

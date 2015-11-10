@@ -1,0 +1,14 @@
+
+<div id="issue_badge_contents" class="notifications arrow_box">
+  <div class="header" id="issue_badge_contents_header"><%= l(:label_assigned_to_me_issues) %></div>
+  <!-- contents will be injected. -->
+  <!-- issue list -->
+  <% for issue in @limited_issues %>
+      <div class="issue_badge_content">
+        <%= link_to("#{issue.id} #{truncate(issue.subject, :length => 20)}", issue_path(issue)) %>
+        <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
+      </div>
+  <% end %>
+  <div>...</div>
+  <div class="footer"><a href="/issues?assigned_to_id=me"><%= l(:label_assigned_to_me_issues) %> <%= l(:button_list) %></a></div>
+

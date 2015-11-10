@@ -1,0 +1,3 @@
+# English strings go here for Rails i18n
+ja:
+  label_issue_badge: 担当チケットの数をバッジ表示
