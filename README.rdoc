@@ -4,18 +4,18 @@ Plugin to show the number of assigned issues with badge on top menu.
 
 === Plugin installation
 
-1. Copy the plugin directory into the vendor/plugins directory.
+1. Copy the plugin directory into the plugins directory.
    Please note that plugin's folder name should be "redmine_issue_badge".
    If changed, some migration task will be failed.
 2. Do migration task.
-  e.g. rake db:migrate_plugins RAILS_ENV=production
+  e.g. rake redmine:plugins:migrate RAILS_ENV=production
 3. (Re)Start Redmine.
 
 === Uninstall
 
 Try this:
 
-* rake db:migrate_plugins NAME=redmine_issue_badge VERSION=0 RAILS_ENV=production
+* rake redmine:plugins:migrate NAME=redmine_issue_badge VERSION=0 RAILS_ENV=production
 
 === Required Settings
 
