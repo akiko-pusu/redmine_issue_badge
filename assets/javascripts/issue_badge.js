@@ -10,7 +10,6 @@ function load_badge(url) {
 }
 
 function display_badge_contents(url) {
-    console.log('clicked.....');
     $.ajax({
         url: url,
         async: true,
