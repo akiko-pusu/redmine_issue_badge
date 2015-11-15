@@ -17,10 +17,5 @@ class IssueBadgeController < ApplicationController
     @limited_issues = Issue.visible.open.where(:assigned_to_id => ([User.current.id] + User.current.group_ids)).limit(5)
     render :action => '_issue_badge_contents', :layout => false
   end
-
-  private
-  def find_user
-    @user = User.current
-  end
 end
 
