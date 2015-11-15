@@ -10,7 +10,6 @@ function load_badge(url) {
 }
 
 function display_badge_contents(url) {
-    console.log('clicked.....');
     $.ajax({
         url: url,
         async: true,
@@ -21,7 +20,8 @@ function display_badge_contents(url) {
 }
 
 $(document).click(function(event) {
-    if (!$.contains($("#issue_badge_contents")[0], event.target)) {
+    // Hide if badge_contents exists.
+    if (!$(event.target).is("#issue_badge_contents")) {
         $("#issue_badge_contents").hide();
         $("#issue_badge_contents").remove();
     }
