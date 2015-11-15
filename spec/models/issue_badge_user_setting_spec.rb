@@ -13,8 +13,6 @@ describe IssueBadgeUserSetting do
 
     it 'usersetting for badge enable is null before save' do
       setting = IssueBadgeUserSetting.find_or_create_by_user_id(@user.id)
-      puts "user_id #{setting.user_id}"
-      puts "user.is #{@user.id}"
       expect(setting.enabled).to be_nil
       expect(setting.user_id).to eq(@user.id)
     end
