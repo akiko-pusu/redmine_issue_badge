@@ -19,10 +19,6 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
 
-  #Capybara.register_driver :poltergeist do |app|
-  #  Capybara::Selenium::Driver.new(app, browser: :chrome)
-  #end
-
   require 'database_cleaner'
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
