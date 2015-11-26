@@ -29,7 +29,29 @@ This feature is activated as one of the user preferences.
 
 That's all.
 
+== Changelog
+
+=== 0.0.2
+
+* Fix. Redmine not at root (#13).
+* Fix. JS Bug (#5).
+* Fix. Wrong CSS (#4).
+* Merge PR: (#1) / Thank you so much, ykws!
+* Add README_ja, GPL.txt
+* Add rspec somple code for test.
+
+=== 0.0.1
+
+* First release
 
 === Repository
 
 * https://github.com/akiko-pusu/redmine_issue_badge
+
+=== License
+
+This software is licensed under the GNU GPL v2. See COPYRIGHT and COPYING for details.
+
+=== Author
+
+Akiko Takano (Twitter: @akiko_pusu)
