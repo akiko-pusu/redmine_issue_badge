@@ -33,3 +33,11 @@ That's all.
 === Repository
 
 * https://github.com/akiko-pusu/redmine_issue_badge
+
+=== License
+
+This software is licensed under the GNU GPL v2. See COPYRIGHT and COPYING for details.
+
+=== Author
+
+Akiko Takano (Twitter: @akiko_pusu)
