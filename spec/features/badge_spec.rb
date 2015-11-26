@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../rails_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe 'Access Redmine top page', js: true do
+feature 'Access Redmine top page', js: true do
   #
   # TODO: Change not to use Redmine's fixture but to use Factory...
   #
@@ -44,17 +44,17 @@ describe 'Access Redmine top page', js: true do
       end
     end
 
-    before do
+    background do
       log_user('dlopper', 'foo')
       visit '/my/account'
     end
 
-    specify 'Badge is not displayed if badge option is not activated' do
+    scenario 'Badge is not displayed if badge option is not activated' do
       assert page.has_content?('Show number of assigned issues with badge.')
       expect(page).not_to have_selector("#issue_badge")
     end
 
-    specify 'Badge is displayed if badge option is activated' do
+    scenario 'Badge is displayed if badge option is activated' do
       assert page.has_content?('Show number of assigned issues with badge.')
 
       # Enable Badge
@@ -74,5 +74,7 @@ describe 'Access Redmine top page', js: true do
         page.save_screenshot('capture/badge.png', :full => true)
       end
     end
+
+
   end
 end
