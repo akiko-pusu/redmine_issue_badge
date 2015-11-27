@@ -73,7 +73,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 #### 実行例
 
 - spec/features/以下のe2eテストのみ対象
-- phantomjs を利用（ブラウザはj起動しません）
+- phantomjs を利用（ブラウザは起動しません）
 - htmlレポートを生成（report/plugin-test.html）カバレッジはデフォルトで coverage/ 以下
 
 ```
@@ -95,7 +95,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 簡単なテストですが、テストの手順用のスクリプトが参照できます。
 drone.ioではブラウザでのe2eテストも可能になっています。
 
-- https://drone.io/github.com/akiko-pusu/redmine_issue_badge 
+- https://drone.io/github.com/akiko-pusu/redmine_issue_badge [![Build Status](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/status.png)](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/latest)
 
 ## License
 
