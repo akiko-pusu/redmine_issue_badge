@@ -19,6 +19,14 @@ function display_badge_contents(url) {
     });
 }
 
+function change_badge_location() {
+    if (window.matchMedia( '(max-width: 899px)' ).matches) {
+        $('#quick-search').prepend($('#issue_badge'));
+    } else {
+        $('#loggedas').after($('#issue_badge'));
+    }
+}
+
 $(document).click(function(event) {
     // Hide if badge_contents exists.
     if (!$(event.target).is("#issue_badge_contents")) {
