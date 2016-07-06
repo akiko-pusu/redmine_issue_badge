@@ -11,3 +11,12 @@ content_url = base_url + "/issue_badge/load_badge_contents"
       </li>
     </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    change_badge_location();
+  });
+  $(window).resize(function () {
+    change_badge_location();
+  });
+</script>

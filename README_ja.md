@@ -46,7 +46,8 @@
 
 ただいまテストについて勉強中です...。
 このため、学習も兼ねて、rspecでのテストコードを書いています。
-こちらのつきましても、フィードバックいただけると幸いです！
+（また、機能は少ないですがフロント側での描画、cssの勉強を兼ねたプラグインになっています）
+こちらにつきましても、フィードバックいただけると幸いです！
 
 ### 実行方法
 
@@ -54,7 +55,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 
 - specディレクトリ全てを指定すると、Capybaraでのe2eテストも走ります。
  - spec/features 以下が対象になります。
- - Selenium Webdrover + Firefox または phantomjs が必要になります。
+ - Selenium Webdriver + Firefox または phantomjs が必要になります。
  - Macの場合は、brew install phantomjs でOKです。
 - デフォルトでは、redmine/ 以下の coverage/ ディレクトリにカバレッジレポートが生成されます。
 
@@ -72,7 +73,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 #### 実行例
 
 - spec/features/以下のe2eテストのみ対象
-- phantomjs を利用（ブラウザはj起動しません）
+- phantomjs を利用（ブラウザは起動しません）
 - htmlレポートを生成（report/plugin-test.html）カバレッジはデフォルトで coverage/ 以下
 
 ```
@@ -92,8 +93,9 @@ redmineのインストールディレクトリに移動して、以下を実行�
 #### drone.ioでのテスト
 
 簡単なテストですが、テストの手順用のスクリプトが参照できます。
+drone.ioではブラウザでのe2eテストも可能になっています。
 
-- https://drone.io/github.com/akiko-pusu/redmine_issue_badge 
+- https://drone.io/github.com/akiko-pusu/redmine_issue_badge [![Build Status](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/status.png)](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/latest)
 
 ## License
 
