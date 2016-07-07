@@ -26,24 +26,12 @@ feature 'Access Redmine top page', js: true do
   context 'When anonymous ' do
     specify 'Badge is not displayed' do
       visit '/issues'
-      expect(page).to have_title "Redmine"
-      expect(page).not_to have_selector("#issue_badge")
+      expect(page).to have_title 'Redmine'
+      expect(page).not_to have_selector('#issue_badge')
     end
   end
 
   context 'When authenticated' do
-    # Do login
-    def log_user(login, password)
-      visit '/my/page'
-      assert_equal '/login', current_path
-      within('#login-form form') do
-        fill_in 'username', :with => login
-        fill_in 'password', :with => password
-        find('input[name=login]').click
-        page.save_screenshot('capture/issues.png', :full => true)
-      end
-    end
-
     background do
       log_user('dlopper', 'foo')
       visit '/my/account'
@@ -51,7 +39,7 @@ feature 'Access Redmine top page', js: true do
 
     scenario 'Badge is not displayed if badge option is not activated' do
       assert page.has_content?('Show number of assigned issues with badge.')
-      expect(page).not_to have_selector("#issue_badge")
+      expect(page).not_to have_selector('#issue_badge')
     end
 
     scenario 'Badge is displayed if badge option is activated' do
@@ -61,20 +49,58 @@ feature 'Access Redmine top page', js: true do
       check 'pref_issue_badge'
       click_on 'Save'
 
-      expect(page).to have_selector("#issue_badge")
-
-      user = User.where(:login => 'dlopper').first
-      all_issues = Issue.visible.open.where(:assigned_to_id => ([user.id] + user.group_ids))
-      puts "dlopper's issue: #{all_issues.length}"
-      if all_issues.any?
-        expect(page).to have_selector("#issue_badge_number")
-        expect(page).to have_selector("#issue_badge_number"), text: all_issues.length
-
-        puts "Badge count: " + find(:id, 'issue_badge_number').text
-        page.save_screenshot('capture/badge.png', :full => true)
-      end
+      expect(page).to have_selector('#issue_badge')
     end
 
+    scenario 'Badge number is displayed if badge option is activated and operator has assigned issues.' do
+      # Enable Badge
+      check 'pref_issue_badge'
+      click_on 'Save'
 
+      user = User.where(login: 'dlopper').first
+      all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
+      if all_issues.any?
+        expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+        page.save_screenshot('capture/badge.png', full: true)
+      end
+    end
+  end
+
+  context 'When Administrator' do
+    background do
+      log_user('admin', 'admin')
+      visit '/settings/plugin/redmine_issue_badge'
+    end
+
+    scenario 'Badge is not displayed if global settings badge option is not activated.' do
+      expect(page).not_to have_selector('#issue_badge')
+    end
+
+    scenario 'Badge is displayed if global settings badge option is activated.' do
+      assert page.has_content?('Display issue badge for all users')
+
+      # Enable Badge
+      check 'settings_activate_for_all_users'
+      click_on 'Apply'
+      expect(page).to have_selector('#issue_badge')
+    end
+
+    scenario 'Issue badge block is displayed if global settings badge option is activated and click badge.' do
+      expect(page).not_to have_selector('#issue_badge_contents')
+
+      find('#link_issue_badge').click
+      expect(page).to have_selector('#issue_badge_contents')
+    end
+  end
+
+  def log_user(login, password)
+    visit '/my/page'
+    assert_equal '/login', current_path
+    within('#login-form form') do
+      fill_in 'username', with: login
+      fill_in 'password', with: password
+      find('input[name=login]').click
+      page.save_screenshot('capture/issues.png', full: true)
+    end
   end
 end
