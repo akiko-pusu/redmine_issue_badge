@@ -2,6 +2,8 @@
 
 Plugin to show the number of assigned issues with badge on top menu.
 
+Build Status at drone.io: https://drone.io/github.com/akiko-pusu/redmine_issue_badge/status.png
+
 === Plugin installation
 
 1. Copy the plugin directory into the plugins directory.
@@ -30,6 +32,13 @@ This feature is activated as one of the user preferences.
 That's all.
 
 == Changelog
+
+=== 0.0.3
+
+* Display badge when responsive mode (#17).
+* Enabled to activate badge for all the user on pluginn's configuration screen. (#3)
+* Code Refactoring.
+* Add scss file and npm script to compile scss.
 
 === 0.0.2
 

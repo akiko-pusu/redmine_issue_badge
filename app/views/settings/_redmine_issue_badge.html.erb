@@ -1,0 +1,6 @@
+<div class="form-inline issue_badge">
+  <p>
+    <%=content_tag(:label, l(:label_activate_for_all_users))%>
+    <%=check_box_tag 'settings[activate_for_all_users]', true, @settings['activate_for_all_users'] == "true" %>
+  </p>
+</div>

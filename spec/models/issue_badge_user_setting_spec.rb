@@ -1,14 +1,14 @@
 require_relative '../spec_helper'
 
 describe IssueBadgeUserSetting do
-  context "instantiation" do
+  context 'instantiation' do
     before do
       @user = create(:user)
     end
 
     it 'instantiates a usersetting for badge' do
       setting = IssueBadgeUserSetting.find_or_create_by_user_id(@user.id)
-      expect(setting.class.name).to eq("IssueBadgeUserSetting")
+      expect(setting.class.name).to eq('IssueBadgeUserSetting')
     end
 
     it 'usersetting for badge enable is null before save' do
@@ -34,16 +34,16 @@ describe IssueBadgeUserSetting do
     end
   end
 
-  context "destroy" do
+  context 'destroy' do
     before do
       @user = create(:user)
     end
-    it "usersetting for badge is null after destroy" do
+    it 'usersetting for badge is null after destroy' do
       setting = IssueBadgeUserSetting.find_or_create_by_user_id(@user.id)
       expect(setting.save).to be_truthy
 
       IssueBadgeUserSetting.destroy_by_user_id(@user.id)
-      result = IssueBadgeUserSetting.where("user_id = ?", @user.id)
+      result = IssueBadgeUserSetting.where('user_id = ?', @user.id)
       expect(result.empty?).to be_truthy
     end
   end
