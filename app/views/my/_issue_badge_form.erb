@@ -1,4 +1,11 @@
+<%-
+  global_enabled = Setting.plugin_redmine_issue_badge['activate_for_all_users'] == 'true'
+%>
 <p>
   <label><%=h l(:label_issue_badge) %></label>
-  <%= check_box :pref, 'issue_badge' %>
+  <% if !global_enabled %>
+      <%= check_box :pref, 'issue_badge' %>
+  <% else %>
+      <%= check_box :pref, 'issue_badge', {disabled: true, checked: true}  %>
+  <% end %>
 </p>
