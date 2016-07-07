@@ -1,0 +1,9 @@
+{
+  "name": "node-sass-build",
+  "version": "0.1.0",
+  "scripts": {
+     "build-sass": "node-sass --source-map true assets/stylesheets/style.scss assets/stylesheets/style.css",
+     "store-and-update-css": "node-sass  -w --source-map true assets/stylesheets/style.scss ../../public/plugin_assets/redmine_issue_badge/stylesheets/style.css",
+     "browser-sync": "browser-sync start --proxy localhost:3000 --files '../../public/plugin_assets/redmine_issue_badge/stylesheets/*.css' "
+  }
+}
