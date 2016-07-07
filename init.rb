@@ -20,4 +20,9 @@ Redmine::Plugin.register :redmine_issue_badge do
   url 'https://github.com/akiko-pusu/redmine_issue_badge'
   author_url 'http://twitter.com/akiko_pusu'
   requires_redmine :version_or_higher => '2.5.0'
+
+  settings :partial => 'settings/redmine_issue_badge',
+    :default => {
+      'activate_for_all_users' => 'false'
+    }
 end
