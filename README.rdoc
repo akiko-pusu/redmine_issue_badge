@@ -31,6 +31,13 @@ That's all.
 
 == Changelog
 
+=== 0.0.3
+
+* Display badge when responsive mode (#17).
+* Enabled to activate badge for all the user on pluginn's configuration screen. (#3)
+* Code Refactoring.
+* Add scss file and npm script to compile scss.
+
 === 0.0.2
 
 * Fix. Redmine not at root (#13).
