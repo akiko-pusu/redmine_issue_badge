@@ -116,7 +116,7 @@ div.notifications > div.footer {
   #issue_badge .badge {
     font-size: 1.2em;
     font-weight: bold;
-    background-color: #09b251;
+    background-color: #4eb97e;
     border-radius: 18px;
     top: 10px;
     padding: 8px;
@@ -130,6 +130,8 @@ div.notifications > div.footer {
     left: -100px;
     width: 180px; }
   .arrow_box:after, .arrow_box:before {
-    left: 120px; } }
+    left: 120px; }
+  div.notifications > div.footer {
+    padding-right: 6px; } }
 
 /*# sourceMappingURL=style.css.map */
