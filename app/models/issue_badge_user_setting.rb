@@ -2,6 +2,7 @@ class IssueBadgeUserSetting < ActiveRecord::Base
   unloadable
   belongs_to :user
   validates_presence_of :user
+  attr_accessible :enabled
 
   def self.find_or_create_by_user_id(user_id)
     issue_badge = IssueBadgeUserSetting.where(user_id: user_id).first
