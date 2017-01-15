@@ -5,6 +5,9 @@ module IssueBadgeUserPreferencePatch
     base.class_eval do
       unloadable # Send unloadable so it will not be unloaded in development
       after_destroy :destroy_issue_badge
+
+      has_one :issue_badge_user_setting, dependent: :destroy
+      safe_attributes :issue_badge
     end
   end
 end
