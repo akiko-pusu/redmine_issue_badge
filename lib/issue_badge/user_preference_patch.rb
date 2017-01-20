@@ -1,8 +1,7 @@
 module IssueBadge
   module UserPreferencePatch
-    def self.included(base) # :nodoc:
-      base.send(:include, UserPreferenceInstanceMethodsForIssueBadge)
 
+    def self.included(base)
       base.class_eval do
         unloadable # Send unloadable so it will not be unloaded in development
         after_destroy :destroy_issue_badge
@@ -11,9 +10,7 @@ module IssueBadge
         safe_attributes :issue_badge
       end
     end
-  end
 
-  module UserPreferenceInstanceMethodsForIssueBadge
     def issue_badge
       issue_badge = IssueBadgeUserSetting.find_by_user_id(user.id)
       return nil unless issue_badge
