@@ -1,4 +1,4 @@
-box: ruby
+box: ruby:2.3.1
 build:
   steps:
     # for phantomjs
