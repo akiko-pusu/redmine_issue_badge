@@ -1,7 +1,7 @@
 require 'redmine'
-require 'issue_badge_application_hooks'
-require 'issue_badge_my_account_hooks'
-require 'issue_badge_user_preference_patch'
+require 'issue_badge/application_hooks'
+require 'issue_badge/my_account_hooks'
+require 'issue_badge/user_preference_patch'
 
 Rails.configuration.to_prepare do
   # Guards against including the module multiple time (like in tests)
