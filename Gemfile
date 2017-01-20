@@ -6,6 +6,5 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'poltergeist', require: false
-  gem 'selenium-webdriver', require: false
   gem 'database_cleaner'
 end

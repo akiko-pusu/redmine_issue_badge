@@ -82,12 +82,25 @@ feature 'Access Redmine top page', js: true do
       # Enable Badge
       check 'settings_activate_for_all_users'
       click_on 'Apply'
+      expect(page).to have_selector '#content > h2', text: /Redmine Issue Badge plugin/
       expect(page).to have_selector('#issue_badge')
+    end
+
+    scenario 'Badge is not displayed if global settings badge option is dectivated.' do
+      assert page.has_content?('Display issue badge for all users')
+
+      # Enable Badge
+      uncheck 'settings_activate_for_all_users'
+      click_on 'Apply'
+      expect(page).to have_selector '#content >h2', text: /Redmine Issue Badge plugin/
+      expect(page).not_to have_selector('#issue_badge')
     end
 
     scenario 'Issue badge block is displayed if global settings badge option is activated and click badge.' do
       expect(page).not_to have_selector('#issue_badge_contents')
 
+      check 'settings_activate_for_all_users'
+      click_on 'Apply'
       find('#link_issue_badge').click
       expect(page).to have_selector('#issue_badge_contents')
     end

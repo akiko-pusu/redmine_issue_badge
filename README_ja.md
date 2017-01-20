@@ -55,7 +55,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 
 - specディレクトリ全てを指定すると、Capybaraでのe2eテストも走ります。
  - spec/features 以下が対象になります。
- - Selenium Webdriver + Firefox または phantomjs が必要になります。
+ - Selenium Webdriver + Chrome または phantomjs が必要になります。
  - Macの場合は、brew install phantomjs でOKです。
 - デフォルトでは、redmine/ 以下の coverage/ ディレクトリにカバレッジレポートが生成されます。
 
@@ -65,9 +65,9 @@ redmineのインストールディレクトリに移動して、以下を実行�
 % bundle exec rake redmine:plugins:migrate RAILS_ENV=test
 
 # rspecのため、rake redmine:plugins:test では実行されません。
-# 直にrspecコマンドを売って下さい。
+# 直にrspecコマンドを売って下さい。もしくは、rake task を実行してください。
 % bundle exec rspec -I plugins/redmine_issue_badge/spec plugins/redmine_issue_badge/spec
-
+% bundle exec rake redmine_issue_badge:spec
 ```
 
 #### 実行例
