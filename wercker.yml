@@ -1,0 +1,53 @@
+box: ruby
+build:
+  steps:
+    # for phantomjs
+    - aussiegeek/install-phantomjs
+
+    - script:
+        name: check directory
+        code: |
+          pwd
+          ls -la .
+    - script:
+        name: download Redmine trunk
+        code: |
+          sh ./scripts/redmine-ready.sh
+    - script:
+        name: 'Install & Update bundler'
+        code: |
+          gem install simplecov simplecov-rcov yard --no-rdoc --no-ri
+          gem update bundler
+    - script:
+        name: check directory again
+        code: |
+          pwd
+          ls -la .
+          ls -la plugins/redmine_issue_badge
+    - bundle-install:
+        path: vendor/bundle
+        without: mysql postgreql rmagick
+    - script:
+        name: 'Bundle Update'
+        code: |
+          bundle update
+    - script:
+        name: 'Migrate DB'
+        code:
+          bundle exec rake db:migrate RAILS_ENV=test
+    - script:
+        name: 'Migrate Plugin'
+        code:
+          bundle exec rake redmine:plugins:migrate RAILS_ENV=test
+    - script:
+        name: 'Run Plugin spec'
+        code: |
+          bundle exec rake redmine_issue_badge:spec RAILS_ENV=test
+    - script:
+        name: 'Uninstall Schema tests'
+        code: |
+          bundle exec rake redmine:plugins:migrate NAME=${PLUGIN_NAME} VERSION=0 RAILS_ENV=test
+    - script:
+        name: 'store coverage report'
+        code: |
+          cp -r coverage ${WERCKER_REPORT_ARTIFACTS_DIR}/
