@@ -42,6 +42,10 @@ That's all.
 
 ## Changelog
 
+### 0.0.4.1
+
+*   Bug fix for #28. Thank you so much @juxta73.
+
 ### 0.0.4
 
 Code refactoring and change settings for CI.
@@ -53,7 +57,6 @@ From this version, need Redmine 3.3.1 or higher.
 *   UserPreference setting is failed in case using Redmine3.3.1 or later. (#23)
 
 ### 0.0.3
-
 *   Display badge when responsive mode (#17).
 *   Enabled to activate badge for all the user on pluginn's configuration
     screen. (#3)
