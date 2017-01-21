@@ -16,7 +16,7 @@ build:
           pwd
           ls -la .
     - script:
-        name: download Redmine trunk
+        name: download Redmine stable
         code: |
           sh ./scripts/redmine-ready.sh
     - script:
