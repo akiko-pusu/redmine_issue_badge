@@ -7,13 +7,13 @@
 (1) プラグインのソースを取得後、redmine/plugins/ ディレクトリ以下に配置して下さい。
    プラグインのディレクトリは、必ず "redmine_issue_badge" として下さい。
    (各プラグインのinit.rbで指定した名前とディレクトリ名が一致しないと起動や動作に影響が出ます）
-   
+
    例) redmine／plugins／redmine_issue_badge
 
 (2) DBマイグレーションを実行して下さい。
 
    例） rake redmine:plugins:migrate RAILS_ENV=production
-   
+
 (3) Redmineを再起動して下さい。
 
 ## アンインストール方法
@@ -78,16 +78,16 @@ redmineのインストールディレクトリに移動して、以下を実行�
 
 ```
 % bundle exec rspec -Iplugins/redmine_issue_badge/spec -fh -o report/plugin-test.html \
-  plugins/redmine_issue_badge/spec/features/badge_spec.rb 
+  plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
 
 - spec/features/以下のe2eテストのみ対象
-- ドライバはseleiumを指定すると、Firefoxが起動してテストを実施
+- ドライバはseleiumを指定すると、Chromeが起動してテストを実施
 - htmlレポートを生成（report/plugin-test.html）カバレッジはデフォルトで coverage/ 以下
 
 ```
 % DRIVER=selenium bundle exec rspec -Iplugins/redmine_issue_badge/spec -fh -o report/plugin-test.html \
-  plugins/redmine_issue_badge/spec/features/badge_spec.rb 
+  plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
 
 #### drone.ioでのテスト
