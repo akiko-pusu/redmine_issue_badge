@@ -6,8 +6,7 @@ module IssueBadge
         after_destroy :destroy_issue_badge
 
         has_one :issue_badge_user_setting, dependent: :destroy
-        # TODO: Turn on safe_attributes statement, if Redmine commit: 15688 applied.
-        # safe_attributes :issue_badge
+        safe_attributes :issue_badge if defined safe_attributes
       end
     end
 
