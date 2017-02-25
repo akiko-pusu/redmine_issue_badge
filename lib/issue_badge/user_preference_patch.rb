@@ -6,7 +6,7 @@ module IssueBadge
         after_destroy :destroy_issue_badge
 
         has_one :issue_badge_user_setting, dependent: :destroy
-        safe_attributes :issue_badge if defined safe_attributes
+        safe_attributes :issue_badge if defined? safe_attributes
       end
     end
 
