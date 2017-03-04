@@ -5,7 +5,9 @@ function load_badge(url) {
         async: true,
         type: 'get'
     }).done(function( html ) {
-        $('#loggedas').after(html);
+        if ($(html).filter('div#issue_badge').length) {
+            $('#loggedas').after(html);
+        }
     });
 }
 
