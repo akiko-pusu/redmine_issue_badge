@@ -1,5 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../rails_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../support/login_helper')
+
+include LoginHelper
 
 feature 'Access Redmine top page', js: true do
   #
@@ -50,6 +53,7 @@ feature 'Access Redmine top page', js: true do
       click_on 'Save'
 
       expect(page).to have_selector('#issue_badge')
+      expect(page).to have_selector("head > script[src$='javascripts/issue_badge.js']", visible: false)
     end
 
     scenario 'Badge number is displayed if badge option is activated and operator has assigned issues.' do
@@ -63,6 +67,20 @@ feature 'Access Redmine top page', js: true do
         expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
         page.save_screenshot('capture/badge.png', full: true)
       end
+    end
+  end
+
+  context 'When authenticated need password reset' do
+    background do
+      user = User.where(login: 'dlopper').first
+      user.update_attribute(:must_change_passwd, true)
+      log_user('dlopper', 'foo')
+      visit '/my/account'
+    end
+
+    scenario 'Badge is not displayed if user need password reset' do
+      expect(page).not_to have_selector("head > script[src$='javascripts/issue_badge.js']", visible: false)
+      expect(page).not_to have_selector('#issue_badge')
     end
   end
 
@@ -103,17 +121,6 @@ feature 'Access Redmine top page', js: true do
       click_on 'Apply'
       find('#link_issue_badge').click
       expect(page).to have_selector('#issue_badge_contents')
-    end
-  end
-
-  def log_user(login, password)
-    visit '/my/page'
-    assert_equal '/login', current_path
-    within('#login-form form') do
-      fill_in 'username', with: login
-      fill_in 'password', with: password
-      find('input[name=login]').click
-      page.save_screenshot('capture/issues.png', full: true)
     end
   end
 end
