@@ -90,12 +90,11 @@ redmineのインストールディレクトリに移動して、以下を実行�
   plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
 
-#### drone.ioでのテスト
+#### werckerでのテスト
 
 簡単なテストですが、テストの手順用のスクリプトが参照できます。
-drone.ioではブラウザでのe2eテストも可能になっています。
 
-- https://drone.io/github.com/akiko-pusu/redmine_issue_badge [![Build Status](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/status.png)](https://drone.io/github.com/akiko-pusu/redmine_issue_badge/latest)
+- https://app.wercker.com/akiko-pusu/redmine_issue_badge/runs
 
 ## License
 
