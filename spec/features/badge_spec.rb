@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require File.expand_path(File.dirname(__FILE__) + '/../rails_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../support/login_helper')
@@ -36,7 +37,8 @@ feature 'Access Redmine top page', js: true do
 
   context 'When authenticated' do
     background do
-      log_user('dlopper', 'foo')
+      user = User.where(login: 'dlopper').first
+      log_user(user.login, 'foo')
       visit '/my/account'
     end
 
@@ -67,6 +69,26 @@ feature 'Access Redmine top page', js: true do
         expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
         page.save_screenshot('capture/badge.png', full: true)
       end
+    end
+
+    scenario 'Assigned issues are displayed if badge option is activated and operator has assigned issues.' do
+      # Enable Badge
+      check 'pref_issue_badge'
+      click_on 'Save'
+
+      user = User.where(login: 'dlopper').first
+      all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
+      return if all_issues.blank?
+      expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+
+      find('#issue_badge_number').click
+      expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+
+      issue = all_issues.first
+      issue.update_attribute(:subject, '<b>HTML Subject</b>')
+
+      find('#issue_badge_number').click
+      expect(first('#issue_badge_contents > div.issue_badge_content > a')).to have_content("#{issue.id} <b>HTML Subject</b>")
     end
   end
 
