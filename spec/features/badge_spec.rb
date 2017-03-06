@@ -88,7 +88,8 @@ feature 'Access Redmine top page', js: true do
       issue.update_attribute(:subject, '<b>HTML Subject</b>')
 
       find('#issue_badge_number').click
-      expect(first('#issue_badge_contents > div.issue_badge_content > a')).to have_content("#{issue.id} <b>HTML Subject</b>")
+      expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
+                               text: "#{issue.id} <b>HTML Subject</b>")
     end
   end
 
