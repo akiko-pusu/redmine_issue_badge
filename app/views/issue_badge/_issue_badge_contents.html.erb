@@ -5,7 +5,8 @@
   <!-- issue list -->
   <% for issue in @limited_issues %>
       <div class="issue_badge_content">
-        <%= link_to("#{issue.id} #{truncate(issue.subject, :length => 20)}", issue_path(issue)) %>
+        <%= link_to("#{issue.id} #{truncate(issue.subject, length: 20, escape: false)}", issue_path(issue),
+                    { title: issue.subject}) %>
         <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
       </div>
   <% end %>
