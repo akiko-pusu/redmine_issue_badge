@@ -33,6 +33,10 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 10
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 # Avoid methods longer than 10 lines of code
 MethodLength:
   CountComments: true  # count full line comments?

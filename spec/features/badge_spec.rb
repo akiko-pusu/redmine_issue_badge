@@ -77,15 +77,10 @@ feature 'Access Redmine top page', js: true do
       click_on 'Save'
 
       user = User.where(login: 'dlopper').first
-      all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
-      return if all_issues.blank?
-      expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+      issue = Issue.create!(project_id: 1, tracker_id: 1, author_id: user.id, subject: '<b>HTML Subject</b>', assigned_to_id: user.id)
+      all_issues = Issue.visible(user).to_a
 
-      find('#issue_badge_number').click
       expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
-
-      issue = all_issues.first
-      issue.update_attribute(:subject, '<b>HTML Subject</b>')
 
       find('#issue_badge_number').click
       expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
