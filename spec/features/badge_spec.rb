@@ -5,59 +5,32 @@ require File.expand_path(File.dirname(__FILE__) + '/../support/login_helper')
 
 include LoginHelper
 
-feature 'Access Redmine top page', js: true do
-  #
-  # TODO: Change not to use Redmine's fixture but to use Factory...
-  #
-  # fixtures :projects,
-  #          :users,
-  #          :roles,
-  #          :members,
-  #          :member_roles,
-  #          :issues,
-  #          :issue_statuses,
-  #          :trackers,
-  #          :projects_trackers,
-  #          :enabled_modules
-  #          # :workflows,
-  #          # :custom_fields,
-  #          # :custom_values,
-  #          # :custom_fields_projects,
-  #          # :custom_fields_trackers
-
-  let(:user) { FactoryGirl.create(:user) }
-  let(:project) do
-    FactoryGirl.create(:project)
-  end
-  let(:tracker) do
-    FactoryGirl.create(:tracker, :with_default_status)
-  end
+feature 'IssueBadge', js: true do
+  let(:project) { FactoryGirl.create(:project) }
+  let(:tracker) { FactoryGirl.create(:tracker, :with_default_status) }
   let(:role) { FactoryGirl.create(:role) }
   let(:issue_priority) { FactoryGirl.create(:priority) }
+  let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
 
-  context 'When anonymous ' do
-    specify 'Badge is not displayed' do
+  context 'When anonymous' do
+    scenario 'Badge is not displayed' do
       visit '/issues'
-      expect(page).to have_title 'Redmine'
       expect(page).not_to have_selector('#issue_badge')
     end
   end
 
   context 'When authenticated' do
-    let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
     background do
       log_user(user.login, user.login)
       visit '/my/account'
     end
 
-    scenario 'Badge is not displayed if badge option is not activated' do
-      assert page.has_content?('Show number of assigned issues with badge.')
+    scenario 'Badge option is displayed on user preference page.' do
+      expect(page.has_no_checked_field?('Show number of assigned issues with badge.')).to be_truthy
       expect(page).not_to have_selector('#issue_badge')
     end
 
     scenario 'Badge is displayed if badge option is activated' do
-      assert page.has_content?('Show number of assigned issues with badge.')
-
       # Enable Badge
       check 'pref_issue_badge'
       click_on 'Save'
@@ -66,36 +39,48 @@ feature 'Access Redmine top page', js: true do
       expect(page).to have_selector("head > script[src$='javascripts/issue_badge.js']", visible: false)
     end
 
-    scenario 'Badge number is displayed if badge option is activated and operator has assigned issues.' do
-      # Enable Badge
-      check 'pref_issue_badge'
-      click_on 'Save'
+    context 'If badge option is activated and operator has assigned issues.' do
+      background do
+        project.trackers << tracker
+        member = Member.new(project: project, user_id: user.id)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
 
-      all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
-      if all_issues.any?
+        FactoryGirl.create_list(:issue, 5,
+                                project_id: project.id,
+                                tracker_id: tracker.id,
+                                priority_id: issue_priority.id,
+                                assigned_to_id: user.id)
+      end
+
+      scenario 'Badge number is displayed.' do
+        # Enable Badge
+        check 'pref_issue_badge'
+        click_on 'Save'
+
+        all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
         expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
       end
-    end
 
-    #     scenario 'Assigned issues are displayed if badge option is activated and operator has assigned issues.' do
-    #       # Enable Badge
-    #       check 'pref_issue_badge'
-    #       click_on 'Save'
-    #
-    #       user = User.where(login: 'dlopper').first
-    #       issue = Issue.create!(project_id: 1, tracker_id: 1, author_id: user.id, subject: '<b>HTML Subject</b>', assigned_to_id: user.id)
-    #       all_issues = Issue.visible(user).to_a
-    #
-    #       expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
-    #
-    #       find('#issue_badge_number').click
-    #       expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
-    #                                text: "#{issue.id} <b>HTML Subject</b>")
-    #     end
+      scenario 'Assigned issues are displayed' do
+        issue = Issue.first
+        issue.update_attributes(subject: '<b>HTML Subject</b>')
+        all_issues = Issue.visible(user).to_a
+
+        # Enable Badge
+        check 'pref_issue_badge'
+        click_on 'Save'
+
+        expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+
+        find('#issue_badge_number').click
+        expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
+                                 text: "#{issue.id} <b>HTML Subject</b>")
+      end
+    end
   end
 
   context 'When authenticated need password reset' do
-    let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
     background do
       user.update_attribute(:must_change_passwd, true)
       log_user(user.login, user.login)
@@ -109,23 +94,18 @@ feature 'Access Redmine top page', js: true do
   end
 
   context 'When Administrator' do
-    let(:user) do
-      FactoryGirl.create(:user, :password_same_login,
-                         login: 'badge_user', language: 'en', admin: true)
-    end
-
     background do
+      user.update_attribute(:admin, true)
       log_user(user.login, user.login)
       visit '/settings/plugin/redmine_issue_badge'
     end
 
-    scenario 'Badge is not displayed if global settings badge option is not activated.' do
+    scenario 'Global settings for badge option is displayed.' do
+      assert page.has_content?('Display issue badge for all users')
       expect(page).not_to have_selector('#issue_badge')
     end
 
     scenario 'Badge is displayed if global settings badge option is activated.' do
-      assert page.has_content?('Display issue badge for all users')
-
       # Enable Badge
       check 'settings_activate_for_all_users'
       click_on 'Apply'
@@ -134,8 +114,6 @@ feature 'Access Redmine top page', js: true do
     end
 
     scenario 'Badge is not displayed if global settings badge option is dectivated.' do
-      assert page.has_content?('Display issue badge for all users')
-
       # Enable Badge
       uncheck 'settings_activate_for_all_users'
       click_on 'Apply'
