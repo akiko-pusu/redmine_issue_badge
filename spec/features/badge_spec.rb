@@ -11,6 +11,13 @@ feature 'IssueBadge', js: true do
   let(:role) { FactoryGirl.create(:role) }
   let(:issue_priority) { FactoryGirl.create(:priority) }
   let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
+  let(:issues) do
+    FactoryGirl.create_list(:issue, 5,
+                            project_id: project.id,
+                            tracker_id: tracker.id,
+                            priority_id: issue_priority.id,
+                            assigned_to_id: user.id)
+  end
 
   context 'When anonymous' do
     scenario 'Badge is not displayed' do
@@ -45,25 +52,18 @@ feature 'IssueBadge', js: true do
         member = Member.new(project: project, user_id: user.id)
         member.member_roles << MemberRole.new(role: role)
         member.save
-
-        FactoryGirl.create_list(:issue, 5,
-                                project_id: project.id,
-                                tracker_id: tracker.id,
-                                priority_id: issue_priority.id,
-                                assigned_to_id: user.id)
       end
 
       scenario 'Badge number is displayed.' do
+        all_issues = issues
         # Enable Badge
         check 'pref_issue_badge'
         click_on 'Save'
-
-        all_issues = Issue.visible.open.where(assigned_to_id: ([user.id] + user.group_ids))
-        expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+        expect(page).to have_selector('#issue_badge_number'), text: all_issues.count
       end
 
       scenario 'Assigned issues are displayed' do
-        issue = Issue.first
+        issue = issues.first
         issue.update_attributes(subject: '<b>HTML Subject</b>')
         all_issues = Issue.visible(user).to_a
 
@@ -95,6 +95,11 @@ feature 'IssueBadge', js: true do
 
   context 'When Administrator' do
     background do
+      project.trackers << tracker
+      member = Member.new(project: project, user_id: user.id)
+      member.member_roles << MemberRole.new(role: role)
+      member.save
+
       user.update_attribute(:admin, true)
       log_user(user.login, user.login)
       visit '/settings/plugin/redmine_issue_badge'
@@ -128,6 +133,23 @@ feature 'IssueBadge', js: true do
       click_on 'Apply'
       find('#link_issue_badge').click
       expect(page).to have_selector('#issue_badge_contents')
+    end
+
+    scenario 'Issue badge polling is activate if polling option clicked.' do
+      issue_count = issues.count
+      expect(page).not_to have_selector('#issue_badge_contents')
+
+      check 'settings_activate_for_all_users'
+      check 'settings_enabled_polling'
+      click_on 'Apply'
+      expect(page).to have_selector('#issue_badge')
+      expect(page).to have_css('#issue_badge_number'), text: issue_count
+      within("#top-menu") do
+        expect(page).to have_selector(:css, 'script', visible: false, count: 2)
+        issues.first.delete
+        page.execute_script('poll()')
+        expect(page).to have_css('#issue_badge_number'), text: issue_count - 1
+      end
     end
   end
 end
