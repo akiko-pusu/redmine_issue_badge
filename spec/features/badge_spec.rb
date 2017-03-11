@@ -59,7 +59,7 @@ feature 'IssueBadge', js: true do
         # Enable Badge
         check 'pref_issue_badge'
         click_on 'Save'
-        expect(page).to have_selector('#issue_badge_number'), text: all_issues.count
+        expect(page).to have_selector('#issue_badge_number', text: all_issues.count)
       end
 
       scenario 'Assigned issues are displayed' do
@@ -71,7 +71,7 @@ feature 'IssueBadge', js: true do
         check 'pref_issue_badge'
         click_on 'Save'
 
-        expect(page).to have_selector('#issue_badge_number'), text: all_issues.length
+        expect(page).to have_selector('#issue_badge_number', text: all_issues.length)
 
         find('#issue_badge_number').click
         expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
@@ -100,6 +100,7 @@ feature 'IssueBadge', js: true do
       member.member_roles << MemberRole.new(role: role)
       member.save
 
+      issues
       user.update_attribute(:admin, true)
       log_user(user.login, user.login)
       visit '/settings/plugin/redmine_issue_badge'
@@ -136,20 +137,20 @@ feature 'IssueBadge', js: true do
     end
 
     scenario 'Issue badge polling is activate if polling option clicked.' do
-      issue_count = issues.count
       expect(page).not_to have_selector('#issue_badge_contents')
 
       check 'settings_activate_for_all_users'
       check 'settings_enabled_polling'
       click_on 'Apply'
       expect(page).to have_selector('#issue_badge')
-      expect(page).to have_css('#issue_badge_number'), text: issue_count
-      within("#top-menu") do
+      expect(page).to have_css('#issue_badge_number', text: issues.count)
+      issues.first.delete
+      within('#top-menu') do
         expect(page).to have_selector(:css, 'script', visible: false, count: 2)
-        issues.first.delete
-        page.execute_script('poll()')
-        expect(page).to have_css('#issue_badge_number'), text: issue_count - 1
       end
+
+      page.execute_script("poll('#{issue_badge_issues_count_path}');")
+      expect(page).to have_css('#issue_badge_number', text: issues.count - 1)
     end
   end
 end
