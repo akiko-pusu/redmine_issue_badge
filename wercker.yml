@@ -51,7 +51,7 @@ test-stable:
     - script:
         name: 'Run Plugin spec'
         code: |
-          bundle exec rake ${WERCKER_APPLICATION_NAME}:spec
+          bundle exec rspec -Iplugins/${WERCKER_APPLICATION_NAME}/spec --format documentation  plugins/${WERCKER_APPLICATION_NAME}/spec/
     - script:
         name: 'Uninstall Schema tests'
         code: |
@@ -84,7 +84,7 @@ test-trunk:
     - script:
         name: 'Run Plugin spec'
         code: |
-          bundle exec rake ${WERCKER_APPLICATION_NAME}:spec
+          bundle exec rspec -Iplugins/${WERCKER_APPLICATION_NAME}/spec --format documentation  plugins/${WERCKER_APPLICATION_NAME}/spec/
     - script:
         name: 'Uninstall Schema tests'
         code: |
