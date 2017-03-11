@@ -151,6 +151,9 @@ feature 'IssueBadge', js: true do
 
       page.execute_script("poll('#{issue_badge_issues_count_path}');")
       wait_for_ajax
+      until has_css?('#issue_badge_number', text: issues.count - 1)
+        sleep 0.5
+      end
       expect(page).to have_css('#issue_badge_number', text: issues.count - 1)
     end
   end
