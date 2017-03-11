@@ -26,6 +26,7 @@ RSpec.configure do |config|
                                                phantomjs_options: ['--ignore-ssl-errors=yes'], timeout: 120)
       end
     end
+    Capybara.default_max_wait_time = 5
   end
 
   config.before :each, type: :feature do
