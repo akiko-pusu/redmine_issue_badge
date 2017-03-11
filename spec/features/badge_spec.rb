@@ -145,11 +145,13 @@ feature 'IssueBadge', js: true do
       expect(page).to have_selector('#issue_badge')
       expect(page).to have_css('#issue_badge_number', text: issues.count)
       issues.first.delete
+      sleep(1)
       within('#top-menu') do
         expect(page).to have_selector(:css, 'script', visible: false, count: 2)
       end
 
       page.execute_script("poll('#{issue_badge_issues_count_path}');")
+      sleep(1)
       expect(page).to have_css('#issue_badge_number', text: issues.count - 1)
     end
   end
