@@ -76,6 +76,7 @@ test-trunk:
     - script:
         name: 'Migrate DB'
         code:
+          rm db/test.sqlite3
           bundle exec rake db:migrate RAILS_ENV=test
     - script:
         name: 'Migrate Plugin'
