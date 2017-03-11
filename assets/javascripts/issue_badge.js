@@ -37,7 +37,6 @@ $(document).click(function(event) {
     }
 });
 
-var status = $('#issue_badge_number');
 function poll(url) {
     var status = $('#issue_badge_number');
         $.ajax({
@@ -45,7 +44,7 @@ function poll(url) {
             dataType: 'json',
             type: 'get',
             success: function(data) {
-                if (typeof data.all_issues_count !== "undefined" && data.status == true) {
+                if (typeof data.all_issues_count !== "undefined" && data.status === true) {
                     status.text(data.all_issues_count);
                 } else {
                     console.log("[IssueBadge] Error. Can't parse polling data.");
