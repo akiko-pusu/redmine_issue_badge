@@ -1,14 +1,12 @@
 require 'redmine'
 require 'issue_badge/application_hooks'
 require 'issue_badge/my_account_hooks'
-require 'issue_badge/user_preference_patch'
+require 'issue_badge/my_controller_patch'
 
 Rails.configuration.to_prepare do
-  # Guards against including the module multiple time (like in tests)
-  # and registering multiple callbacks
-  require_dependency 'user_preference'
-  unless UserPreference.included_modules.include? IssueBadge::UserPreferencePatch
-    UserPreference.include IssueBadge::UserPreferencePatch
+  require_dependency 'my_controller'
+  unless MyController.included_modules.include? IssueBadge::MyControllerPatch
+    MyController.include IssueBadge::MyControllerPatch
   end
 end
 

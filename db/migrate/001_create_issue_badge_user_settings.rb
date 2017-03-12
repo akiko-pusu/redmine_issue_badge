@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateIssueBadgeUserSettings < ActiveRecord::Migration
   def change
     create_table :issue_badge_user_settings do |t|

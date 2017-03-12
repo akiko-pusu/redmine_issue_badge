@@ -39,7 +39,7 @@ feature 'IssueBadge', js: true do
 
     scenario 'Badge is displayed if badge option is activated' do
       # Enable Badge
-      check 'pref_issue_badge'
+      check 'issue_badge_enabled'
       click_on 'Save'
 
       expect(page).to have_selector('#issue_badge')
@@ -57,7 +57,7 @@ feature 'IssueBadge', js: true do
       scenario 'Badge number is displayed.' do
         all_issues = issues
         # Enable Badge
-        check 'pref_issue_badge'
+        check 'issue_badge_enabled'
         click_on 'Save'
         expect(page).to have_selector('#issue_badge_number', text: all_issues.count)
       end
@@ -68,7 +68,7 @@ feature 'IssueBadge', js: true do
         all_issues = Issue.visible(user).to_a
 
         # Enable Badge
-        check 'pref_issue_badge'
+        check 'issue_badge_enabled'
         click_on 'Save'
 
         expect(page).to have_selector('#issue_badge_number', text: all_issues.length)
@@ -147,13 +147,11 @@ feature 'IssueBadge', js: true do
       issues.first.delete
       within('#top-menu') do
         expect(page).to have_selector(:css, 'script', visible: false, count: 2)
+        page.execute_script("poll('#{issue_badge_issues_count_path}');")
       end
 
-      page.execute_script("poll('#{issue_badge_issues_count_path}');")
       wait_for_ajax
-      until has_css?('#issue_badge_number', text: issues.count - 1)
-        sleep 0.5
-      end
+      sleep 0.5 until has_css?('#issue_badge_number', text: issues.count - 1)
       expect(page).to have_css('#issue_badge_number', text: issues.count - 1)
     end
   end

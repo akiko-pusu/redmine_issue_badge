@@ -49,6 +49,34 @@ describe IssueBadgeController do
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
       end
     end
+
+    context 'When show_assigned_to_group option is checked.' do
+      let(:issue_count) { 4 }
+      before do
+        g = Group.new(name: 'New group')
+        g.users << user
+        g.save
+        Issue.last.update_attributes(assigned_to_id: g.id)
+      end
+
+      it 'renders the _issue_badge template' do
+        get :index
+        expect(assigns(:all_issues_count)).not_to be_nil
+        expect(assigns(:all_issues_count)).to eq issue_count - 1
+        expect(response).to render_template(partial: '_issue_badge')
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count - 1}<\/span>}im)
+      end
+
+      it 'renders the _issue_badge template with assigned to group' do
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user.id)
+        setting.update_attributes(show_assigned_to_group: true)
+        get :index
+        expect(assigns(:all_issues_count)).not_to be_nil
+        expect(assigns(:all_issues_count)).to eq issue_count
+        expect(response).to render_template(partial: '_issue_badge')
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
+      end
+    end
   end
 
   describe 'GET #load_badge_contents' do

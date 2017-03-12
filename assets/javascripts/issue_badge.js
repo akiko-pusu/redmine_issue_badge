@@ -24,8 +24,10 @@ function display_badge_contents(url) {
 function change_badge_location() {
     if (window.matchMedia( '(max-width: 899px)' ).matches) {
         $('#quick-search').prepend($('#issue_badge'));
+        $('#pref_issue_badge').insertBefore('#my_account_form > div.splitcontentright > p');
     } else {
         $('#loggedas').after($('#issue_badge'));
+        $('#pref_issue_badge').appendTo('div.splitcontentright');
     }
 }
 
@@ -36,25 +38,3 @@ $(document).click(function(event) {
         $("#issue_badge_contents").remove();
     }
 });
-
-function poll(url) {
-    var status = $('#issue_badge_number');
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'get',
-            success: function(data) {
-                if (typeof data.all_issues_count !== "undefined" && data.status === true) {
-                    status.text(data.all_issues_count);
-                } else {
-                    console.log("[IssueBadge] Error. Can't parse polling data.");
-                    status.text("?");
-                    clearInterval(pollInterval);
-                }
-            },
-            error: function() {
-                console.log("[IssueBadge] Error. Ajax request failed.");
-                clearInterval(pollInterval);
-            }
-        });
-    }
