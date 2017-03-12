@@ -2,3 +2,4 @@
 en:
   label_issue_badge: Show number of assigned issues with badge.
   label_activate_for_all_users: Display issue badge for all users
+  label_enabled_polling: Enabled pollig to refresh issue count（Interval 60sec）

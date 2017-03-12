@@ -4,4 +4,9 @@
     <%= hidden_field_tag("settings[activate_for_all_users]", 0, :id => nil).html_safe %>
     <%= check_box_tag 'settings[activate_for_all_users]', true, @settings['activate_for_all_users'] == "true" %>
   </p>
+  <p>
+    <%=content_tag(:label, l(:label_enabled_polling))%>
+    <%= hidden_field_tag("settings[enabled_polling]", 0, :id => nil).html_safe %>
+    <%= check_box_tag 'settings[enabled_polling]', true, @settings['enabled_polling'] == "true" %>
+  </p>
 </div>

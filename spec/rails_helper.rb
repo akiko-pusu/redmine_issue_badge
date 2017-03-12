@@ -13,7 +13,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/test/fixtures"
   config.include FactoryGirl::Syntax::Methods
 
-  config.before :suite, type: :feature do
+  config.before :suite do
     if ENV['DRIVER'] == 'selenium'
       require 'selenium-webdriver'
       Capybara.register_driver :selenium_chrome do |app|
@@ -27,6 +27,7 @@ RSpec.configure do |config|
       end
     end
   end
+  Capybara.default_max_wait_time = 5
 
   config.before :each, type: :feature do
     Capybara.current_driver = ENV['DRIVER'] == 'selenium' ? :selenium_chrome : :poltergeist

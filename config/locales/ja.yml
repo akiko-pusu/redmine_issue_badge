@@ -2,3 +2,4 @@
 ja:
   label_issue_badge: 担当チケットの数をバッジ表示
   label_activate_for_all_users: 全てのユーザにバッジを表示
+  label_enabled_polling: 担当チケット数のポーリングを許可（60秒）
