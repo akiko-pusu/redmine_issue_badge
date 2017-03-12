@@ -60,6 +60,11 @@ redmineのインストールディレクトリに移動して、以下を実行�
 - デフォルトでは、redmine/ 以下の coverage/ ディレクトリにカバレッジレポートが生成されます。
 
 ```
+# issue badgedの稼働には追加のgemは必要ありませんが、テストの場合はcapybaraやfactory_girlを使うので、
+# Gemfileを配置します
+
+% cp plugins/redmine_issue_badge/Gemfile.local plugins/redmine_issue_badge/Gemfile
+
 # テスト用のDBの設定を行ってから、migration 実施
 % bundle exec rake db:migrate RAILS_ENV=test
 % bundle exec rake redmine:plugins:migrate RAILS_ENV=test
