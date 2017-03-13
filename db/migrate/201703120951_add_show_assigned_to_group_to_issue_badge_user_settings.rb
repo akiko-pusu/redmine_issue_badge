@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class AddShowAssignedToGroupToIssueBadgeUserSettings < ActiveRecord::Migration
   def self.up
-    add_column :issue_badge_user_settings, :show_assigned_to_group, :boolean, default: true
+    add_column :issue_badge_user_settings, :show_assigned_to_group, :boolean
   end
 
   def self.down
