@@ -20,3 +20,20 @@
       </p>
   <% end %>
 </fieldset>
+
+<script type="text/javascript">
+  function change_pref_location() {
+    if (window.matchMedia( '(max-width: 899px)' ).matches) {
+      $('#pref_issue_badge').insertBefore('#my_account_form > div.splitcontentright > p');
+    } else {
+      $('#pref_issue_badge').appendTo('div.splitcontentright');
+    }
+  }
+
+  $(document).ready(function () {
+    change_pref_location();
+  });
+  $(window).resize(function () {
+    change_pref_location();
+  });
+</script>

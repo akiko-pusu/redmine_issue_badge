@@ -24,10 +24,8 @@ function display_badge_contents(url) {
 function change_badge_location() {
     if (window.matchMedia( '(max-width: 899px)' ).matches) {
         $('#quick-search').prepend($('#issue_badge'));
-        $('#pref_issue_badge').insertBefore('#my_account_form > div.splitcontentright > p');
     } else {
         $('#loggedas').after($('#issue_badge'));
-        $('#pref_issue_badge').appendTo('div.splitcontentright');
     }
 }
 
