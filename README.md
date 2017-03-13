@@ -42,6 +42,17 @@ That's all.
 
 ## Changelog
 
+### 0.0.5
+
+Please note, this release is required to migrate.
+
+* Feature #43. Add option to polling assigned issues count every 60 seconds. (Prototype)
+* Feature #41. Add option to include / exclude option issues assigned to user's group.
+* Bug fix for #36. Don’t render html in case current user is required password change just after login. Thanks, @nakat-t.
+* Bug fix for #32. Escape subject includes html entities. Thank you so much @pousterlus.
+* Change not to use fixtures and to use FactoryGirl for rspec.
+* Some code refactoring. Special thanks to SideCI, https://sideci.com, which is automating code analysis system.
+
 ### 0.0.4.1
 
 *   Bug fix for #28. Thank you so much @juxta73.
@@ -57,6 +68,7 @@ From this version, need Redmine 3.3.1 or higher.
 *   UserPreference setting is failed in case using Redmine3.3.1 or later. (#23)
 
 ### 0.0.3
+
 *   Display badge when responsive mode (#17).
 *   Enabled to activate badge for all the user on pluginn's configuration
     screen. (#3)
