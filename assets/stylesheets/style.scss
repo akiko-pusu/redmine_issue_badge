@@ -49,10 +49,12 @@ div.checkbox label {
   text-decoration: none;
 }
 
-div.issue_badge_content .metadata {
-  color: #999;
-  margin-top: 2pt;
-  text-align: right;
+div.issue_badge_content {
+  .metadata {
+    color: #999;
+    margin-top: 2pt;
+    text-align: right;
+  }
 }
 
 .badge {
@@ -122,15 +124,33 @@ div.notifications > div.footer {
 }
 
 /*---- Use ticket_go png as icon -----*/
-#issue_badge_contents > div.footer > a {
-  background-position: 0% 50%;
-  background-repeat: no-repeat;
-  padding-left: 20px;
-  padding-top: 2px;
-  padding-bottom: 3px;
-  background-image: url('../../../images/ticket_go.png');
-}
+#issue_badge_contents {
+  > div.footer {
+    > a {
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
+      padding-left: 20px;
+      padding-top: 2px;
+      padding-bottom: 3px;
+      background-image: url('../../../images/ticket_go.png');
+    }
+  }
+  a {
+    background-position: 0% 40%;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 3px;
 
+    &.users {
+      background-image: url('../../../images/user.png');
+    }
+
+    &.groups {
+      background-image: url('../../../images/group.png');
+    }
+  }
+}
 @media (max-width: 899px) {
   #issue_badge > li {
     list-style-type: none;

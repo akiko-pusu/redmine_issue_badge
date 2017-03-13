@@ -1,11 +1,39 @@
+<fieldset class="box tabular" id="pref_issue_badge">
+  <legend><%=l(:title_issue_badge)%></legend>
 <%-
   global_enabled = Setting.plugin_redmine_issue_badge['activate_for_all_users'] == 'true'
 %>
-<p>
-  <label><%=h l(:label_issue_badge) %></label>
-  <% if !global_enabled %>
-      <%= check_box :pref, 'issue_badge' %>
-  <% else %>
-      <%= check_box :pref, 'issue_badge', {disabled: true, checked: true}  %>
+
+  <%= labelled_fields_for :issue_badge, @issue_badge do |field| %>
+      <p>
+        <label><%=h l(:label_issue_badge) %></label>
+        <% if !global_enabled %>
+            <%= check_box :issue_badge, 'enabled',  {onclick: '$("#show_assigned_to_group").toggle();'} %>
+        <% else %>
+            <%= check_box :issue_badge, 'enabled', {disabled: true, checked: true, onclick: '$("#show_assigned_to_group").toggle();'}  %>
+        <% end %>
+      </p>
+
+      <p id='show_assigned_to_group' style="display: <%= global_enabled || @issue_badge.enabled ? 'block' : 'none' %>">
+        <label><%=h l(:label_show_assigned_to_group) %></label>
+        <%= check_box :issue_badge, 'show_assigned_to_group'  %>
+      </p>
   <% end %>
-</p>
+</fieldset>
+
+<script type="text/javascript">
+  function change_pref_location() {
+    if (window.matchMedia( '(max-width: 899px)' ).matches) {
+      $('#pref_issue_badge').insertBefore('#my_account_form > div.splitcontentright > p');
+    } else {
+      $('#pref_issue_badge').appendTo('div.splitcontentright');
+    }
+  }
+
+  $(document).ready(function () {
+    change_pref_location();
+  });
+  $(window).resize(function () {
+    change_pref_location();
+  });
+</script>

@@ -1,6 +1,7 @@
 <%-
-base_url = Redmine::Utils.relative_url_root
-content_url = base_url + "/issue_badge/load_badge_contents"
+  content_url = issue_badge_load_badge_contents_path
+  polling_url = issue_badge_issues_count_path
+  polling_option = Setting.plugin_redmine_issue_badge['enabled_polling'] || false
 %>
 <% if @all_issues_count %>
     <div id="issue_badge">
@@ -20,3 +21,37 @@ content_url = base_url + "/issue_badge/load_badge_contents"
     change_badge_location();
   });
 </script>
+
+<% if polling_option == 'true' %>
+    <script type="text/javascript">
+      function poll(url) {
+        var status = $('#issue_badge_number');
+        $.ajax({
+          url: url,
+          dataType: 'json',
+          type: 'get',
+          success: function(data) { // check if available
+            if (typeof data.all_issues_count !== "undefined" && data.status === true) {
+              status.text(data.all_issues_count);
+            } else {
+              console.log("[IssueBadge] Error. Can't parse polling data.");
+              status.text("?");
+              clearInterval(pollInterval);
+            }
+          },
+          error: function() { // error logging
+            console.log("[IssueBadge] Error. Can't receive polling data.");
+            clearInterval(pollInterval);
+          }
+        });
+      }
+
+      var pollInterval = setInterval(function() { // run function every 2000 ms
+        poll('<%= polling_url %>');
+      }, 60000);
+
+      $(document).ready(function () {
+        poll('<%= polling_url %>');
+      });
+    </script>
+<% end %>

@@ -42,11 +42,11 @@ test-stable:
           bundle install --without mysql postgreql rmagick && bundle update
     - script:
         name: 'Migrate DB'
-        code:
+        code: |
           bundle exec rake db:migrate RAILS_ENV=test
     - script:
         name: 'Migrate Plugin'
-        code:
+        code: |
           bundle exec rake redmine:plugins:migrate RAILS_ENV=test
     - script:
         name: 'Run Plugin spec'
@@ -75,11 +75,11 @@ test-trunk:
           bundle update && bundle install --without mysql postgreql rmagick
     - script:
         name: 'Migrate DB'
-        code:
+        code: |
           bundle exec rake db:migrate RAILS_ENV=test
     - script:
         name: 'Migrate Plugin'
-        code:
+        code: |
           bundle exec rake redmine:plugins:migrate RAILS_ENV=test
     - script:
         name: 'Run Plugin spec'
