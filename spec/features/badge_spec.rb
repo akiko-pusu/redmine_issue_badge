@@ -12,7 +12,7 @@ feature 'IssueBadge', js: true do
   let(:issue_priority) { FactoryGirl.create(:priority) }
   let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
   let(:issues) do
-    FactoryGirl.create_list(:issue, 5,
+    FactoryGirl.create_list(:issue, 4,
                             project_id: project.id,
                             tracker_id: tracker.id,
                             priority_id: issue_priority.id,
@@ -76,6 +76,39 @@ feature 'IssueBadge', js: true do
         find('#issue_badge_number').click
         expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
                                  text: "#{issue.id} <b>HTML Subject</b>")
+        expect(page).not_to have_css('#issue_badge_contents > div.issue_badge_content > a.groups')
+      end
+    end
+
+    context 'Setting issue_group_assignment is activated' do
+      background do
+        project.trackers << tracker
+
+        Setting.issue_group_assignment = 1
+        g = Group.new(name: 'New group', status: 1)
+        g.users << user
+        g.save
+        member = Member.new(project: project, principal: g)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
+        FactoryGirl.create(:issue, project_id: project.id,
+                                   tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
+      end
+      scenario 'Issue assigned to group is displayed.' do
+        all_issues = issues
+
+        # Enable Badge
+        check 'issue_badge_enabled'
+        click_on 'Save'
+        expect(page).to have_selector('#issue_badge_number', text: all_issues.length)
+
+        check 'issue_badge_enabled'
+        check 'issue_badge_show_assigned_to_group'
+        click_on 'Save'
+        expect(page).to have_selector('#issue_badge_number', text: all_issues.length + 1)
+
+        find('#issue_badge_number').click
+        expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a.groups')
       end
     end
   end
