@@ -2,7 +2,7 @@
 require_relative '../spec_helper'
 
 describe IssueBadgeController do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, status: 1) }
   let(:project) do
     FactoryGirl.create(:project)
   end
@@ -47,6 +47,39 @@ describe IssueBadgeController do
         expect(assigns(:all_issues_count)).to eq issue_count
         expect(response).to render_template(partial: '_issue_badge')
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
+      end
+    end
+
+    context 'When show_assigned_to_group option is checked.' do
+      let(:issue_count) { 4 }
+      before do
+        Setting.issue_group_assignment = 1
+        g = Group.new(name: 'New group', status: 1)
+        g.users << user
+        g.save
+        member = Member.new(project: project, principal: g)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
+        FactoryGirl.create(:issue, project_id: project.id,
+                                   tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
+      end
+
+      it 'renders the _issue_badge template' do
+        get :index
+        expect(assigns(:all_issues_count)).not_to be_nil
+        expect(assigns(:all_issues_count)).to eq issue_count
+        expect(response).to render_template(partial: '_issue_badge')
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
+      end
+
+      it 'renders the _issue_badge template with assigned to group' do
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user.id)
+        setting.update_attributes(show_assigned_to_group: true)
+        get :index
+        expect(assigns(:all_issues_count)).not_to be_nil
+        expect(assigns(:all_issues_count)).to eq issue_count + 1
+        expect(response).to render_template(partial: '_issue_badge')
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count + 1}<\/span>}im)
       end
     end
   end

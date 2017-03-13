@@ -3,10 +3,11 @@
   <div class="header" id="issue_badge_contents_header"><%= l(:label_assigned_to_me_issues) %></div>
   <!-- contents will be injected. -->
   <!-- issue list -->
-  <% for issue in @limited_issues %>
+  <% @limited_issues.each do |issue|  %>
       <div class="issue_badge_content">
         <%= link_to("#{issue.id} #{truncate(issue.subject.html_safe, length: 20, escape: false)}", issue_path(issue),
-                    { title: "#{issue.subject} - #{format_time(issue.created_on)}" } ) %>
+                    { title: "#{issue.subject} - #{format_time(issue.created_on)}",
+                      class:  issue.assigned_to.is_a?(Group) ? 'groups' : 'users' } ) %>
         <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
       </div>
   <% end %>
