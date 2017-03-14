@@ -1,0 +1,7 @@
+# Simplified Chinese strings go here for Rails i18n
+zh:
+  title_issue_badge: 任务计数徽章
+  label_issue_badge: 显示已指派的任务计数
+  label_activate_for_all_users: 所有用户显示任务计数徽章
+  label_enabled_polling: 启用轮询刷新任务计数（刷新时间间隔 60秒）
+  label_show_assigned_to_group: 包含指派给所在组的任务数量
