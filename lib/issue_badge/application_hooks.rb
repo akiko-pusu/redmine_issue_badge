@@ -6,7 +6,7 @@ module IssueBadge
       base_url = Redmine::Utils.relative_url_root
       badge_url = base_url + '/issue_badge'
       o = ''
-      if User.current.logged? && User.current.change_password_allowed?
+      if User.current.logged?
         global_enabled = Setting.plugin_redmine_issue_badge['activate_for_all_users'] == 'true'
         issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(User.current)
         o = stylesheet_link_tag('style', plugin: 'redmine_issue_badge')
