@@ -4,11 +4,12 @@ class IssueBadgeUserSetting < ActiveRecord::Base
   validates_presence_of :user
   attr_accessible :enabled, :show_assigned_to_group
 
-  def self.find_or_create_by_user_id(user_id)
-    issue_badge = IssueBadgeUserSetting.where(user_id: user_id).first
+  def self.find_or_create_by_user_id(user)
+    issue_badge = IssueBadgeUserSetting.where(user_id: user.id).first
     unless issue_badge
       issue_badge = IssueBadgeUserSetting.new
-      issue_badge.user_id = user_id
+      issue_badge.user = user
+      issue_badge.save!
     end
     issue_badge
   end
