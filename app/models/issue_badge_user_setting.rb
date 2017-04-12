@@ -9,7 +9,6 @@ class IssueBadgeUserSetting < ActiveRecord::Base
     unless issue_badge
       issue_badge = IssueBadgeUserSetting.new
       issue_badge.user = user
-      issue_badge.save!
     end
     issue_badge
   end
