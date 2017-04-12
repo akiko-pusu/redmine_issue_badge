@@ -73,7 +73,7 @@ describe IssueBadgeController do
       end
 
       it 'renders the _issue_badge template with assigned to group' do
-        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user.id)
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
         setting.update_attributes(show_assigned_to_group: true)
         get :index
         expect(assigns(:all_issues_count)).not_to be_nil
