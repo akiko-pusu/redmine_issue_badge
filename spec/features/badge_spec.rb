@@ -43,7 +43,7 @@ feature 'IssueBadge', js: true do
       click_on 'Save'
 
       expect(page).to have_selector('#issue_badge')
-      expect(page).to have_selector("head > script[src$='javascripts/issue_badge.js']", visible: false)
+      expect(page).to have_selector("head > script[src*='javascripts/issue_badge.js']", visible: false)
     end
 
     context 'If badge option is activated and operator has assigned issues.' do
