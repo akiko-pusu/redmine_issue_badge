@@ -11,7 +11,16 @@
         <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
       </div>
   <% end %>
-  <div>...</div>
+  <div class="<%= @limited_issues.empty? ? 'no-issue' : 'has-issue' %>">
+    ...
+  </div>
+  <% if @limited_issues.blank? %>
+      <div class="contextual">
+        <% if User.current.allowed_to?(:add_issues, @project, :global => true) && (@project.nil? || Issue.allowed_target_trackers(@project).any?) %>
+            <%= link_to l(:label_issue_new), _new_project_issue_path(@project), :class => 'icon icon-add new-issue' %>
+        <% end %>
+      </div>
+  <% end %>
   <div class="footer">
     <%= link_to issues_path(:set_filter => 1, :assigned_to_id => 'me', :sort => 'priority:desc,updated_on:desc') do %>
         <%= l(:label_assigned_to_me_issues) %>

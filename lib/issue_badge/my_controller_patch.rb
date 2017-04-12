@@ -8,7 +8,7 @@ module IssueBadge
 
     def account_with_issue_badge
       user = User.current
-      @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user.id)
+      @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user)
       if request.post?
         begin
           unless @issue_badge.update(badge_params)
