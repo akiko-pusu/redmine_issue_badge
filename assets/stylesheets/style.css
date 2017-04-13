@@ -102,6 +102,23 @@ div.notifications > div.footer {
   background: #f6f5f5; }
 
 /*---- Use ticket_go png as icon -----*/
+#issue_badge_contents > div.no-issue {
+  background-image: url("../images/coffee.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 80%;
+  height: 50px;
+  opacity: 0.5;
+  border-bottom: none; }
+
+#issue_badge_contents > div.contextual {
+  white-space: nowrap;
+  line-height: 1.2em;
+  padding: 4px;
+  font-size: 0.6em;
+  opacity: 0.4;
+  float: none; }
+
 #issue_badge_contents > div.footer > a {
   background-position: 0% 50%;
   background-repeat: no-repeat;
