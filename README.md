@@ -44,7 +44,7 @@ That's all.
 
 ### 0.0.6
 
-* Bug fux for #49. Badge is not working for user created from LDAP user.
+* Bug fix for #49. Badge is not working for user created from LDAP user.
 * Feature #52. Display background image when user’s assigned issue is empty.
 * PR #48. Add simplified Chinese translation file. Thank you so much, Steven.W!
 * Some code refactoring. Thanks to SideCI, I am very saved!
