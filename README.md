@@ -42,6 +42,13 @@ That's all.
 
 ## Changelog
 
+### 0.0.6
+
+* Bug fux for #49. Badge is not working for user created from LDAP user.
+* Feature #52. Display background image when user’s assigned issue is empty.
+* PR #48. Add simplified Chinese translation file. Thank you so much, Steven.W!
+* Some code refactoring. Thanks to SideCI, I am very saved!
+
 ### 0.0.5
 
 Please note, this release is required to migrate.
@@ -70,7 +77,7 @@ From this version, need Redmine 3.3.1 or higher.
 ### 0.0.3
 
 *   Display badge when responsive mode (#17).
-*   Enabled to activate badge for all the user on pluginn's configuration
+*   Enabled to activate badge for all the user on plugin's configuration
     screen. (#3)
 *   Code Refactoring.
 *   Add scss file and npm script to compile scss.
