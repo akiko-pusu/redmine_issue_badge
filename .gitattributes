@@ -6,3 +6,6 @@ wercker.yml export-ignore
 script/ export-ignore
 .rubocop* export-ignore
 Gemfile.local export-ignore
+node_modules/ export-ignore
+src/ export-ignore
+package.json export-ignore
