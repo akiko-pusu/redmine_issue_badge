@@ -6,7 +6,7 @@ require 'issue_badge/my_controller_patch'
 Rails.configuration.to_prepare do
   require_dependency 'my_controller'
   unless MyController.included_modules.include? IssueBadge::MyControllerPatch
-    MyController.include IssueBadge::MyControllerPatch
+    MyController.send(:include, IssueBadge::MyControllerPatch)
   end
 end
 
