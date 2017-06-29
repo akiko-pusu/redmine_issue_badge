@@ -29,7 +29,7 @@ div.checkbox label {
   color: black;
   background: #ffffff;
   padding: 0px;
-  font-size: 0.8em;
+  /* font-size: 0.8em; */
   line-height: 1.5;
   z-index: 300;
   border: 1px solid #c9c9c9;
@@ -57,14 +57,13 @@ div.issue_badge_content .metadata {
   display: inline-block;
   min-width: 10px;
   padding: 2px 3px 3px 3px;
-  font-size: 0.6em;
   /* font-weight: 700; */
   color: #fff;
   line-height: 1;
   vertical-align: middle;
   white-space: nowrap;
   text-align: center;
-  background-color: red;
+  background-color: #ee2630;
   border-radius: 7px;
   position: relative;
   /* font-weight: normal; */
@@ -134,7 +133,7 @@ div.notifications > div.footer {
   white-space: nowrap;
   line-height: 1.2em;
   padding: 4px;
-  font-size: 0.6em;
+  /* font-size: 0.6em; */
   opacity: 0.4;
   float: none;
 }
@@ -169,7 +168,7 @@ div.notifications > div.footer {
     list-style-type: none;
   }
   #issue_badge .badge {
-    font-size: 1.2em;
+    /* font-size: 1.2em; */
     font-weight: bold;
     background-color: #4eb97e;
     border-radius: 18px;
