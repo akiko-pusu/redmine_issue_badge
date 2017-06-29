@@ -6,6 +6,8 @@ require 'issue_badge/my_controller_patch'
 Rails.configuration.to_prepare do
   require_dependency 'my_controller'
   unless MyController.included_modules.include? IssueBadge::MyControllerPatch
+    # for ruby 1.9 / 2.0 compatibility
+    #   MyController.include IssueBadge::MyControllerPatch
     MyController.send(:include, IssueBadge::MyControllerPatch)
   end
 end
