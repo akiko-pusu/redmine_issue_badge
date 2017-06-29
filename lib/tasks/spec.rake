@@ -1,16 +1,17 @@
 namespace :redmine_issue_badge do
-  desc 'Run test for redmine_issue_badge plugin.'
-  task default: :spec
-
   desc 'Run spec for redmine_issue_badge plugin'
-  begin
-    require 'rspec/core/rake_task'
-    RSpec::Core::RakeTask.new(:spec) do |t|
-      t.pattern = 'plugins/redmine_issue_badge/spec/**/*_spec.rb'
-      t.rspec_opts = ['-I plugins/redmine_issue_badge/spec', '--format documentation']
+  task :spec do |task_name|
+    next unless ENV['RAILS_ENV'] == 'test' && task_name.name == 'redmine_issue_badge:spec'
+    begin
+      require 'rspec/core'
+      path = 'plugins/redmine_issue_badge/spec/'
+      options = ['-I plugins/redmine_issue_badge/spec']
+      options << '--format'
+      options << 'documentation'
+      options << path
+      RSpec::Core::Runner.run(options)
+    rescue LoadError => ex
+      puts "This task should be called only for redmine_issue_badge spec. #{ex.message}"
     end
-    task default: :spec
-  rescue LoadError
-    puts 'rspec failed.'
   end
 end
