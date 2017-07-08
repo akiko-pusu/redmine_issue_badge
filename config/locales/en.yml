@@ -5,3 +5,4 @@ en:
   label_activate_for_all_users: Display issue badge for all users
   label_enabled_polling: Enabled pollig to refresh issue count（Interval 60sec）
   label_show_assigned_to_group: Include issue numbers assigned to group
+  label_other_badge_num: other badge num
