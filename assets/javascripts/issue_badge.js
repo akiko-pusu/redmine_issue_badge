@@ -5,11 +5,16 @@ function load_badge(url) {
         async: true,
         type: 'get'
     }).done(function( html ) {
-        if ($(html).filter('div#issue_badge').length) {
+        if ($(html).filter('div#issue_badge').length || $(html).filter('div#issue_badge0').length) {
             $('#loggedas').after(html);
         }
     });
 }
+
+function display_badge_goto(url) {
+    window.location.href=url
+}
+
 
 function display_badge_contents(url) {
     $.ajax({
@@ -29,6 +34,16 @@ function change_badge_location() {
     }
 }
 
+function change_badge_location2(num) {
+    for (i=0;i<num;++i)
+    {
+        if (window.matchMedia( '(max-width: 899px)' ).matches) {
+            $('#quick-search').prepend($('#issue_badge'+i));
+        } else {
+            $('#loggedas').after($('#issue_badge'+i));
+        }
+    }
+}
 $(document).click(function(event) {
     // Hide if badge_contents exists.
     if (!$(event.target).is("#issue_badge_contents")) {
