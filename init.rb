@@ -24,6 +24,7 @@ Redmine::Plugin.register :redmine_issue_badge do
   settings partial: 'settings/redmine_issue_badge',
            default: {
              'activate_for_all_users' => 'false',
-             'enabled_polling' => false
+             'enabled_polling' => false,
+             'other_badge_num' => 0
            }
 end
