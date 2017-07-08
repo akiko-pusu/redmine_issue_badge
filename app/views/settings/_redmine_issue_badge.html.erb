@@ -9,4 +9,10 @@
     <%= hidden_field_tag("settings[enabled_polling]", 0, :id => nil).html_safe %>
     <%= check_box_tag 'settings[enabled_polling]', true, @settings['enabled_polling'] == "true" %>
   </p>
+
+  <p>
+    <%=content_tag(:label, l(:label_other_badge_num))%>
+    <%= text_field_tag("settings[other_badge_num]", @settings['other_badge_num'])%>
+  </p>
+
 </div>
