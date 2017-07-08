@@ -2,23 +2,49 @@
   content_url = issue_badge_load_badge_contents_path
   polling_url = issue_badge_issues_count_path
   polling_option = Setting.plugin_redmine_issue_badge['enabled_polling'] || false
+  other_badge_num = Setting.plugin_redmine_issue_badge['other_badge_num'] || 0
 %>
-<% if @all_issues_count %>
-    <div id="issue_badge">
-      <li class="starting_point">
-        <a style="cursor: pointer" onclick="display_badge_contents('<%= content_url %>');" id="link_issue_badge">
-          <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
+
+<% if other_badge_num.to_i == 0 %>
+  <% if @all_issues_count %>
+      <div id="issue_badge">
+        <li class="starting_point">
+          <a style="cursor: pointer" onclick="display_badge_contents('<%= content_url %>');" id="link_issue_badge">
+            <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
+          </a>
+        </li>
+      </div>
+  <% end %>
+  
+<% else  %>
+
+<% for bdg in 0..other_badge_num.to_i %>
+    <div id="<%= "issue_badge" +bdg.to_s %>"  style="float:right;">
+      <li class="starting_point" title='<%= @all_issues_title[bdg] %>'>
+        <a style="cursor: pointer" onclick="display_badge_goto('<%= @all_issues_path[bdg] %>');" id="link_issue_badge">
+          <span id="issue_badge_number" class="badge"  style="background-color: <%= @all_issues_color[bdg] %>" ><%= @all_issues_count[bdg] %></span>
         </a>
       </li>
     </div>
 <% end %>
 
+
+<% end %>
+
+
 <script type="text/javascript">
+    var other_badge_num = '<%= other_badge_num.to_i %>';
   $(document).ready(function () {
-    change_badge_location();
+  	if (other_badge_num==0)
+	        change_badge_location()
+	else
+        change_badge_location2(other_badge_num);
   });
   $(window).resize(function () {
-    change_badge_location();
+  	if (other_badge_num==0)
+	        change_badge_location()
+	else
+        change_badge_location2(other_badge_num);
   });
 </script>
 
