@@ -1,0 +1,7 @@
+# Portuguese strings go here for Rails i18n
+pt:
+  title_issue_badge: Tarefas Badge
+  label_issue_badge: Mostar o número de tarefas atribuídos com badge
+  label_activate_for_all_users: Mostrar tarefas para todos os usuários
+  label_enabled_polling: Habilitar atualização (Intervalo de 60 sec.）
+  label_show_assigned_to_group: Incluir as tarefas associadas aos meus grupos
