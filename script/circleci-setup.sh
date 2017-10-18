@@ -1,6 +1,4 @@
 #!/bin/sh
-mysql -v
-mysql -u root -e "SHOW VARIABLES LIKE 'sql_mode';"
 cd /tmp/
 hg clone https://bitbucket.org/redmine/redmine-all redmine
 
