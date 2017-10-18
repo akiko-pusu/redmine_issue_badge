@@ -3,5 +3,5 @@ fr:
   title_issue_badge: Issue Badge
   label_issue_badge: Affiche le nombre de demandes assignées avec un badge.
   label_activate_for_all_users: Afficher un badge des demandes pour tous les utilisateurs
-  label_enabled_polling: Active le 'polling' pour rafraichir le nombre de demandes (Intervale 60sec）
+  label_enabled_polling: Active le 'polling' pour rafraîchir le nombre de demandes (Intervalle 60sec）
   label_show_assigned_to_group: Inclure le nombre de demandes assignées aux groupes
