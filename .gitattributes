@@ -9,3 +9,5 @@ Gemfile.local export-ignore
 node_modules/ export-ignore
 src/ export-ignore
 package.json export-ignore
+Dockerfile export-ignore
+docker-compose.yml export-ignore
