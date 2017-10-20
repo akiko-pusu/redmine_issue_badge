@@ -37,8 +37,33 @@ This feature is activated as one of the user preferences.
     is shown with badge.
 4.  Click badge and firt 5 issues are displayed.
 
-
 That's all.
+
+### Quick try with using Docker
+
+You can try quickly this plugin with Docker environment.
+Please try:
+
+```
+$ https://github.com/akiko-pusu/redmine_issue_badge
+$ docker-compose up -d
+```
+
+Please note: Yon don't have to download Redmine's source code, but source code of this plugin is required.
+
+Run **docker-compose up -d** command and soon you can access Redmine running within Docker container.
+After stating up container, please login as admin (password: admin) and access **http://localhost:3000/admin/plugins** .
+Then, you can configure and activate this plugin.
+
+As default, Redmine is cloned stable branch defined in Dockerfile. (Exp. REDMINE_VERSION: 3.4-stable)
+
+You can use latest (trunk / master) branch as following:
+
+```
+$ REDMINE_VERSION=master docker-compose up -d --build
+```
+(But, maybe plugin will not work correctly if not supported latest redmine.)
+
 
 ## Changelog
 

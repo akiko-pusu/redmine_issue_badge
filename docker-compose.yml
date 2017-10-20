@@ -1,7 +1,10 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        REDMINE_VERSION: $REDMINE_VERSION
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     environment:
       RAILS_ENV: development

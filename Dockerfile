@@ -12,14 +12,11 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN apt-get update
 RUN apt-get install -qq -y \
-    sudo                   \
-    subversion             \
     git                    \
-    sqlite3                \
-    curl
+    sqlite3
 
-RUN cd /tmp && svn checkout http://svn.redmine.org/redmine/branches/${REDMINE_VERSION} redmine
-
+RUN cd /tmp && git clone --depth 1 -b ${REDMINE_VERSION} https://github.com/redmine/redmine redmine
+RUN echo "REDMINE_VERSION: ${REDMINE_VERSION}"
 WORKDIR /tmp/redmine
 
 RUN echo $'test:\n\
