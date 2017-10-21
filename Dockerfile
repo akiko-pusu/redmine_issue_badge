@@ -40,8 +40,8 @@ RUN gem install simplecov simplecov-rcov yard --no-rdoc --no-ri
 RUN gem update bundler
 ADD . /tmp/redmine/plugins/redmine_issue_badge
 RUN bundle install --without mysql postgresql rmagick
-RUN bundle exec rake db:migrate
 RUN bundle exec rails g rspec:install
+RUN bundle exec rake db:migrate
 RUN bundle exec rake redmine:plugins:migrate
 RUN bundle exec rake generate_secret_token
 EXPOSE 3000
