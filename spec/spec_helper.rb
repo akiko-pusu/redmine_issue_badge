@@ -1,8 +1,11 @@
 # frozen_string_literal: true
+
 require File.expand_path('../../../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'simplecov'
 require 'factory_girl_rails'
+
+SimpleCov.coverage_dir('coverage/redmine_issue_badge_spec')
 SimpleCov.start 'rails'
 
 RSpec.configure do |config|

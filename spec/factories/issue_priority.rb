@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :priority, class: IssuePriority do
     sequence(:id, &:to_s)

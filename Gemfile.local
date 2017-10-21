@@ -2,8 +2,11 @@ source 'https://rubygems.org'
 
 group :test do
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_girl', '< 4.8.2'
+  gem 'factory_girl_rails', '< 4.8.2'
   gem 'launchy'
   gem 'poltergeist', require: false
   gem 'database_cleaner'
+  # Test format nyan cat
+  gem 'nyan-cat-formatter', require: false
 end

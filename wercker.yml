@@ -39,7 +39,7 @@ test-stable:
     - script:
         name: 'bundle install'
         code: |
-          bundle install --without mysql postgreql rmagick && bundle update
+          bundle install --without mysql postgreql rmagick
     - script:
         name: 'Migrate DB'
         code: |
@@ -73,6 +73,10 @@ test-trunk:
         name: 'bundle install'
         code: |
           bundle update && bundle install --without mysql postgreql rmagick
+    - script:
+        name: 'install spec'
+        code: |
+          bundle exec rails g rspec:install
     - script:
         name: 'Migrate DB'
         code: |

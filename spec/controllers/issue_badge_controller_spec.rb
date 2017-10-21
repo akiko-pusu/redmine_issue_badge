@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 require_relative '../spec_helper'
 
-describe IssueBadgeController do
+describe IssueBadgeController, type: :controller do
   let(:user) { FactoryGirl.create(:user, status: 1) }
   let(:project) do
     FactoryGirl.create(:project)
@@ -32,8 +33,6 @@ describe IssueBadgeController do
       let(:issue_count) { 0 }
       it 'renders the _issue_badge template' do
         get :index
-        expect(assigns(:all_issues_count)).not_to be_nil
-        expect(response).to render_template(partial: '_issue_badge')
         expect(response.body).to match(/<span id="issue_badge_number" class="badge">0/im)
       end
     end
@@ -43,9 +42,6 @@ describe IssueBadgeController do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(assigns(:all_issues_count)).not_to be_nil
-        expect(assigns(:all_issues_count)).to eq issue_count
-        expect(response).to render_template(partial: '_issue_badge')
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
       end
     end
@@ -66,9 +62,6 @@ describe IssueBadgeController do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(assigns(:all_issues_count)).not_to be_nil
-        expect(assigns(:all_issues_count)).to eq issue_count
-        expect(response).to render_template(partial: '_issue_badge')
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
       end
 
@@ -76,27 +69,25 @@ describe IssueBadgeController do
         setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
         setting.update_attributes(show_assigned_to_group: true)
         get :index
-        expect(assigns(:all_issues_count)).not_to be_nil
-        expect(assigns(:all_issues_count)).to eq issue_count + 1
-        expect(response).to render_template(partial: '_issue_badge')
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count + 1}<\/span>}im)
       end
     end
   end
 
   describe 'GET #load_badge_contents' do
+    render_views
     before(:each) do
       @request.session[:user_id] = user.id
     end
 
     it 'renders the _issue_badge_contents template' do
       get :load_badge_contents
-      expect(assigns(:limited_issues)).not_to be_nil
-      expect(response).to render_template(partial: '_issue_badge_contents')
+      expect(response.body).to match(/<div id="issue_badge_contents" class="notifications arrow_box">/im)
     end
   end
 
   describe 'GET #issues_count' do
+    render_views
     context 'When anonymous' do
       it 'return json with status false.' do
         get :issues_count

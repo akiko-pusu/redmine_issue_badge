@@ -7,7 +7,7 @@ namespace :redmine_issue_badge do
       path = 'plugins/redmine_issue_badge/spec/'
       options = ['-I plugins/redmine_issue_badge/spec']
       options << '--format'
-      options << 'documentation'
+      options << 'NyanCatFormatter'
       options << path
       RSpec::Core::Runner.run(options)
     rescue LoadError => ex

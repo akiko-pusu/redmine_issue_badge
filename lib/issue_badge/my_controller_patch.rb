@@ -1,12 +1,8 @@
 module IssueBadge
   module MyControllerPatch
     extend ActiveSupport::Concern
-    unloadable
-    included do
-      alias_method_chain(:account, :issue_badge)
-    end
 
-    def account_with_issue_badge
+    def account
       user = User.current
       @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user)
       if request.post?
@@ -18,7 +14,7 @@ module IssueBadge
           logger.warn "Can't save IssueBadge. #{ex.message}"
         end
       end
-      account_without_issue_badge
+      super
     end
 
     private
@@ -28,3 +24,5 @@ module IssueBadge
     end
   end
 end
+
+MyController.prepend IssueBadge::MyControllerPatch

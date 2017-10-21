@@ -1,8 +1,12 @@
 class IssueBadgeUserSetting < ActiveRecord::Base
-  unloadable
+  include Redmine::SafeAttributes
   belongs_to :user
   validates_presence_of :user
-  attr_accessible :enabled, :show_assigned_to_group
+  safe_attributes 'enabled', 'show_assigned_to_group'
+  # attr_accessor :enabled, :show_assigned_to_group
+
+  # scope :enabled, -> { where(enabled: true) }
+  # scope :show_assigned_to_group, -> { where(show_assigned_to_group: true) }
 
   def self.find_or_create_by_user_id(user)
     issue_badge = IssueBadgeUserSetting.where(user_id: user.id).first
