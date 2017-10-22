@@ -3,15 +3,15 @@
 require_relative '../spec_helper'
 
 describe IssueBadgeController, type: :controller do
-  let(:user) { FactoryGirl.create(:user, status: 1) }
+  let(:user) { FactoryBot.create(:user, status: 1) }
   let(:project) do
-    FactoryGirl.create(:project)
+    FactoryBot.create(:project)
   end
   let(:tracker) do
-    FactoryGirl.create(:tracker, :with_default_status)
+    FactoryBot.create(:tracker, :with_default_status)
   end
-  let(:role) { FactoryGirl.create(:role) }
-  let(:issue_priority) { FactoryGirl.create(:priority) }
+  let(:role) { FactoryBot.create(:role) }
+  let(:issue_priority) { FactoryBot.create(:priority) }
 
   describe 'GET #index' do
     before do
@@ -21,7 +21,7 @@ describe IssueBadgeController, type: :controller do
       member.save
       @request.session[:user_id] = user.id
 
-      FactoryGirl.create_list(:issue, issue_count,
+      FactoryBot.create_list(:issue, issue_count,
                               project_id: project.id,
                               tracker_id: tracker.id,
                               priority_id: issue_priority.id,
@@ -56,7 +56,7 @@ describe IssueBadgeController, type: :controller do
         member = Member.new(project: project, principal: g)
         member.member_roles << MemberRole.new(role: role)
         member.save
-        FactoryGirl.create(:issue, project_id: project.id,
+        FactoryBot.create(:issue, project_id: project.id,
                                    tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
       end
 
@@ -101,7 +101,7 @@ describe IssueBadgeController, type: :controller do
         member = Member.new(project: project, user_id: user.id)
         member.member_roles << MemberRole.new(role: role)
         member.save
-        FactoryGirl.create_list(:issue, issue_count,
+        FactoryBot.create_list(:issue, issue_count,
                                 project_id: project.id,
                                 tracker_id: tracker.id,
                                 priority_id: issue_priority.id,

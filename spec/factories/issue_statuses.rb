@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :issue_status do
     sequence(:name)     { |n| "status-name: #{n}" }
     sequence(:position) { |n| n }

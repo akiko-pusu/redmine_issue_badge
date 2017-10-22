@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :project do
     sequence(:name) { |n| "project-name: #{n}" }
     sequence(:description) { |n| "project-description: #{n}" }
@@ -10,7 +10,7 @@ FactoryGirl.define do
 
     trait :with_issue_tracking do
       after(:create) do |project|
-        tracker_module = FactoryGirl.create(:enabled_module, name: 'issue_tracking', project_id: project.id)
+        tracker_module = FactoryBot.create(:enabled_module, name: 'issue_tracking', project_id: project.id)
         project.enabled_modules << tracker_module
       end
     end

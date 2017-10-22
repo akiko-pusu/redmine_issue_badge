@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :priority, class: IssuePriority do
     sequence(:id, &:to_s)
     sequence(:name) { |n| "issue-priority: #{n}" }
