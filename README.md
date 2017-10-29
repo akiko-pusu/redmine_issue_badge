@@ -1,13 +1,12 @@
 # Redmine Issue Badge Plugin
 
 [![Plugin info at redmine.org](https://img.shields.io/badge/Redmine-plugin-green.svg?)](http://www.redmine.org/plugins/redmine_issue_badge)
-[![wercker status](https://app.wercker.com/status/60fa6d07854d0fa0cd8e961d2d10325d/s/ "wercker status")](https://app.wercker.com/project/byKey/60fa6d07854d0fa0cd8e961d2d10325d)
+[![Circle CI](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master.svg?style=shield&circle-token=156d098f75b4142fead83e9e4bd5871257acf3be)](https://circleci.com/gh/akiko-pusu/redmine_issue_badge)
+[![SideCI](https://img.shields.io/badge/Special%20Thanks!-SideCI-blue.svg?)](https://sideci.com/features)
 
 Plugin to show the number of assigned issues with badge on top menu.
 
-Build Status on wercker:
-
-[![wercker status](https://app.wercker.com/status/60fa6d07854d0fa0cd8e961d2d10325d/s/ "wercker status")](https://app.wercker.com/project/byKey/60fa6d07854d0fa0cd8e961d2d10325d)
+![screen shot](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/screen-in-case-no-assigned-issues.png)
 
 ### Plugin installation
 
@@ -66,6 +65,8 @@ You can use latest (trunk / master) branch as following:
 $ REDMINE_VERSION=master docker-compose up -d --build
 ```
 (But, maybe plugin will not work correctly if not supported latest redmine.)
+
+![docker-compose-sample](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/plugin-with-docker.gif)
 
 
 ## Changelog
