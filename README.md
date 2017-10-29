@@ -1,5 +1,8 @@
 # Redmine Issue Badge Plugin
 
+[![Plugin info at redmine.org](https://img.shields.io/badge/Redmine-plugin-green.svg?)](http://www.redmine.org/plugins/redmine_issue_badge)
+[![wercker status](https://app.wercker.com/status/60fa6d07854d0fa0cd8e961d2d10325d/s/ "wercker status")](https://app.wercker.com/project/byKey/60fa6d07854d0fa0cd8e961d2d10325d)
+
 Plugin to show the number of assigned issues with badge on top menu.
 
 Build Status on wercker:
