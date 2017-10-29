@@ -1,10 +1,10 @@
 #!/bin/sh
 cd /tmp/
+echo ${REDMINE_VERSION}
 git clone --depth 1 -b ${REDMINE_VERSION} https://github.com/redmine/redmine redmine
 
 # switch target version of redmine
 cd /tmp/redmine
-hg pull
 cat << HERE >> config/database.yml
 test:
   adapter: mysql2
@@ -13,11 +13,9 @@ test:
   username: root
   password: ""
   encoding: utf8mb4
-  sql_mode: false
 HERE
 
 # move redmine source to wercker source directory
-echo
 mkdir -p /tmp/redmine/plugins/${CIRCLE_PROJECT_REPONAME}
 
 # Move Gemfile.local to Gemfile only for test
