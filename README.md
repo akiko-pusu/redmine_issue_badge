@@ -1,7 +1,8 @@
 # Redmine Issue Badge Plugin
 
 [![Plugin info at redmine.org](https://img.shields.io/badge/Redmine-plugin-green.svg?)](http://www.redmine.org/plugins/redmine_issue_badge)
-[![CircleCI](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master.svg?style=svg)](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master)
+[![Circle CI](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master.svg?style=shield&circle-token=156d098f75b4142fead83e9e4bd5871257acf3be)](https://circleci.com/gh/akiko-pusu/redmine_issue_badge)
+[![SideCI](https://img.shields.io/badge/Special%20Thanks!-SideCI-blue.svg?)](https://sideci.com/features)
 
 Plugin to show the number of assigned issues with badge on top menu.
 
