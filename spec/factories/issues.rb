@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-FactoryGirl.define do
+FactoryBot.define do
   factory :issue do |i|
     association :project
     association :tracker
@@ -12,7 +12,7 @@ FactoryGirl.define do
 
     trait :with_priority do
       after(:create) do |issue|
-        priority = FactoryGirl.create(:priority)
+        priority = FactoryBot.create(:priority)
         issue.priority = priority
       end
     end

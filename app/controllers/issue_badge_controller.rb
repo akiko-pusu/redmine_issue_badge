@@ -1,5 +1,4 @@
 class IssueBadgeController < ApplicationController
-  unloadable
   layout 'base'
   helper :issues
   include IssuesHelper

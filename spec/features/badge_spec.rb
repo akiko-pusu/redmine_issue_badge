@@ -6,13 +6,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../support/login_helper')
 include LoginHelper
 
 feature 'IssueBadge', js: true do
-  let(:project) { FactoryGirl.create(:project) }
-  let(:tracker) { FactoryGirl.create(:tracker, :with_default_status) }
-  let(:role) { FactoryGirl.create(:role) }
-  let(:issue_priority) { FactoryGirl.create(:priority) }
-  let(:user) { FactoryGirl.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
+  let(:project) { FactoryBot.create(:project) }
+  let(:tracker) { FactoryBot.create(:tracker, :with_default_status) }
+  let(:role) { FactoryBot.create(:role) }
+  let(:issue_priority) { FactoryBot.create(:priority) }
+  let(:user) { FactoryBot.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
   let(:issues) do
-    FactoryGirl.create_list(:issue, 4,
+    FactoryBot.create_list(:issue, 4,
                             project_id: project.id,
                             tracker_id: tracker.id,
                             priority_id: issue_priority.id,
@@ -91,7 +91,7 @@ feature 'IssueBadge', js: true do
         member = Member.new(project: project, principal: g)
         member.member_roles << MemberRole.new(role: role)
         member.save
-        FactoryGirl.create(:issue, project_id: project.id,
+        FactoryBot.create(:issue, project_id: project.id,
                                    tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
       end
       scenario 'Issue assigned to group is displayed.' do
