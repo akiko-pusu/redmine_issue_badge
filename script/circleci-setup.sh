@@ -27,4 +27,3 @@ mv ~/repo/.* /tmp/redmine/plugins/${CIRCLE_PROJECT_REPONAME}/
 mv /tmp/redmine/* ~/repo/
 mv /tmp/redmine/.* ~/repo/
 ls -la ~/repo/
-
