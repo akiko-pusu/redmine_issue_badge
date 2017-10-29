@@ -1,6 +1,6 @@
 #!/bin/sh
 cd /tmp/
-git clone --depth 1 -b master https://github.com/redmine/redmine redmine
+git clone --depth 1 -b ${REDMINE_VERSION} https://github.com/redmine/redmine redmine
 
 # switch target version of redmine
 cd /tmp/redmine

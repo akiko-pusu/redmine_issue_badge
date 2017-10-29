@@ -16,7 +16,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-  master_test:
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/ruby:2.4.1-node-browsers
@@ -24,6 +24,7 @@ jobs:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           TZ: /usr/share/zoneinfo/Asia/Tokyo
+          REDMINE_VERSION: 3.4-stable
       - image: mysql:5.7
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda --sql-mode=""
         environment:
@@ -54,7 +55,7 @@ jobs:
             cp -r coverage/${CIRCLE_PROJECT_REPONAME}_spec /tmp/coverage/
       - store_artifacts:
           path: /tmp/coverage
-  test:
+  trunk_test:
     docker:
       # specify the version you desire here
       - image: circleci/ruby:2.4.1-node-browsers
@@ -62,6 +63,7 @@ jobs:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           TZ: /usr/share/zoneinfo/Asia/Tokyo
+          REDMINE_VERSION: master
       - image: mysql:5.7
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda --sql-mode=""
         environment:
@@ -97,9 +99,14 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test:
+      - trunk_test:
           filters:
             branches:
               only:
                 - support-rails5
                 - /redmine-master-.*/
+      - test:
+          filters:
+            branches:
+              only:
+                - master
