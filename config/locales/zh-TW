@@ -1,0 +1,6 @@
+zh-TW:
+  title_issue_badge: "議題數量徽章"
+  label_issue_badge: "顯示被分派的議題數量"
+  label_activate_for_all_users: "所有用戶顯示議題數量徽章"
+  label_enabled_polling: "啟用更新議題數量（間隔60秒）"
+  label_show_assigned_to_group: "包含被分派給所屬群組的議題數量"
