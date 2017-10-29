@@ -67,6 +67,8 @@ $ REDMINE_VERSION=master docker-compose up -d --build
 ```
 (But, maybe plugin will not work correctly if not supported latest redmine.)
 
+![docker-compose-sample](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/plugin-with-docker.gif)
+
 
 ## Changelog
 
