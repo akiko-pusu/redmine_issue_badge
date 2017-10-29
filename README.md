@@ -6,6 +6,8 @@
 
 Plugin to show the number of assigned issues with badge on top menu.
 
+![screen shot](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/screen-in-case-no-assigned-issues.png)
+
 ### Plugin installation
 
 1.  Copy the plugin directory into the plugins directory. Please note that
