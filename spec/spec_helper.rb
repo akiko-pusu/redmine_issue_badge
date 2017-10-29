@@ -10,7 +10,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/test/fixtures"
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
   FactoryBot.find_definitions
   config.before(:all) do
