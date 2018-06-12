@@ -1,7 +1,6 @@
 module IssueBadge
   module MyControllerPatch
     extend ActiveSupport::Concern
-    unloadable
     included do
       alias_method_chain(:account, :issue_badge)
     end
