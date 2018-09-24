@@ -6,7 +6,7 @@ services:
   #
   # If you want to change Redmine's version,
   #
-  # 1. $ REDMINE_VERSION=master docker-compose build --force-rm --no-cache
+  # 1. $ docker-compose build --force-rm --no-cache --build-arg REDMINE_VERSION=master
   # 2. $ docker-compose up -d
   #
   #
@@ -14,7 +14,7 @@ services:
     build:
       context: .
       args:
-        REDMINE_VERSION: $REDMINE_VERSION:-3.4-stable
+        REDMINE_VERSION: 3.4-stable
     image: redmine_sqlite3
     container_name: redmine_sqlite3
     command: >
