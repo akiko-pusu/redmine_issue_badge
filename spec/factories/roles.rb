@@ -2,10 +2,10 @@
 FactoryBot.define do
   factory :role do
     sequence(:name) { |n| "Developer: #{n}" }
-    builtin 0
-    issues_visibility 'default'
-    users_visibility 'all'
-    position 1
+    builtin { 0 }
+    issues_visibility { 'default' }
+    users_visibility { 'all' }
+    position { 1 }
     permissions [
       :edit_project,
       :manage_members,
