@@ -62,7 +62,7 @@ As default, Redmine is cloned stable branch defined in Dockerfile. (Exp. REDMINE
 You can use latest (trunk / master) branch as following:
 
 ```
-$ REDMINE_VERSION=master docker-compose build --force-rm --no-cache
+$ docker-compose build --force-rm --no-cache --build-arg REDMINE_VERSION=master
 $ docker-compose up -d
 ```
 (But, maybe plugin will not work correctly if not supported latest redmine.)
