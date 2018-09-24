@@ -2,7 +2,7 @@
 
 [![Plugin info at redmine.org](https://img.shields.io/badge/Redmine-plugin-green.svg?)](http://www.redmine.org/plugins/redmine_issue_badge)
 [![Circle CI](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master.svg?style=shield&circle-token=156d098f75b4142fead83e9e4bd5871257acf3be)](https://circleci.com/gh/akiko-pusu/redmine_issue_badge)
-[![SideCI](https://img.shields.io/badge/Special%20Thanks!-SideCI-blue.svg?)](https://sideci.com/features)
+[![Sider](https://img.shields.io/badge/Special%20Thanks!-Sider-blue.svg?)](https://sider.review/features)
 
 Plugin to show the number of assigned issues with badge on top menu.
 
@@ -77,7 +77,7 @@ $ docker-compose up -d
 * Bug fix for #49. Badge is not working for user created from LDAP user.
 * Feature #52. Display background image when user’s assigned issue is empty.
 * PR #48. Add simplified Chinese translation file. Thank you so much, Steven.W!
-* Some code refactoring. Thanks to SideCI, I am very saved!
+* Some code refactoring. Thanks to Sider (former SideCI), I am very saved!
 
 ### 0.0.5
 
@@ -88,7 +88,7 @@ Please note, this release is required to migrate.
 * Bug fix for #36. Don’t render html in case current user is required password change just after login. Thanks, @nakat-t.
 * Bug fix for #32. Escape subject includes html entities. Thank you so much @pousterlus.
 * Change not to use fixtures and to use FactoryGirl for rspec.
-* Some code refactoring. Special thanks to SideCI, https://sideci.com, which is automating code analysis system.
+* Some code refactoring. Special thanks to Sider, https://sider.review, which is automating code analysis system.
 
 ### 0.0.4.1
 
