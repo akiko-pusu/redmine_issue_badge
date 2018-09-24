@@ -6,7 +6,7 @@ FactoryBot.define do
     issues_visibility { 'default' }
     users_visibility { 'all' }
     position { 1 }
-    permissions [
+    permissions { [
       :edit_project,
       :manage_members,
       :manage_versions,
@@ -45,13 +45,13 @@ FactoryBot.define do
       :manage_files,
       :browse_repository,
       :view_changesets
-    ]
+    ] }
 
     trait :manager_role do
-      name 'Manager'
-      issues_visibility 'all'
-      users_visibility 'all'
-      permissions [
+      name { 'Manager' }
+      issues_visibility { 'all' }
+      users_visibility { 'all' }
+      permissions { [
         :add_project,
         :edit_project,
         :close_project,
@@ -103,7 +103,7 @@ FactoryBot.define do
         :view_changesets,
         :manage_related_issues,
         :manage_project_activities
-      ]
+      ] }
     end
   end
 end
