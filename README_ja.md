@@ -102,11 +102,11 @@ redmineのインストールディレクトリに移動して、以下を実行�
   plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
 
-#### werckerでのテスト
+#### CircleCIでのテスト
 
 簡単なテストですが、テストの手順用のスクリプトが参照できます。
 
-- https://app.wercker.com/akiko-pusu/redmine_issue_badge/runs
+- https://circleci.com/gh/akiko-pusu/redmine_issue_badge
 
 ## License
 
