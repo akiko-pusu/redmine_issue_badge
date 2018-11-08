@@ -8,15 +8,21 @@
       <p>
         <label><%=h l(:label_issue_badge) %></label>
         <% if !global_enabled %>
-            <%= check_box :issue_badge, 'enabled',  {onclick: '$("#show_assigned_to_group").toggle();'} %>
+            <%= check_box :issue_badge, 'enabled',  { onclick: 'show_optional_badge_setting();' } %>
         <% else %>
-            <%= check_box :issue_badge, 'enabled', {disabled: true, checked: true, onclick: '$("#show_assigned_to_group").toggle();'}  %>
+            <%= check_box :issue_badge, 'enabled',
+                          { disabled: true, checked: true, onclick: 'show_optional_badge_setting();' } %>
         <% end %>
       </p>
 
       <p id='show_assigned_to_group' style="display: <%= global_enabled || @issue_badge.enabled ? 'block' : 'none' %>">
         <label><%=h l(:label_show_assigned_to_group) %></label>
         <%= check_box :issue_badge, 'show_assigned_to_group'  %>
+      </p>
+      <p id='badge_order' style="display: <%= global_enabled || @issue_badge.enabled ? 'block' : 'none' %>">
+        <label><%=h l(:label_badge_order) %></label>
+        <%= radio_button_tag 'issue_badge[badge_order]', IssueBadgeUserSetting.badge_orders[:oldest], @issue_badge.oldest? %> <%=h l(:label_badge_order_oldest) %>
+        <%= radio_button_tag 'issue_badge[badge_order]', IssueBadgeUserSetting.badge_orders[:newest], @issue_badge.newest? %> <%=h l(:label_badge_order_newest) %>
       </p>
   <% end %>
 </fieldset>
@@ -36,4 +42,9 @@
   $(window).resize(function () {
     change_pref_location();
   });
+
+  function show_optional_badge_setting() {
+      $("#show_assigned_to_group").toggle();
+      $("#badge_order").toggle();
+  }
 </script>
