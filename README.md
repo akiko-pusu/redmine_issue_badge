@@ -140,4 +140,4 @@ details.
 
 ### Author
 
-Akiko Takano (Twitter: @akiko_pusu)
+Akiko Takano (Twitter: @akiko_pusu) / GitHub: https://github.com/akiko-pusu/
