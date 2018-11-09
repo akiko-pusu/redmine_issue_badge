@@ -1,0 +1,13 @@
+rules:
+  - id: akiko-pusu.redmine_plugins.1
+    pattern: Github
+    message: Do you want to write GitHub?
+    glob: 
+      - "**/*.rb"
+      - "**/*.yml"
+      - "**/*.html"
+      - "**/*.md"
+    fail:
+      - Signup via Github
+    pass:
+      - Signup via GitHub
