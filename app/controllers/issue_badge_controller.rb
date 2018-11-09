@@ -6,7 +6,10 @@ class IssueBadgeController < ApplicationController
   before_filter :find_user
 
   def index
-    @all_issues_count = all_issues.count
+    @all_issues_count = all_issues.where(projects: { status: 'active' }).count
+
+    # for debug
+    p @all_issues_count
     render action: '_issue_badge', layout: false
   end
 
@@ -34,6 +37,6 @@ class IssueBadgeController < ApplicationController
   def all_issues
     condition = [@user.id]
     condition += @user.group_ids if setting.show_assigned_to_group?
-    Issue.visible.open.where(assigned_to_id: condition)
+           Issue.joins(:project).visible.open.where(assigned_to_id: condition)
   end
 end
