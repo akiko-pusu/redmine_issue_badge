@@ -26,9 +26,11 @@ rules:
     message: "Typo: 'Javascript' -> 'JavaScript' 😅"
     fail: "Javascript"
     pass: "JavaScript"    
-  - id: akiko-pusu.redmine_plugins.Redmine
-    pattern: " redmine "
+  - id: akiko-pusu.redmine_plugins.redmine
+    pattern:
+      regexp: \sredmine\s
+      case_sensitive: true
     glob: "**/*.{yml,yaml,rb,erb,js,css,scss,md}"
-    message: "Typo: Official name is 'redmine' -> 'Redmine' 😅"
-    fail: "redmine"
-    pass: "Redmine" 
+    message: "Typo: Official name is Redmine 😅"
+    fail: " redmine "
+    pass: " Redmine "
