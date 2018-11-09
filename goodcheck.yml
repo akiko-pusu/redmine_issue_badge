@@ -20,3 +20,15 @@ rules:
     fail: "Github"
     pass: "GitHub"
     justification: "Ignore 3rd-party identifier (e.g. X-Github-Media-Type)"
+  - id: akiko-pusu.redmine_plugins.javascript
+    pattern: "Javascript"
+    glob: "**/*.{yml,yaml,rb,erb,js,css,scss,md}"
+    message: "Typo: 'Javascript' -> 'JavaScript' 😅"
+    fail: "Javascript"
+    pass: "JavaScript"    
+  - id: akiko-pusu.redmine_plugins.Redmine
+    pattern: " redmine "
+    glob: "**/*.{yml,yaml,rb,erb,js,css,scss,md}"
+    message: "Typo: Official name is 'redmine' -> 'Redmine' 😅"
+    fail: "redmine"
+    pass: "Redmine" 

@@ -1,6 +1,6 @@
 version: '3'
 services:
-  # start service for redmine with plugin
+  # start service for Redmine with plugin
   # 1. $ docker-compose build --force-rm --no-cache
   # 2. $ docker-compose up -d
   #
