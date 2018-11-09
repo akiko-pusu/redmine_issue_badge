@@ -21,7 +21,15 @@ rules:
     examples:
       - before: class MyError < Exception; end
         after: class MyError < StandardError; end
-
+  - id: akiko-pusu.redmine_plugins.count
+    pattern: count() !{}
+    message: |
+      Use size or length for count, if receiver is an array
+    examples:
+      - before: "[].count"
+        after: "[].size"
+      - after: "[].count(:x)"
+      - after: "[].count {|x| x > 3 }"
   - id: akiko-pusu.redmine_plugins.test.assert_equal_size
     pattern:
       subject: "assert_equal(:int: as 'zero, _.'size, ...)"
