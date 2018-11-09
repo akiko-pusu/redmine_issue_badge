@@ -20,9 +20,11 @@
         <%= check_box :issue_badge, 'show_assigned_to_group'  %>
       </p>
       <p id='badge_order' style="display: <%= global_enabled || @issue_badge.enabled ? 'block' : 'none' %>">
-        <label><%=h l(:label_badge_order) %></label>
-        <%= radio_button_tag 'issue_badge[badge_order]', IssueBadgeUserSetting.badge_orders[:oldest], @issue_badge.oldest? %> <%=h l(:label_badge_order_oldest) %>
-        <%= radio_button_tag 'issue_badge[badge_order]', IssueBadgeUserSetting.badge_orders[:newest], @issue_badge.newest? %> <%=h l(:label_badge_order_newest) %>
+        <label><%= h l(:label_badge_order, default: 'List order') %></label>
+        <%= radio_button_tag 'issue_badge[badge_order]', "oldest", @issue_badge.oldest? %>
+        <%= h l(:label_badge_order_oldest, default: 'Oldest 5 issues') %><br/>
+        <%= radio_button_tag 'issue_badge[badge_order]', "newest", @issue_badge.newest? %>
+        <%= h l(:label_badge_order_newest, default: 'Newest 5 issues') %>
       </p>
   <% end %>
 </fieldset>
