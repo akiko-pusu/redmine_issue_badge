@@ -6,10 +6,8 @@ class IssueBadgeController < ApplicationController
   before_filter :find_user
 
   def index
-    @all_issues_count = all_issues.where(projects: { status: 'active' }).count
+    @all_issues_count = all_issues.where(projects: {status: 'active'}).size
 
-    # for debug
-    p @all_issues_count
     render action: '_issue_badge', layout: false
   end
 
