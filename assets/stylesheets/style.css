@@ -16,11 +16,6 @@ div.checkbox label {
 }
 
 #issue_badge li > div {
-  position: absolute;
-  display: none;
-}
-
-#issue_badge li > div {
   max-width: 230px;
   position: absolute;
   display: block;
