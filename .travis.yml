@@ -7,7 +7,7 @@ addons:
       secure: "bM5TUdvlKIDvqHkVvwdu+VeR0Gf3UlA26OUisGaiCCbMy6vOaknjIKfta+Zpg2eEtZxXYbKEbfKUbGgn7u9LfsfvzTtLB58NNYi4BNgCMZaU2Pxi8Ai4zG6pwms5r905Si6goO+cQdkz8xfwhuxKAEgF6eg6bLX2pW+zFXK0xGmDW8mtZycP3a38e83etI4gVHgEer5McztpPr+Wz+PASFrbxnvAsz08G8CjEuNw/YdrYVHOFr0YiAWM3SLwfW3E+gReMa1CXhZbZTxl4UK+x0NElipXMKOF8A4zIyNAK8oVsXSJ4HOun/H3JuYV8qG+vcc/YMTAppnjpU/FABI2SU0avThzKQF/Hon/80A5Mpu0eZyJ7BPpUcrL5r9lz+IPEyrjzoSY3LrytQBrZ6GontqipkWKUJgNmhtVo6LokqkYTJIDlx/Py42uuWCcN6vxS4zLDD1MB5dtp3jtcMowu4oqGqAtn+NL72XtjOQomSL8n8EJ0xse2loS7V04skSj2TnW4jNV2uls2UoULX0C7kHphkYWFuXGjHoPGmp/jjSB36HfV5Cnq3GRCnI1GQm62asH/wYrJMG4myZkev/yUbQKvMP2x+x0BRragFU/W79smzCallGKOXhhxt2fOlILxCXSrMtPJ82WjF4S6dr603aDvYDev86DlgFZxqRkvZs="
 
 script:
-  - sonar-scanner
+  - sonar-scanner -Dsonar.github.pullRequest=${TRAVIS_PULL_REQUEST}
 
 cache:
   directories:
