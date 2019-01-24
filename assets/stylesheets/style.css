@@ -11,16 +11,16 @@ div.checkbox label {
   float: right;
 }
 
-#issue_badge > li {
+#issue_badge li {
   position: relative;
 }
 
-#issue_badge > li > div {
+#issue_badge li > div {
   position: absolute;
   display: none;
 }
 
-#issue_badge > li > div {
+#issue_badge li > div {
   max-width: 230px;
   position: absolute;
   display: block;
@@ -38,7 +38,7 @@ div.checkbox label {
   box-shadow: 3px 3px 5px -2px #0d0a0d;
 }
 
-#issue_badge > li > div a, a:link, a:visited {
+#issue_badge li > div a, a:link, a:visited {
   font-weight: normal;
 }
 
@@ -164,7 +164,7 @@ div.notifications > div.footer {
 }
 
 @media (max-width: 899px) {
-  #issue_badge > li {
+  #issue_badge li {
     list-style-type: none;
   }
   #issue_badge .badge {
@@ -177,7 +177,7 @@ div.notifications > div.footer {
     margin: 6px 10px;
     z-index: 1000;
   }
-  #issue_badge > li > div {
+  #issue_badge li > div {
     max-width: 230px;
     position: absolute;
     display: block;

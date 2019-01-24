@@ -5,11 +5,13 @@
 %>
 <% if @all_issues_count %>
     <div id="issue_badge">
+      <ul>
       <li class="starting_point">
         <a style="cursor: pointer" onclick="display_badge_contents('<%= content_url %>');" id="link_issue_badge">
           <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
         </a>
       </li>
+      </ul>
     </div>
 <% end %>
 
