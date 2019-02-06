@@ -3,7 +3,7 @@ class IssueBadgeController < ApplicationController
   helper :issues
   include IssuesHelper
   menu_item :issues
-  before_filter :find_user
+  before_action :find_user
 
   def index
     @all_issues_count = all_issues.count
