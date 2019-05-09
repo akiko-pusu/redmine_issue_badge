@@ -30,5 +30,5 @@ development:\n\
 >> config/database.yml
 
 RUN gem uninstall bundler
-RUN bundle install --without postgresql rmagick  mysql
+RUN bundle install --without postgresql rmagick mysql
 RUN bundle exec rake db:migrate
