@@ -5,3 +5,6 @@ ja:
   label_activate_for_all_users: 全てのユーザにバッジを表示
   label_enabled_polling: 担当チケット数のポーリングを許可（60秒）
   label_show_assigned_to_group: グループに割り当てられたチケット数も含める
+  label_badge_order: チケットの表示順
+  label_badge_order_oldest: 古いものから5件
+  label_badge_order_newest: 新しいものから5件

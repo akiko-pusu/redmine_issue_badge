@@ -23,7 +23,7 @@ module IssueBadge
     private
 
     def badge_params
-      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group)
+      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group, :badge_order)
     end
   end
 end
