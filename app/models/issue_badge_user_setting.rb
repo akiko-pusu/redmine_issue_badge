@@ -1,7 +1,6 @@
 class IssueBadgeUserSetting < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user
-  attr_accessible :enabled, :show_assigned_to_group, :badge_order
   enum badge_order: { oldest: 0, newest: 1 }
 
   def self.find_or_create_by_user_id(user)
