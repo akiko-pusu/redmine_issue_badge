@@ -37,8 +37,7 @@ jobs:
           name: ready for redmine
           command: |
             REDMINE_BRANCH=3.4-stable sh script/circleci-setup.sh
-      - run: gem uninstall bundler
-      - run: bundle install --path vendor/bundle --without postgresql rmagick
+      - run: bundle install --path vendor/bundle --without postgresql rmagick && gem update bundler
       - run: bundle exec rake db:create RAILS_ENV=test
       - run: bundle exec rake db:migrate RAILS_ENV=test
       - run: bundle exec rake redmine:plugins:migrate RAILS_ENV=test
@@ -77,8 +76,7 @@ jobs:
           name: ready for redmine
           command: |
             REDMINE_BRANCH=master sh script/circleci-setup.sh
-      - run: gem uninstall bundler
-      - run: bundle install --path vendor/bundle --without postgresql rmagick
+      - run: bundle install --path vendor/bundle --without postgresql rmagick && gem update bundler
       - run: bundle exec rake db:create RAILS_ENV=test
       - run: bundle exec rake db:migrate RAILS_ENV=test
       - run: bundle exec rake redmine:plugins:migrate RAILS_ENV=test
