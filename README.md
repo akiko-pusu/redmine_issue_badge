@@ -57,20 +57,22 @@ Run **docker-compose up -d** command and soon you can access Redmine running wit
 After stating up container, please login as admin (password: admin) and access **http://localhost:3000/admin/plugins** .
 Then, you can configure and activate this plugin.
 
-As default, Redmine is cloned stable branch defined in Dockerfile. (Exp. REDMINE_VERSION: 3.4-stable)
-
-You can use latest (trunk / master) branch as following:
-
-```
-$ docker-compose build --force-rm --no-cache --build-arg REDMINE_VERSION=master
-$ docker-compose up -d
-```
-(But, maybe plugin will not work correctly if not supported latest redmine.)
 
 ![docker-compose-sample](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/plugin-with-docker.gif)
 
 
 ## Changelog
+
+### 0.0.7
+
+* Feature #82. Enabled to switch list issue order. (Oldest 5 or Latest 5)
+* Merge pull request #92 to support Redmine4.0. (Thanks, kenji21)
+* Some code refactoring.
+
+Please note, this version does not spport Redmine4.x completely.
+Since Redmine4.x is based on Rails that migration format must be changed.
+
+Maybe new version, 0.1.0, which support Redmine4.x will be released soon.
 
 ### 0.0.6
 
@@ -140,4 +142,4 @@ details.
 
 ### Author
 
-Akiko Takano (Twitter: @akiko_pusu)
+Akiko Takano (Twitter: @akiko_pusu) / GitHub: https://github.com/akiko-pusu/

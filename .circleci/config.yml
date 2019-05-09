@@ -108,6 +108,7 @@ workflows:
               only:
                 - develop
                 - master
+                - /gh-.*/
       - trunk_test:
           requires:
             - build

@@ -114,4 +114,4 @@ This software is licensed under the GNU GPL v2. See COPYRIGHT and COPYING for de
 
 ### Author / 作ったひと
 
-Akiko Takano (Twitter: @akiko_pusu)
+Akiko Takano (Twitter: @akiko_pusu) / GitHub: https://github.com/akiko-pusu/

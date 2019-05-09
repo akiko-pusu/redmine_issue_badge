@@ -2,7 +2,8 @@ module IssueBadge
   module MyControllerPatch
     extend ActiveSupport::Concern
     included do
-      alias_method_chain(:account, :issue_badge)
+      alias_method :account_without_issue_badge, :account
+      alias_method :account, :account_with_issue_badge
     end
 
     def account_with_issue_badge
@@ -23,7 +24,7 @@ module IssueBadge
     private
 
     def badge_params
-      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group)
+      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group, :badge_order)
     end
   end
 end

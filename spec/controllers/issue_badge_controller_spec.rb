@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative '../spec_helper'
 
 describe IssueBadgeController do
@@ -21,10 +22,10 @@ describe IssueBadgeController do
       @request.session[:user_id] = user.id
 
       FactoryBot.create_list(:issue, issue_count,
-                              project_id: project.id,
-                              tracker_id: tracker.id,
-                              priority_id: issue_priority.id,
-                              assigned_to_id: user.id)
+                             project_id: project.id,
+                             tracker_id: tracker.id,
+                             priority_id: issue_priority.id,
+                             assigned_to_id: user.id)
     end
 
     render_views
@@ -61,7 +62,7 @@ describe IssueBadgeController do
         member.member_roles << MemberRole.new(role: role)
         member.save
         FactoryBot.create(:issue, project_id: project.id,
-                                   tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
+                                  tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
       end
 
       it 'renders the _issue_badge template' do
@@ -94,6 +95,40 @@ describe IssueBadgeController do
       expect(assigns(:limited_issues)).not_to be_nil
       expect(response).to render_template(partial: '_issue_badge_contents')
     end
+
+    context 'When assigned more than 5 issues' do
+      let(:issue_count) { 7 }
+      before do
+        project.trackers << tracker
+        member = Member.new(project: project, user_id: user.id)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
+        FactoryBot.create_list(:issue, issue_count,
+                               project_id: project.id,
+                               tracker_id: tracker.id,
+                               priority_id: issue_priority.id,
+                               assigned_to_id: user.id)
+
+        @request.session[:user_id] = user.id
+      end
+
+      it 'list 5 issues with order by asc when ' do
+        get :load_badge_contents
+        assigned_issue_ids = assigns(:limited_issues).pluck(:id)
+        expected_issue_ids = Issue.limit(5).pluck(:id)
+        expect(assigned_issue_ids).to eq expected_issue_ids
+      end
+
+      it 'list 5 issues with order by desc' do
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
+        setting.update_attributes(badge_order: 1)
+
+        get :load_badge_contents
+        assigned_issue_ids = assigns(:limited_issues).pluck(:id)
+        expected_issue_ids = Issue.limit(5).reverse_order.pluck(:id)
+        expect(assigned_issue_ids).to eq expected_issue_ids
+      end
+    end
   end
 
   describe 'GET #issues_count' do
@@ -111,10 +146,10 @@ describe IssueBadgeController do
         member.member_roles << MemberRole.new(role: role)
         member.save
         FactoryBot.create_list(:issue, issue_count,
-                                project_id: project.id,
-                                tracker_id: tracker.id,
-                                priority_id: issue_priority.id,
-                                assigned_to_id: user.id)
+                               project_id: project.id,
+                               tracker_id: tracker.id,
+                               priority_id: issue_priority.id,
+                               assigned_to_id: user.id)
 
         @request.session[:user_id] = user.id
       end
