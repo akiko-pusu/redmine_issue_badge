@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Redmine Issue Badge Plugin
 #
 # This is a plugin for Redmine to show how many issues are assigned to me via badge.
