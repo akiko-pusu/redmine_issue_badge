@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+
 require_relative '../spec_helper'
 require_relative '../support/login_helper'
 
-include LoginHelper
-
 feature 'IssueBadge', js: true do
+  include LoginHelper
   let(:project) { FactoryBot.create(:project) }
   let(:tracker) { FactoryBot.create(:tracker, :with_default_status) }
   let(:role) { FactoryBot.create(:role) }
@@ -12,10 +12,10 @@ feature 'IssueBadge', js: true do
   let(:user) { FactoryBot.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
   let(:issues) do
     FactoryBot.create_list(:issue, 4,
-                            project_id: project.id,
-                            tracker_id: tracker.id,
-                            priority_id: issue_priority.id,
-                            assigned_to_id: user.id)
+                           project_id: project.id,
+                           tracker_id: tracker.id,
+                           priority_id: issue_priority.id,
+                           assigned_to_id: user.id)
   end
 
   context 'When anonymous' do
@@ -63,7 +63,7 @@ feature 'IssueBadge', js: true do
 
       scenario 'Assigned issues are displayed' do
         issue = issues.first
-        issue.update_attributes(subject: '<b>HTML Subject</b>')
+        issue.update(subject: '<b>HTML Subject</b>')
         all_issues = Issue.visible(user).to_a
 
         # Enable Badge
@@ -91,7 +91,7 @@ feature 'IssueBadge', js: true do
         member.member_roles << MemberRole.new(role: role)
         member.save
         FactoryBot.create(:issue, project_id: project.id,
-                                   tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
+                                  tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
       end
       scenario 'Issue assigned to group is displayed.' do
         all_issues = issues
@@ -114,7 +114,7 @@ feature 'IssueBadge', js: true do
 
   context 'When authenticated need password reset' do
     background do
-      user.update_attribute(:must_change_passwd, true)
+      user.update(must_change_passwd: true)
       log_user(user.login, user.login)
       visit '/my/account'
     end
@@ -127,13 +127,16 @@ feature 'IssueBadge', js: true do
 
   context 'When Administrator' do
     background do
+      # Prevent to call User.deliver_security_notification when user is created.
+      allow_any_instance_of(User).to receive(:deliver_security_notification).and_return(true)
+
       project.trackers << tracker
       member = Member.new(project: project, user_id: user.id)
       member.member_roles << MemberRole.new(role: role)
       member.save
 
       issues
-      user.update_attribute(:admin, true)
+      user.update(admin: true)
       log_user(user.login, user.login)
       visit '/settings/plugin/redmine_issue_badge'
     end

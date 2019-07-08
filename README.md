@@ -6,6 +6,8 @@
 
 Plugin to show the number of assigned issues with badge on top menu.
 
+For Redmine 3.x, please use version 0.7.0 or support-Redmine3 branch.
+
 ![screen shot](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/screen-in-case-no-assigned-issues.png)
 
 ### Plugin installation
@@ -17,7 +19,7 @@ Plugin to show the number of assigned issues with badge on top menu.
 
     e.g. rake redmine:plugins:migrate RAILS_ENV=production
 
-1.  (Re)Start Redmine.
+3.  (Re)Start Redmine.
 
 
 ### Uninstall
@@ -62,6 +64,17 @@ Then, you can configure and activate this plugin.
 
 
 ## Changelog
+
+### 0.1.0
+
+* Support Redmine 4.x.
+  * Now master branch unsupports Redmine 3.x.
+  * Please use ver **0.7.x** or ``support-Redmine3`` branch
+    in case using Redmine3.x.
+
+NOTE: Mainly, maintenance and refactoring only. There is no additional feature, translation in this release.
+Thank you so much for providing workaround against Redmine4.x, @kenji21! (#91, #92)
+
 
 ### 0.0.7
 
@@ -133,6 +146,26 @@ From this version, need Redmine 3.3.1 or higher.
 ### Repository
 
 *   https://github.com/akiko-pusu/redmine_issue_badge
+
+### Run spec
+
+Please see .circleci/config.yml for more details.
+You can run only for the spec related this plugin via rake task.
+
+```
+$ cd REDMINE_ROOT_DIR
+$ cp plugins/redmine_issue_badge/Gemfile.local plugins/redmine_issue_badge/Gemfile
+$ bundle install --with test
+$ export RAILS_ENV=test
+$ bundle exec rake redmine_issue_badge:spec
+```
+
+Also you can run via rspec command like this:
+
+```
+$ bundle exec rspec -I plugins/redmine_issue_badge/spec \
+            --format documentation plugins/redmine_issue_badge/spec/
+```
 
 
 ### License

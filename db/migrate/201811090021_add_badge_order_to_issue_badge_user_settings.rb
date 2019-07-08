@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddBadgeOrderToIssueBadgeUserSettings < ActiveRecord::Migration
+class AddBadgeOrderToIssueBadgeUserSettings < ActiveRecord::Migration[4.2]
   def self.up
     add_column :issue_badge_user_settings, :badge_order, :integer, default: 0
   end

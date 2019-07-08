@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IssueBadgeController < ApplicationController
   layout 'base'
   helper :issues
@@ -11,8 +13,8 @@ class IssueBadgeController < ApplicationController
   end
 
   def issues_count
-    render(text: { status: false }.to_json) && return if User.current.anonymous?
-    render text: { status: true, all_issues_count: all_issues.count }.to_json
+    render(plain: { status: false }.to_json) && return if User.current.anonymous?
+    render plain: { status: true, all_issues_count: all_issues.count }.to_json
   end
 
   def load_badge_contents

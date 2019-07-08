@@ -1,24 +1,21 @@
+# frozen_string_literal: true
+
 module IssueBadge
   module MyControllerPatch
     extend ActiveSupport::Concern
-    included do
-      alias_method :account_without_issue_badge, :account
-      alias_method :account, :account_with_issue_badge
-    end
 
-    def account_with_issue_badge
+    def account
       user = User.current
       @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user)
-      if request.post?
+      if request.put?
         begin
-          unless @issue_badge.update(badge_params)
-            logger.warn "Can't save IssueBadge."
-          end
-        rescue => ex
-          logger.warn "Can't save IssueBadge. #{ex.message}"
+          logger.info(badge_params)
+          logger.warn "Can't save IssueBadge." unless @issue_badge.update(badge_params)
+        rescue StandardError => e
+          logger.warn "Can't save IssueBadge. #{e.message}"
         end
       end
-      account_without_issue_badge
+      super
     end
 
     private
@@ -28,3 +25,5 @@ module IssueBadge
     end
   end
 end
+
+MyController.prepend IssueBadge::MyControllerPatch

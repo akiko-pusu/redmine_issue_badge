@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:2.5
 LABEL maintainer="AKIKO TAKANO / (Twitter: @akiko_pusu)" \
   description="Image to run Redmine simply with sqlite to try/review plugin."
 
@@ -14,9 +14,8 @@ RUN apt-get install -qq -y \
     sqlite3 default-libmysqlclient-dev
 RUN apt-get install -qq -y build-essential libc6-dev
 
-RUN cd /tmp && svn co http://svn.redmine.org/redmine/branches/3.4-stable/ redmine
+RUN cd /tmp && svn co http://svn.redmine.org/redmine/trunk redmine
 WORKDIR /tmp/redmine
-
 
 # add database.yml (for development, development with mysql, test)
 RUN echo $'test:\n\
@@ -26,9 +25,15 @@ RUN echo $'test:\n\
 development:\n\
   adapter: sqlite3\n\
   database: /tmp/data/redmine_development.sqlite3\n\
-  encoding: utf8mb4\n'\
+  encoding: utf8mb4\n\
+development_mysql:\n\
+  adapter: mysql2\n\
+  host: mysql\n\
+  password: pasword\n\
+  database: redemine_development\n\
+  username: root\n'\
 >> config/database.yml
 
-RUN gem uninstall bundler
-RUN bundle install --without postgresql rmagick mysql
+RUN gem update bundler
+RUN bundle install --without postgresql rmagick
 RUN bundle exec rake db:migrate
