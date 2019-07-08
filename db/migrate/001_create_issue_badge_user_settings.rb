@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateIssueBadgeUserSettings < ActiveRecord::Migration[4.2]
   def change
     create_table :issue_badge_user_settings do |t|
@@ -15,3 +16,7 @@ class CreateIssueBadgeUserSettings < ActiveRecord::Migration[4.2]
     drop_table :issue_badge_user_settings
   end
 end
+
+# For Redmine4.x user, especially under clean install:
+# Please change ActiveRecord::Migration to ActiveRecord::Migration[4.2] in case
+# migration failed.

@@ -1,10 +1,12 @@
 # Redmine Issue Badge Plugin
 
+[![Plugin info at redmine.org](https://img.shields.io/badge/Redmine-plugin-green.svg?)](http://www.redmine.org/plugins/redmine_issue_badge)
+[![Circle CI](https://circleci.com/gh/akiko-pusu/redmine_issue_badge/tree/master.svg?style=shield&circle-token=156d098f75b4142fead83e9e4bd5871257acf3be)](https://circleci.com/gh/akiko-pusu/redmine_issue_badge)
+[![Sider](https://img.shields.io/badge/Special%20Thanks!-Sider-blue.svg?)](https://sider.review/features)
+
 Plugin to show the number of assigned issues with badge on top menu.
 
-Build Status on wercker:
-
-[![wercker status](https://app.wercker.com/status/60fa6d07854d0fa0cd8e961d2d10325d/s/ "wercker status")](https://app.wercker.com/project/byKey/60fa6d07854d0fa0cd8e961d2d10325d)
+![screen shot](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/screen-in-case-no-assigned-issues.png)
 
 ### Plugin installation
 
@@ -55,24 +57,29 @@ Run **docker-compose up -d** command and soon you can access Redmine running wit
 After stating up container, please login as admin (password: admin) and access **http://localhost:3000/admin/plugins** .
 Then, you can configure and activate this plugin.
 
-As default, Redmine is cloned stable branch defined in Dockerfile. (Exp. REDMINE_VERSION: 3.4-stable)
 
-You can use latest (trunk / master) branch as following:
-
-```
-$ REDMINE_VERSION=master docker-compose up -d --build
-```
-(But, maybe plugin will not work correctly if not supported latest redmine.)
+![docker-compose-sample](https://raw.githubusercontent.com/wiki/akiko-pusu/redmine_issue_badge/img/plugin-with-docker.gif)
 
 
 ## Changelog
+
+### 0.0.7
+
+* Feature #82. Enabled to switch list issue order. (Oldest 5 or Latest 5)
+* Merge pull request #92 to support Redmine4.0. (Thanks, kenji21)
+* Some code refactoring.
+
+Please note, this version does not spport Redmine4.x completely.
+Since Redmine4.x is based on Rails that migration format must be changed.
+
+Maybe new version, 0.1.0, which support Redmine4.x will be released soon.
 
 ### 0.0.6
 
 * Bug fix for #49. Badge is not working for user created from LDAP user.
 * Feature #52. Display background image when user’s assigned issue is empty.
 * PR #48. Add simplified Chinese translation file. Thank you so much, Steven.W!
-* Some code refactoring. Thanks to SideCI, I am very saved!
+* Some code refactoring. Thanks to Sider (former SideCI), I am very saved!
 
 ### 0.0.5
 
@@ -83,7 +90,7 @@ Please note, this release is required to migrate.
 * Bug fix for #36. Don’t render html in case current user is required password change just after login. Thanks, @nakat-t.
 * Bug fix for #32. Escape subject includes html entities. Thank you so much @pousterlus.
 * Change not to use fixtures and to use FactoryGirl for rspec.
-* Some code refactoring. Special thanks to SideCI, https://sideci.com, which is automating code analysis system.
+* Some code refactoring. Special thanks to Sider, https://sider.review, which is automating code analysis system.
 
 ### 0.0.4.1
 
@@ -155,4 +162,4 @@ details.
 
 ### Author
 
-Akiko Takano (Twitter: @akiko_pusu)
+Akiko Takano (Twitter: @akiko_pusu) / GitHub: https://github.com/akiko-pusu/

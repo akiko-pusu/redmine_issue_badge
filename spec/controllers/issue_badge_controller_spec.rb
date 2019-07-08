@@ -22,10 +22,10 @@ describe IssueBadgeController, type: :controller do
       @request.session[:user_id] = user.id
 
       FactoryBot.create_list(:issue, issue_count,
-                              project_id: project.id,
-                              tracker_id: tracker.id,
-                              priority_id: issue_priority.id,
-                              assigned_to_id: user.id)
+                             project_id: project.id,
+                             tracker_id: tracker.id,
+                             priority_id: issue_priority.id,
+                             assigned_to_id: user.id)
     end
 
     render_views
@@ -57,7 +57,7 @@ describe IssueBadgeController, type: :controller do
         member.member_roles << MemberRole.new(role: role)
         member.save
         FactoryBot.create(:issue, project_id: project.id,
-                                   tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
+                                  tracker_id: tracker.id, priority_id: issue_priority.id, assigned_to_id: g.id)
       end
 
       it 'renders the _issue_badge template' do
@@ -67,7 +67,7 @@ describe IssueBadgeController, type: :controller do
 
       it 'renders the _issue_badge template with assigned to group' do
         setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
-        setting.update_attributes(show_assigned_to_group: true)
+        setting.update(show_assigned_to_group: true)
         get :index
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count + 1}<\/span>}im)
       end
@@ -83,6 +83,38 @@ describe IssueBadgeController, type: :controller do
     it 'renders the _issue_badge_contents template' do
       get :load_badge_contents
       expect(response.body).to match(/<div id="issue_badge_contents" class="notifications arrow_box">/im)
+    end
+
+    context 'When assigned more than 5 issues' do
+      let(:issue_count) { 7 }
+      before do
+        project.trackers << tracker
+        member = Member.new(project: project, user_id: user.id)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
+        FactoryBot.create_list(:issue, issue_count,
+                               project_id: project.id,
+                               tracker_id: tracker.id,
+                               priority_id: issue_priority.id,
+                               assigned_to_id: user.id)
+
+        @request.session[:user_id] = user.id
+      end
+
+      it '1st issue should not be included with order by asc when ' do
+        # from 1 to 5
+        get :load_badge_contents
+        expect(response.body).to match(%r{class="users" href="/issues/1">1 issue-subject:})
+      end
+
+      it '1st issue should not be included with order by desc' do
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
+        setting.update(badge_order: 1)
+
+        # from 7 to 3
+        get :load_badge_contents
+        expect(response.body).to match(%r{class="users" href="/issues/7">7 issue-subject:})
+      end
     end
   end
 
@@ -102,10 +134,10 @@ describe IssueBadgeController, type: :controller do
         member.member_roles << MemberRole.new(role: role)
         member.save
         FactoryBot.create_list(:issue, issue_count,
-                                project_id: project.id,
-                                tracker_id: tracker.id,
-                                priority_id: issue_priority.id,
-                                assigned_to_id: user.id)
+                               project_id: project.id,
+                               tracker_id: tracker.id,
+                               priority_id: issue_priority.id,
+                               assigned_to_id: user.id)
 
         @request.session[:user_id] = user.id
       end

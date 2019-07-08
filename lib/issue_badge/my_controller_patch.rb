@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IssueBadge
   module MyControllerPatch
     extend ActiveSupport::Concern
@@ -5,13 +7,12 @@ module IssueBadge
     def account
       user = User.current
       @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user)
-      if request.post?
+      if request.put?
         begin
-          unless @issue_badge.update(badge_params)
-            logger.warn "Can't save IssueBadge."
-          end
-        rescue => ex
-          logger.warn "Can't save IssueBadge. #{ex.message}"
+          logger.info(badge_params)
+          logger.warn "Can't save IssueBadge." unless @issue_badge.update(badge_params)
+        rescue StandardError => e
+          logger.warn "Can't save IssueBadge. #{e.message}"
         end
       end
       super
@@ -20,7 +21,7 @@ module IssueBadge
     private
 
     def badge_params
-      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group)
+      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group, :badge_order)
     end
   end
 end

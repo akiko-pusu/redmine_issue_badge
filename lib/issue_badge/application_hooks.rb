@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module IssueBadge
   class ApplicationHooks < Redmine::Hook::ViewListener
     include ApplicationHelper
