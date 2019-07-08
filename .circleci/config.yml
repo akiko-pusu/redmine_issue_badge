@@ -6,7 +6,7 @@ version: 2
 
 general:
   artifacts:
-    - coverage/${CIRCLE_PROJECT_REPONAME}_test/index.html
+    - coverage/${CIRCLE_PROJECT_REPONAME}_spec/index.html
 
 jobs:
   build:
@@ -54,7 +54,6 @@ jobs:
       - run:
           command: |
             mkdir -p /tmp/coverage
-            cp -r coverage/${CIRCLE_PROJECT_REPONAME}_test /tmp/coverage/
             cp -r coverage/${CIRCLE_PROJECT_REPONAME}_spec /tmp/coverage/
       - store_artifacts:
           path: /tmp/coverage
