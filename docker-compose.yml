@@ -11,7 +11,8 @@ services:
     image: redmine_sqlite3
     container_name: redmine_sqlite3
     command: >
-      bash -c "bundle &&
+      bash -c "svn update &&
+           bundle &&
            bundle exec rake db:migrate &&
            bundle exec rake redmine:plugins:migrate &&
            bundle exec rake generate_secret_token &&

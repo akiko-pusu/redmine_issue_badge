@@ -134,6 +134,26 @@ From this version, need Redmine 3.3.1 or higher.
 
 *   https://github.com/akiko-pusu/redmine_issue_badge
 
+### Run spec
+
+Please see .circleci/config.yml for more details.
+You can run only for the spec related this plugin via rake task.
+
+```
+$ cd REDMINE_ROOT_DIR
+$ cp plugins/redmine_issue_badge/Gemfile.local plugins/redmine_issue_badge/Gemfile
+$ bundle install --with test
+$ export RAILS_ENV=test
+$ bundle exec rake redmine_issue_badge:spec
+```
+
+Also you can run via rspec command like this:
+
+```
+$ bundle exec rspec -I plugins/redmine_issue_badge/spec \
+            --format documentation plugins/redmine_issue_badge/spec/
+```
+
 
 ### License
 
