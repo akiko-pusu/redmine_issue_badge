@@ -14,7 +14,7 @@ module IssueBadge
         o = stylesheet_link_tag('style', plugin: 'redmine_issue_badge')
         if issue_badge.try(:enabled?) || global_enabled
           o << javascript_include_tag('issue_badge', plugin: 'redmine_issue_badge')
-          o << "\n".html_safe + javascript_tag("load_badge('#{escape_javascript badge_url}');")
+          o << "\n".html_safe + javascript_tag("loadBadge('#{escape_javascript badge_url}');")
         end
       end
       o

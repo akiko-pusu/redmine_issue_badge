@@ -3,29 +3,33 @@
   polling_url = issue_badge_issues_count_path
   polling_option = Setting.plugin_redmine_issue_badge['enabled_polling'] || false
 %>
-<% if @all_issues_count %>
-    <div id="issue_badge">
-      <li class="starting_point">
-        <a style="cursor: pointer" onclick="display_badge_contents('<%= content_url %>');" id="link_issue_badge">
-          <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
-        </a>
-      </li>
-    </div>
-<% end %>
+<% return '' unless @all_issues_count %>
+<div id="issue_badge">
+  <li class="starting_point">
+    <a style="cursor: pointer" onclick="displayBadgeContents('<%= content_url %>');" id="link_issue_badge">
+      <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
+    </a>
+  </li>
+</div>
 
-<script type="text/javascript">
-  $(document).ready(function () {
-    change_badge_location();
-  });
-  $(window).resize(function () {
-    change_badge_location();
-  });
+
+  <script type="text/javascript">
+  document.onreadystatechange = () => {
+    console.log('onreadystatechange');
+    if (document.readyState === 'complete') {
+      changeBadgeLocation();
+    }
+  }
+
+  window.onresize = () => {
+    changeBadgeLocation();
+  }
 </script>
 
 <% if polling_option == 'true' %>
     <script type="text/javascript">
       function poll(url) {
-        var status = $('#issue_badge_number');
+        let status = $('#issue_badge_number');
         $.ajax({
           url: url,
           dataType: 'json',
@@ -46,12 +50,13 @@
         });
       }
 
-      var pollInterval = setInterval(function() { // run function every 2000 ms
-        poll('<%= polling_url %>');
-      }, 60000);
+      var polling_url = '<%= polling_url %>';
+      var pollInterval = setInterval(poll.bind(this, polling_url), 60000);
 
-      $(document).ready(function () {
-        poll('<%= polling_url %>');
-      });
+      document.onreadystatechange = () => {
+        if (document.readyState === 'complete') {
+          poll(polling_url);
+        }
+      }
     </script>
 <% end %>
