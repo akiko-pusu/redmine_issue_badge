@@ -6,23 +6,21 @@ const loadBadge = (url, optionPollUrl) => {
   request.open('GET', url, true)
 
   request.onload = () => {
+    // Only update nadge when success. Do nothing when status is error.
     if (request.status >= 200 && request.status < 400) {
       let html = request.response
       if (html.length > 0) {
-        console.log('load badge')
         document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
         if (optionPollUrl) {
           pollBadgeCount(optionPollUrl)
         }
         changeBadgeLocation()
       }
-    } else {
-      console.log('[IssueBadge] LoadBadge Response Error. Status: ' + request.status)
     }
   }
 
   request.onerror = () => {
-    console.log("[IssueBadge] LoadBadge Request Error. Can't get badge data.")
+    // do nothing
   }
   request.send()
 }
@@ -32,18 +30,17 @@ const displayBadgeContents = (url) => {
   request.open('GET', url, true)
 
   request.onload = () => {
+    // Only update contents when success. Do nothing when status is error.
     if (request.status >= 200 && request.status < 400) {
       let html = request.response
       if (html.length > 0) {
         document.getElementById('link_issue_badge').insertAdjacentHTML('afterend', html)
       }
-    } else {
-      console.log('[IssueBadge] DisplayBadge Error. Status: ' + request.status)
     }
   }
 
   request.onerror = () => {
-    console.log("[IssueBadge] DisplayBadge Request Error. Can't get badge data.")
+    // do nothing
   }
   request.send()
 }
@@ -80,23 +77,22 @@ const pollBadgeCount = (pollingUrl) => {
     request.open('GET', pollingUrl, true)
 
     request.onload = () => {
+      // Only update issue count when success. Do nothing when status is error and stop polling.
       if (request.status >= 200 && request.status < 400) {
         let data = request.response
         if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
           status.textContent = data.all_issues_count
         } else {
-          console.log("[IssueBadge] Error. Can't parse polling data.")
           status.textContent = '?'
           clearInterval(pollInterval)
         }
       } else {
-        console.log("[IssueBadge] Error. Can't receive polling data.")
         clearInterval(pollInterval)
       }
     }
 
     request.onerror = () => {
-      console.log("[IssueBadge] LoadBadge Request Error. Can't get badge data.")
+      // do nothing
     }
     request.responseType = 'json'
     request.send()
