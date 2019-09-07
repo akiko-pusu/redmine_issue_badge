@@ -1,62 +1,8 @@
-<%-
-  content_url = issue_badge_load_badge_contents_path
-  polling_url = issue_badge_issues_count_path
-  polling_option = Setting.plugin_redmine_issue_badge['enabled_polling'] || false
-%>
 <% return '' unless @all_issues_count %>
 <div id="issue_badge">
   <li class="starting_point">
-    <a style="cursor: pointer" onclick="displayBadgeContents('<%= content_url %>');" id="link_issue_badge">
+    <a style="cursor: pointer" onclick="displayBadgeContents('<%= issue_badge_load_badge_contents_path %>');" id="link_issue_badge">
       <span id="issue_badge_number" class="badge"><%= @all_issues_count %></span>
     </a>
   </li>
 </div>
-
-
-  <script type="text/javascript">
-  document.onreadystatechange = () => {
-    console.log('onreadystatechange');
-    if (document.readyState === 'complete') {
-      changeBadgeLocation();
-    }
-  }
-
-  window.onresize = () => {
-    changeBadgeLocation();
-  }
-</script>
-
-<% if polling_option == 'true' %>
-    <script type="text/javascript">
-      function poll(url) {
-        let status = $('#issue_badge_number');
-        $.ajax({
-          url: url,
-          dataType: 'json',
-          type: 'get',
-          success: function(data) { // check if available
-            if (typeof data.all_issues_count !== "undefined" && data.status === true) {
-              status.text(data.all_issues_count);
-            } else {
-              console.log("[IssueBadge] Error. Can't parse polling data.");
-              status.text("?");
-              clearInterval(pollInterval);
-            }
-          },
-          error: function() { // error logging
-            console.log("[IssueBadge] Error. Can't receive polling data.");
-            clearInterval(pollInterval);
-          }
-        });
-      }
-
-      var polling_url = '<%= polling_url %>';
-      var pollInterval = setInterval(poll.bind(this, polling_url), 60000);
-
-      document.onreadystatechange = () => {
-        if (document.readyState === 'complete') {
-          poll(polling_url);
-        }
-      }
-    </script>
-<% end %>
