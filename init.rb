@@ -51,6 +51,11 @@ Redmine::Plugin.register :redmine_issue_badge do
                'activate_for_all_users' => 'false',
                'enabled_polling' => false
              }
+
+    Rails.configuration.to_prepare do
+      require_dependency 'my_controller'
+      MyController.prepend IssueBadge::MyControllerPatch unless MyController.included_modules.include?(IssueBadge::MyControllerPatch)
+    end
   rescue ::Redmine::PluginRequirementError => e
     raise ::Redmine::PluginRequirementError.new(issue_badge_version_message(e.message)) # rubocop:disable Style/RaiseArgs
   end
