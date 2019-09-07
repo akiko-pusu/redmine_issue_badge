@@ -2,60 +2,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-env jquery */
 const loadBadge = (url, optionPollUrl) => {
-  let request = new window.XMLHttpRequest()
-  request.open('GET', url, true)
-
-  request.onload = () => {
-    // Only update nadge when success. Do nothing when status is error.
-    if (request.status >= 200 && request.status < 400) {
-      let html = request.response
-      if (html.length > 0) {
-        document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
-        if (optionPollUrl) {
-          pollBadgeCount(optionPollUrl)
-        }
-        changeBadgeLocation()
-      }
+  baseRequest(url).then((html) => {
+    if (html.length > 0) {
+      document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
+      changeBadgeLocation()
+        .then(() => {
+          if (optionPollUrl) {
+            pollBadgeCount(optionPollUrl)
+          }
+        })
     }
-  }
-
-  request.onerror = () => {
-    // do nothing
-  }
-  request.send()
+  })
 }
 
+// Load and popup BadgeContents
 const displayBadgeContents = (url) => {
-  let request = new window.XMLHttpRequest()
-  request.open('GET', url, true)
-
-  request.onload = () => {
-    // Only update contents when success. Do nothing when status is error.
-    if (request.status >= 200 && request.status < 400) {
-      let html = request.response
-      if (html.length > 0) {
-        document.getElementById('link_issue_badge').insertAdjacentHTML('afterend', html)
-      }
+  baseRequest(url).then((html) => {
+    if (html.length > 0) {
+      document.getElementById('link_issue_badge').insertAdjacentHTML('afterend', html)
     }
-  }
-
-  request.onerror = () => {
-    // do nothing
-  }
-  request.send()
+  }).catch(() => { /* do nothing */ })
 }
 
-const changeBadgeLocation = () => {
-  const issueBadgeElement = document.getElementById('issue_badge')
-  if (window.matchMedia('(max-width: 899px)').matches) {
-    const quickSearch = document.getElementById('quick-search')
-
-    quickSearch.insertBefore(issueBadgeElement, quickSearch.firstChild)
-  } else {
-    document.getElementById('loggedas').insertAdjacentElement('afterend', issueBadgeElement)
-  }
-}
-
+// Hide BadgeContents
 document.addEventListener('click', (event) => {
   const badgeContents = document.getElementById('issue_badge_contents')
 
@@ -64,40 +33,78 @@ document.addEventListener('click', (event) => {
   }
 })
 
+// Polling setting
+const pollBadgeCount = (pollingUrl) => {
+  return new Promise((resolve) => {
+    const poll = (pollingUrl) => {
+      let status = document.getElementById('issue_badge_number')
+      baseRequest(pollingUrl, 'json')
+        .then((data) => {
+          if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
+            status.textContent = data.all_issues_count
+          } else {
+            status.textContent = '?'
+            clearInterval(pollInterval)
+          }
+          resolve()
+        })
+        .catch(() => {
+          // Stop polling and resolve
+          clearInterval(pollInterval)
+          resolve()
+        })
+    }
+    const pollInterval = setInterval(poll, 60000, pollingUrl)
+  })
+}
+
+// For responsive: change the place to display badge
+const changeBadgeLocation = () => {
+  return new Promise((resolve) => {
+    const issueBadgeElement = document.getElementById('issue_badge')
+    if (window.matchMedia('(max-width: 899px)').matches) {
+      const quickSearch = document.getElementById('quick-search')
+      if (quickSearch) {
+        quickSearch.insertBefore(issueBadgeElement, quickSearch.firstChild)
+      }
+    } else {
+      const loggedas = document.getElementById('loggedas')
+      if (loggedas) {
+        loggedas.insertAdjacentElement('afterend', issueBadgeElement)
+      }
+    }
+    resolve()
+  })
+}
+
 window.onresize = () => {
   changeBadgeLocation()
 }
 
-// Polling setting
-const pollBadgeCount = (pollingUrl) => {
-  const poll = (pollingUrl) => {
-    let status = document.getElementById('issue_badge_number')
+// Common method to send request and return response text
+const baseRequest = (url, type) => {
+  return new Promise((resolve, reject) => {
     let request = new window.XMLHttpRequest()
+    request.open('GET', url, true)
 
-    request.open('GET', pollingUrl, true)
+    if (type) {
+      request.responseType = type
+    }
 
     request.onload = () => {
-      // Only update issue count when success. Do nothing when status is error and stop polling.
+      // Only update nadge when success. Do nothing when status is error.
       if (request.status >= 200 && request.status < 400) {
-        let data = request.response
-        if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
-          status.textContent = data.all_issues_count
-        } else {
-          status.textContent = '?'
-          clearInterval(pollInterval)
-        }
+        resolve(request.response)
       } else {
-        clearInterval(pollInterval)
+        reject(new Error(request.statusText))
       }
     }
 
     request.onerror = () => {
-      // do nothing
+      reject(new Error(request.statusText))
     }
-    request.responseType = 'json'
     request.send()
-  }
-  const pollInterval = setInterval(poll, 60000, pollingUrl)
+  })
 }
 
 /* eslint-enable no-unused-vars */
