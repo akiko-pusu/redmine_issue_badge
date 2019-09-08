@@ -2,17 +2,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-env jquery */
 const loadBadge = (url, optionPollUrl) => {
-  baseRequest(url).then((html) => {
-    if (html.length > 0) {
-      document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
-      changeBadgeLocation()
-        .then(() => {
-          if (optionPollUrl) {
-            pollBadgeCount(optionPollUrl)
-          }
-        })
-    }
-  })
+  baseRequest(url)
+    .then((html) => {
+      if (html.length > 0) {
+        document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
+        changeBadgeLocation()
+        if (optionPollUrl) {
+          pollBadgeCount(optionPollUrl)
+        }
+      }
+    })
 }
 
 // Load and popup BadgeContents
@@ -35,46 +34,39 @@ document.addEventListener('click', (event) => {
 
 // Polling setting
 const pollBadgeCount = (pollingUrl) => {
-  return new Promise((resolve) => {
-    const poll = (pollingUrl) => {
-      let status = document.getElementById('issue_badge_number')
-      baseRequest(pollingUrl, 'json')
-        .then((data) => {
-          if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
-            status.textContent = data.all_issues_count
-          } else {
-            status.textContent = '?'
-            clearInterval(pollInterval)
-          }
-          resolve()
-        })
-        .catch(() => {
-          // Stop polling and resolve
+  const poll = (pollingUrl) => {
+    let status = document.getElementById('issue_badge_number')
+    baseRequest(pollingUrl, 'json')
+      .then((data) => {
+        if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
+          status.textContent = data.all_issues_count
+        } else {
+          status.textContent = '?'
           clearInterval(pollInterval)
-          resolve()
-        })
-    }
-    const pollInterval = setInterval(poll, 60000, pollingUrl)
-  })
+        }
+      })
+      .catch(() => {
+        // Stop polling and resolve
+        clearInterval(pollInterval)
+      })
+  }
+  const pollInterval = setInterval(poll, 10000, pollingUrl)
 }
 
 // For responsive: change the place to display badge
 const changeBadgeLocation = () => {
-  return new Promise((resolve) => {
-    const issueBadgeElement = document.getElementById('issue_badge')
-    if (window.matchMedia('(max-width: 899px)').matches) {
-      const quickSearch = document.getElementById('quick-search')
-      if (quickSearch) {
-        quickSearch.insertBefore(issueBadgeElement, quickSearch.firstChild)
-      }
-    } else {
-      const loggedas = document.getElementById('loggedas')
-      if (loggedas) {
-        loggedas.insertAdjacentElement('afterend', issueBadgeElement)
-      }
+  const issueBadgeElement = document.getElementById('issue_badge')
+  if (window.matchMedia('(max-width: 899px)').matches) {
+    const quickSearch = document.getElementById('quick-search')
+    if (quickSearch) {
+      quickSearch.insertBefore(issueBadgeElement, quickSearch.firstChild)
     }
-    resolve()
-  })
+  } else {
+    const loggedas = document.getElementById('loggedas')
+    if (loggedas) {
+      loggedas.insertAdjacentElement('afterend', issueBadgeElement)
+    }
+  }
 }
 
 window.onresize = () => {
