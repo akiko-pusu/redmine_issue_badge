@@ -50,7 +50,7 @@ const pollBadgeCount = (pollingUrl) => {
         clearInterval(pollInterval)
       })
   }
-  const pollInterval = setInterval(poll, 10000, pollingUrl)
+  const pollInterval = setInterval(poll, 60000, pollingUrl)
 }
 
 // For responsive: change the place to display badge
