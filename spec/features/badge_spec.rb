@@ -181,8 +181,7 @@ feature 'IssueBadge', js: true do
       expect(page).to have_css('#issue_badge_number', text: issues.count)
       issues.first.delete
       within('#top-menu') do
-        expect(page).to have_selector(:css, 'script', visible: false, count: 2)
-        page.execute_script("poll('#{issue_badge_issues_count_path}');")
+        page.execute_script("pollBadgeCount('#{issue_badge_issues_count_path}');")
       end
 
       wait_for_ajax

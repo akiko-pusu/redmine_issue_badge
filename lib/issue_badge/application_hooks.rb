@@ -5,8 +5,6 @@ module IssueBadge
     include ApplicationHelper
 
     def view_layouts_base_html_head(_context = {})
-      base_url = Redmine::Utils.relative_url_root
-      badge_url = base_url + '/issue_badge'
       o = ''
       if User.current.logged?
         global_enabled = Setting.plugin_redmine_issue_badge['activate_for_all_users'] == 'true'
@@ -14,10 +12,20 @@ module IssueBadge
         o = stylesheet_link_tag('style', plugin: 'redmine_issue_badge')
         if issue_badge.try(:enabled?) || global_enabled
           o << javascript_include_tag('issue_badge', plugin: 'redmine_issue_badge')
-          o << "\n".html_safe + javascript_tag("load_badge('#{escape_javascript badge_url}');")
+          o << "\n".html_safe + javascript_tag(build_load_badge_script)
         end
       end
       o
+    end
+
+    def build_load_badge_script
+      base_url = Redmine::Utils.relative_url_root
+      badge_url = base_url + '/issue_badge'
+      polling_option = Setting.plugin_redmine_issue_badge['enabled_polling'] == 'true'
+
+      return "loadBadge('#{escape_javascript badge_url}');" unless polling_option
+
+      "loadBadge('#{escape_javascript badge_url}', '#{issue_badge_issues_count_path}');"
     end
   end
 end
