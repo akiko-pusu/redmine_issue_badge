@@ -2,6 +2,25 @@
 
 このプラグインは、Redmineの上部（ナビゲーションバー)上に、現在の自分の担当チケット数をバッジ表示させるプラグインです。
 
+--------
+<!-- TOC depthFrom:2 orderedList:false -->
+
+- [インストール方法](#インストール方法)
+- [アンインストール方法](#アンインストール方法)
+- [インストール後の設定](#インストール後の設定)
+  - [20170314 Updated](#20170314-updated)
+- [リポジトリ](#リポジトリ)
+- [テストについて](#テストについて)
+  - [実行方法](#実行方法)
+    - [実行例](#実行例)
+    - [werckerでのテスト](#werckerでのテスト)
+- [License](#license)
+  - [Author / 作ったひと](#author--作ったひと)
+
+<!-- /TOC -->
+
+--------
+
 ## インストール方法
 
 (1) プラグインのソースを取得後、redmine/plugins/ ディレクトリ以下に配置して下さい。
@@ -20,7 +39,7 @@
 
 以下のコマンドを実行して下さい:
 
-* rake redmine:plugins:migrate NAME=redmine_issue_badge VERSION=0 RAILS_ENV=production
+- rake redmine:plugins:migrate NAME=redmine_issue_badge VERSION=0 RAILS_ENV=production
 
 また、実施後に、plugins/redmine_issue_badge を削除して下さい。
 
@@ -37,17 +56,16 @@
 また、Redmine自体がまだSPA的な作りになっていないことと、性能にインパクトを与えないよう、バッジ数のポーリングは行っていません。
 （画面遷移が実行された際に、担当チケット数を再取得する仕組みになっています）
 
-### 20170314 Updated: 
+### 20170314 Updated
 
 プラグインの管理画面から、ポーリングを有効にするオプションを追加しています。
 バフォーマンスを考慮してデフォルトではOFF, 有効な場合も間隔は60秒にしています。
 また、有効にした場合でセッションがきれたり、ajaxリクエストでエラーが発生した場合はポーリングをストップするようにしています。
 こちらの機能については、バグ等のフィードバックをいただければ幸いです。
 
-
 ## リポジトリ
 
-* https://github.com/akiko-pusu/redmine_issue_badge
+- <https://github.com/akiko-pusu/redmine_issue_badge>
 
 ## テストについて
 
@@ -61,12 +79,12 @@
 redmineのインストールディレクトリに移動して、以下を実行します。
 
 - specディレクトリ全てを指定すると、Capybaraでのe2eテストも走ります。
- - spec/features 以下が対象になります。
- - Selenium Webdriver + Chrome または phantomjs が必要になります。
- - Macの場合は、brew install phantomjs でOKです。
+  - spec/features 以下が対象になります。
+  - Selenium Webdriver + Chrome または phantomjs が必要になります。
+  - Macの場合は、brew install phantomjs でOKです。
 - デフォルトでは、redmine/ 以下の coverage/ ディレクトリにカバレッジレポートが生成されます。
 
-```
+```bash
 # issue badgedの稼働には追加のgemは必要ありませんが、テストの場合はcapybaraやfactory_girlを使うので、
 # Gemfileを配置します
 
@@ -88,7 +106,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 - phantomjs を利用（ブラウザは起動しません）
 - htmlレポートを生成（report/plugin-test.html）カバレッジはデフォルトで coverage/ 以下
 
-```
+```bash
 % bundle exec rspec -Iplugins/redmine_issue_badge/spec -fh -o report/plugin-test.html \
   plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
@@ -97,7 +115,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 - ドライバはseleiumを指定すると、Chromeが起動してテストを実施
 - htmlレポートを生成（report/plugin-test.html）カバレッジはデフォルトで coverage/ 以下
 
-```
+```bash
 % DRIVER=selenium bundle exec rspec -Iplugins/redmine_issue_badge/spec -fh -o report/plugin-test.html \
   plugins/redmine_issue_badge/spec/features/badge_spec.rb
 ```
@@ -106,7 +124,7 @@ redmineのインストールディレクトリに移動して、以下を実行�
 
 簡単なテストですが、テストの手順用のスクリプトが参照できます。
 
-- https://app.wercker.com/akiko-pusu/redmine_issue_badge/runs
+- <https://circleci.com/gh/akiko-pusu/redmine_issue_badge>
 
 ## License
 
@@ -114,4 +132,4 @@ This software is licensed under the GNU GPL v2. See COPYRIGHT and COPYING for de
 
 ### Author / 作ったひと
 
-Akiko Takano (Twitter: @akiko_pusu) / GitHub: https://github.com/akiko-pusu/
+Akiko Takano (Twitter: @akiko_pusu) / GitHub: <https://github.com/akiko-pusu/>
