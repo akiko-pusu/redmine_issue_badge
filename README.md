@@ -83,7 +83,7 @@ Then, you can configure and activate this plugin.
 Code refactoring and maintenance release.
 
 - Bug fix for #96 #97. UserPreference setting does not work correctly.
-- JavaScript Code refactoring.
+- JavaScript Code refactoring.　(Change jQuery to Pure JavaScript)
 
 ### 0.1.0
 
