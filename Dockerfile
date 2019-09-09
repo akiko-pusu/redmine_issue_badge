@@ -14,17 +14,17 @@ RUN apt-get install -qq -y \
     sqlite3 default-libmysqlclient-dev
 RUN apt-get install -qq -y build-essential libc6-dev
 
-RUN cd /tmp && svn co http://svn.redmine.org/redmine/trunk redmine
-WORKDIR /tmp/redmine
+RUN mkdir -p /app && cd /app && svn co http://svn.redmine.org/redmine/trunk redmine
+WORKDIR /app/redmine
 
 # add database.yml (for development, development with mysql, test)
 RUN echo $'test:\n\
   adapter: sqlite3\n\
-  database: /tmp/data/redmine_test.sqlite3\n\
+  database: /app/data/redmine_test.sqlite3\n\
   encoding: utf8mb4\n\
 development:\n\
   adapter: sqlite3\n\
-  database: /tmp/data/redmine_development.sqlite3\n\
+  database: /app/data/redmine_development.sqlite3\n\
   encoding: utf8mb4\n\
 development_mysql:\n\
   adapter: mysql2\n\

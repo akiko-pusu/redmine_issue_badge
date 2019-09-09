@@ -8,10 +8,10 @@
       <p>
         <label><%=h l(:label_issue_badge) %></label>
         <% if !global_enabled %>
-            <%= check_box :issue_badge, 'enabled',  { onclick: 'show_optional_badge_setting();' } %>
+            <%= check_box :issue_badge, 'enabled',  { onclick: 'showOptionalBadgeSetting();' } %>
         <% else %>
             <%= check_box :issue_badge, 'enabled',
-                          { disabled: true, checked: true, onclick: 'show_optional_badge_setting();' } %>
+                          { disabled: true, checked: true, onclick: 'showOptionalBadgeSetting();' } %>
         <% end %>
       </p>
 
@@ -29,24 +29,3 @@
   <% end %>
 </fieldset>
 
-<script type="text/javascript">
-  function change_pref_location() {
-    if (window.matchMedia( '(max-width: 899px)' ).matches) {
-      $('#pref_issue_badge').insertBefore('#my_account_form > div.splitcontentright > p');
-    } else {
-      $('#pref_issue_badge').appendTo('div.splitcontentright');
-    }
-  }
-
-  $(document).ready(function () {
-    change_pref_location();
-  });
-  $(window).resize(function () {
-    change_pref_location();
-  });
-
-  function show_optional_badge_setting() {
-      $("#show_assigned_to_group").toggle();
-      $("#badge_order").toggle();
-  }
-</script>
