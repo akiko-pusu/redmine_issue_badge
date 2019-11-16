@@ -33,7 +33,7 @@ describe IssueBadgeController, type: :controller do
       let(:issue_count) { 0 }
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(/<span id="issue_badge_number" class="badge">0/im)
+        expect(response.body).to match(/<span id="issue_badge_number" class="badge green">0/im)
       end
     end
 
@@ -42,7 +42,7 @@ describe IssueBadgeController, type: :controller do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
       end
     end
 
@@ -62,14 +62,14 @@ describe IssueBadgeController, type: :controller do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count}<\/span>}im)
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
       end
 
       it 'renders the _issue_badge template with assigned to group' do
         setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
         setting.update(show_assigned_to_group: true)
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge">#{issue_count + 1}<\/span>}im)
+        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count + 1}<\/span>}im)
       end
     end
   end
@@ -146,7 +146,7 @@ describe IssueBadgeController, type: :controller do
         let(:issue_count) { 0 }
         it 'return json with status true.' do
           get :issues_count
-          expect(response.body).to match(/"status":true,"all_issues_count":0/)
+          expect(response.body).to match(/"status":true,"all_issues_count":0,"badge_color":"green"/)
         end
       end
 
@@ -154,7 +154,7 @@ describe IssueBadgeController, type: :controller do
         let(:issue_count) { 2 }
         it 'return json with status true and assigned issues number.' do
           get :issues_count
-          expect(response.body).to match(/"status":true,"all_issues_count":2/)
+          expect(response.body).to match(/"status":true,"all_issues_count":2,"badge_color":"red"/)
         end
       end
     end
