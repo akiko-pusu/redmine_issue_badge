@@ -9,14 +9,18 @@ class IssueBadgeController < ApplicationController
   def index
     all_issues_count = all_issues.size
     render action: '_issue_badge', layout: false,
-      locals: { all_issues_count: all_issues_count, badge_color: all_issues_count.zero? ? 'green' : 'red'}
+      locals: { all_issues_count: all_issues_count,
+                badge_color: all_issues_count.zero? ? 'green' : 'red'
+              }
   end
 
   def issues_count
     all_issues_count = all_issues.count
     render(plain: { status: false }.to_json) && return if User.current.anonymous?
-    render plain: { status: true, all_issues_count: all_issues_count,
-            badge_color: all_issues_count.zero? ? 'green' : 'red' }.to_json
+    render plain: { status: true,
+                    all_issues_count: all_issues_count,
+                    badge_color: all_issues_count.zero? ? 'green' : 'red'
+                  }.to_json
   end
 
   def load_badge_contents

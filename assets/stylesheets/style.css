@@ -72,11 +72,11 @@ div.issue_badge_content .metadata {
 
 
 #issue_badge .badge.red {
-background-color: #ee2630;
+  background-color: #ee2630;
 }
 
 #issue_badge .badge.green {
-background-color: #4eb97e;
+  background-color: #4eb97e;
 }
 
 .arrow_box {
