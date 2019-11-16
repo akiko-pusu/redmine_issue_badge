@@ -40,6 +40,7 @@ const pollBadgeCount = (pollingUrl) => {
       .then((data) => {
         if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
           status.textContent = data.all_issues_count
+          status.className = 'badge ' + data.badge_color
         } else {
           status.textContent = '?'
           clearInterval(pollInterval)
