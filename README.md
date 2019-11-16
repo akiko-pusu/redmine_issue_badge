@@ -34,7 +34,7 @@ For Redmine 3.x, please use version 0.7.0 or support-Redmine3 branch.
     migration task will be failed.
 2. Do migration task.
 
-    e.g. rake redmine:plugins:migrate RAILS_ENV=production
+> e.g. rails redmine:plugins:migrate RAILS_ENV=production
 
 3. (Re)Start Redmine.
 
@@ -42,8 +42,10 @@ For Redmine 3.x, please use version 0.7.0 or support-Redmine3 branch.
 
 Try this:
 
-* rake redmine:plugins:migrate NAME=redmine_issue_badge VERSION=0
+```bash
+rails redmine:plugins:migrate NAME=redmine_issue_badge VERSION=0 \
     RAILS_ENV=production
+```
 
 ## Required Settings
 
@@ -64,8 +66,8 @@ You can try quickly this plugin with Docker environment.
 Please try:
 
 ```bash
-$ https://github.com/akiko-pusu/redmine_issue_badge
-$ docker-compose up -d
+https://github.com/akiko-pusu/redmine_issue_badge
+docker-compose up -d
 ```
 
 Please note: Yon don't have to download Redmine's source code, but source code of this plugin is required.
@@ -173,7 +175,10 @@ cd REDMINE_ROOT_DIR
 cp plugins/redmine_issue_badge/Gemfile.local plugins/redmine_issue_badge/Gemfile
 bundle install --with test
 export RAILS_ENV=test
-bundle exec rake redmine_issue_badge:spec
+bundle exec rails db:migrate RAILS_ENV=test
+bundle exec rails redmine:plugins:migrate RAILS_ENV=test
+
+bundle exec rails redmine_issue_badge:spec
 ```
 
 Also you can run via rspec command like this:
