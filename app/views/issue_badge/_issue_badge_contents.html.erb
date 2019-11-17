@@ -1,30 +1,57 @@
-
 <div id="issue_badge_contents" class="notifications arrow_box">
-  <div class="header" id="issue_badge_contents_header"><%= l(:label_assigned_to_me_issues) %></div>
+  <div class="header" id="issue_badge_contents_header">
+    <% if @query_id.present? %>
+      <%= l(:label_query) %>
+    <% else %>
+      <%= l(:label_assigned_to_me_issues) %>
+    <% end %>
+  </div>
   <!-- contents will be injected. -->
   <!-- issue list -->
-  <% @limited_issues.each do |issue|  %>
-      <div class="issue_badge_content">
+  <% if @error_message.blank? && @limited_issues.any? %>
+    <div class="contents_wrapper">
+      <div class="contents_wrapper_inner">
+        <% @limited_issues.each do |issue|  %>
+        <div class="issue_badge_content">
         <%= link_to("#{issue.id} #{truncate(issue.subject.html_safe, length: 20, escape: false)}", issue_path(issue),
-                    { title: "#{issue.subject} - #{format_time(issue.created_on)}",
-                      class:  issue.assigned_to.is_a?(Group) ? 'groups' : 'users' } ) %>
-        <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
+                  { title: "#{issue.subject} - #{format_time(issue.created_on)}",
+                    class:  issue.assigned_to.is_a?(Group) ? 'groups' : 'users' } ) %>
+          <div class="metadata"><%= l(:label_project) %>: <%= issue.project %></div>
+        </div>
+      <% end %>
       </div>
+    </div>
   <% end %>
+
   <div class="<%= @limited_issues.empty? ? 'no-issue' : 'has-issue' %>">
     ...
   </div>
-  <% if @limited_issues.blank? %>
-      <div class="contextual">
-        <% if User.current.allowed_to?(:add_issues, @project, :global => true) && (@project.nil? || Issue.allowed_target_trackers(@project).any?) %>
-            <%= link_to l(:label_issue_new), _new_project_issue_path(@project), :class => 'icon icon-add new-issue' %>
-        <% end %>
-      </div>
-  <% end %>
-  <div class="footer">
-    <%= link_to issues_path(set_filter: 1, assigned_to_id: 'me', sort: 'priority:desc,updated_on:desc') do %>
-        <%= l(:label_assigned_to_me_issues) %>
-    <% end %>
-  </div>
-</div>
 
+  <% if @limited_issues.blank? %>
+    <div class="contextual">
+      <% if User.current.allowed_to?(:add_issues, @project, :global => true) && (@project.nil? || Issue.allowed_target_trackers(@project).any?) %>
+        <%= link_to l(:label_issue_new), _new_project_issue_path(@project), :class => 'icon icon-add new-issue' %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @error_message.present? %>
+    <div class="error_message">
+      <p style="white-space: normal;"><%= l(@error_message) %></p>
+    <div>
+  <% end %>
+
+  <% if @error_message.blank? %>
+    <div class="footer">
+      <% if @query_id.present? %>
+        <%= link_to @query_path do %>
+          <%= l(:label_query) %>
+        <% end %>
+      <% else %>
+        <%= link_to issues_path(set_filter: 1, assigned_to_id: 'me', sort: 'priority:desc,updated_on:desc') do %>
+          <%= l(:label_assigned_to_me_issues) %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

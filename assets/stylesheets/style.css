@@ -21,10 +21,11 @@ div.checkbox label {
 }
 
 #issue_badge > li > div {
-  max-width: 230px;
+  min-width: 210px;
+  max-width: 250px;
   position: absolute;
   display: block;
-  top: 18px;
+  top: 20px;
   left: 5px;
   color: black;
   background: #ffffff;
@@ -45,6 +46,12 @@ div.checkbox label {
 #issue_badge a, #issue_badge a:link, #issue_badge a:visited {
   color: #169;
   text-decoration: none;
+}
+
+div.issue_badge_content {
+  white-space: normal;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #c9c9c9;
 }
 
 div.issue_badge_content .metadata {
@@ -140,12 +147,40 @@ div.notifications > div.footer {
 }
 
 #issue_badge_contents > div.contextual {
-  white-space: nowrap;
+  white-space: normal;
   line-height: 1.2em;
   padding: 4px;
   /* font-size: 0.6em; */
   opacity: 0.4;
   float: none;
+}
+
+div.contents_wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+div.contents_wrapper::-webkit-scrollbar-track {
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset 0 0 2px #777;
+}
+
+div.contents_wrapper::-webkit-scrollbar-thumb {
+  background: rgb(223, 222, 222);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+#issue_badge_contents > div.contents_wrapper {
+  width: 220px;
+  overflow-y: auto;
+  max-height: 260px;
+  padding-bottom: 10px;
+}
+
+#issue_badge_contents > div.contents_wrapper > div.contents_wrapper_inner {
+  padding-bottom: 10px;
 }
 
 #issue_badge_contents > div.footer > a {
@@ -155,6 +190,11 @@ div.notifications > div.footer {
   padding-top: 2px;
   padding-bottom: 3px;
   background-image: url("../../../images/ticket_go.png");
+}
+
+#issue_badge_contents > div.error_message {
+  white-space: normal;
+  color: darkred;
 }
 
 #issue_badge_contents a {
@@ -188,10 +228,11 @@ div.notifications > div.footer {
     z-index: 1000;
   }
   #issue_badge > li > div {
+    min-width: 200px;
     max-width: 230px;
     position: absolute;
     display: block;
-    top: 54px;
+    top: 52px;
     left: -100px;
     width: 180px;
   }
@@ -200,5 +241,9 @@ div.notifications > div.footer {
   }
   div.notifications > div.footer {
     padding-right: 6px;
+  }
+
+  #issue_badge_contents > div.contents_wrapper {
+    width: 210px;
   }
 }

@@ -9,3 +9,9 @@ group :test do
   # Test format nyan cat
   gem 'nyan-cat-formatter', require: false
 end
+
+# for Debug
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+end
