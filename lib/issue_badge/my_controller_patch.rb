@@ -9,7 +9,7 @@ module IssueBadge
 
       @issue_badge = IssueBadgeUserSetting.find_or_create_by_user_id(user)
 
-      if put_request?
+      if put_request? || request.post?
         begin
           logger.info(badge_params)
           logger.warn "Can't save IssueBadge." unless @issue_badge.update(badge_params)
