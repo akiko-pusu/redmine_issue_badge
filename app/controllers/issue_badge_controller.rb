@@ -62,6 +62,7 @@ class IssueBadgeController < ApplicationController
   def all_issues_based_on_query
     query_id = setting.query_id
     query = IssueQuery.find_by!(id: query_id)
+    @query_name = query.name || t(:label_query)
     @query_path = _project_issues_path(query.project, sort: 'priority:desc,updated_on:desc')
     Issue.joins(:project).visible.where(id: query.issues)
   end

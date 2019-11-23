@@ -1,7 +1,7 @@
 <div id="issue_badge_contents" class="notifications arrow_box">
   <div class="header" id="issue_badge_contents_header">
     <% if @query_id.present? %>
-      <%= l(:label_query) %>
+      <%= "#{truncate(@query_name, length: 20, escape: false)}" %>
     <% else %>
       <%= l(:label_assigned_to_me_issues) %>
     <% end %>
