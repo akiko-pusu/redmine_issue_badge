@@ -8,8 +8,3 @@ ja:
   label_badge_order: チケットの表示順
   label_badge_order_oldest: 古いものから5件
   label_badge_order_newest: 新しいものから5件
-  label_use_custom_query: カスタムクエリを利用
-  invalid_query_id: 無効なカスタムクエリが設定されています
-
-
-

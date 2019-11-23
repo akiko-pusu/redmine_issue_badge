@@ -1,9 +1,7 @@
 <% return '' unless all_issues_count %>
 <div id="issue_badge">
   <li class="starting_point">
-    <a style="cursor: pointer" onclick="displayBadgeContents('<%= issue_badge_load_badge_contents_path %>');"
-        title='<%= error_message.empty? ? "" : l(error_message, default: "Invalid custom query id is specified.") %>'
-        id="link_issue_badge">
+    <a style="cursor: pointer" onclick="displayBadgeContents('<%= issue_badge_load_badge_contents_path %>');" id="link_issue_badge">
       <span id="issue_badge_number" class="badge <%= badge_color %>"><%= all_issues_count %></span>
     </a>
   </li>
