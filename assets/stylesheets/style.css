@@ -127,6 +127,7 @@ div.notifications > div {
 div.notifications > div.header {
   font-weight: bold;
   background: #f6f5f5;
+  white-space: normal;
 }
 
 div.notifications > div.footer {
