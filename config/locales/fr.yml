@@ -1,7 +1,13 @@
 # French strings go here for Rails i18n
 fr:
-  title_issue_badge: Issue Badge
+  title_issue_badge: Badge des demandes
   label_issue_badge: Affiche le nombre de demandes assignées avec un badge.
   label_activate_for_all_users: Afficher un badge des demandes pour tous les utilisateurs
   label_enabled_polling: Active le 'polling' pour rafraîchir le nombre de demandes (Intervalle 60sec）
   label_show_assigned_to_group: Inclure le nombre de demandes assignées aux groupes
+  label_badge_order: Liste des demandes
+  label_badge_order_oldest: "Les %{value} plus anciennes demandes"
+  label_badge_order_newest: "Les %{value} plus récentes demandes"
+  label_use_custom_query: Utiliser une requête personnalisée
+  invalid_query_id: Id de la requête personnalisée non valide.
+  label_number_to_display: Nombre de demande à afficher dans la fenêtre
