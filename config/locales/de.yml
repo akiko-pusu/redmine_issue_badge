@@ -6,5 +6,5 @@ de:
   label_enabled_polling: Enabled pollig to refresh issue count（Interval 60sec）
   label_show_assigned_to_group: Tickets für zugewiesene Gruppen anzeigen
   label_badge_order: Liste sortieren
-  label_badge_order_oldest: nach den ältesten 5 Tickets
-  label_badge_order_newest: nach den neuesten 5 Tickets
+  label_badge_order_oldest: "nach den ältesten %{value} Tickets"
+  label_badge_order_newest: "nach den neuesten %{value} Tickets"

@@ -2,6 +2,7 @@
   <legend><%=l(:title_issue_badge)%></legend>
 <%-
   global_enabled = Setting.plugin_redmine_issue_badge['activate_for_all_users'] == 'true'
+  number_to_display = Setting.plugin_redmine_issue_badge['number_to_display']
 %>
 
   <%= labelled_fields_for :issue_badge, @issue_badge do |field| %>
@@ -19,13 +20,19 @@
         <label><%=h l(:label_show_assigned_to_group) %></label>
         <%= check_box :issue_badge, 'show_assigned_to_group'  %>
       </p>
+      <p>
+        <label for="issue_badge_query_id">
+          <%= l(:label_use_custom_query, default: 'Use custom queries') %>
+        </label>
+        <%= select_tag "issue_badge[query_id]",
+                content_tag("option", l(:label_none)) + options_from_collection_for_select(@queries, :id, :name, :selected => @issue_badge.query_id) %>
+      </p>
       <p id='badge_order' style="display: <%= global_enabled || @issue_badge.enabled ? 'block' : 'none' %>">
         <label><%= h l(:label_badge_order, default: 'List order') %></label>
         <%= radio_button_tag 'issue_badge[badge_order]', "oldest", @issue_badge.oldest? %>
-        <%= h l(:label_badge_order_oldest, default: 'Oldest 5 issues') %><br/>
+        <%= h l(:label_badge_order_oldest, value: number_to_display, default: 'Oldest 5 issues') %><br/>
         <%= radio_button_tag 'issue_badge[badge_order]', "newest", @issue_badge.newest? %>
-        <%= h l(:label_badge_order_newest, default: 'Newest 5 issues') %>
+        <%= h l(:label_badge_order_newest, value: number_to_display, default: 'Newest 5 issues') %>
       </p>
   <% end %>
 </fieldset>
-

@@ -5,5 +5,5 @@ zh-TW:
   label_enabled_polling: "啟用更新議題數量（間隔60秒）"
   label_show_assigned_to_group: "包含被分派給所屬群組的議題數量"
   label_badge_order: 列表排序
-  label_badge_order_oldest: 最舊的 5 則議題
-  label_badge_order_newest: 最新的 5 則議題
+  label_badge_order_oldest: "最舊的 %{value} 則議題"
+  label_badge_order_newest: "最新的 %{value} 則議題"

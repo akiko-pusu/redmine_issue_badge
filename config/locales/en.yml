@@ -6,5 +6,8 @@ en:
   label_enabled_polling: Enabled pollig to refresh issue count（Interval 60sec）
   label_show_assigned_to_group: Include issue numbers assigned to group
   label_badge_order: List order
-  label_badge_order_oldest: Oldest 5 issues
-  label_badge_order_newest: Newest 5 issues
+  label_badge_order_oldest: "Oldest %{value} issues"
+  label_badge_order_newest: "Newest %{value} issues"
+  label_use_custom_query: Use custom queries
+  invalid_query_id: Invalid custom query id is specified.
+  label_number_to_display: Issue number to display in the popup

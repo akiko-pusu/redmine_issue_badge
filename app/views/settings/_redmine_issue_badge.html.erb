@@ -9,4 +9,10 @@
     <%= hidden_field_tag("settings[enabled_polling]", 0, :id => nil).html_safe %>
     <%= check_box_tag 'settings[enabled_polling]', true, @settings['enabled_polling'] == "true" %>
   </p>
+
+  <p>
+    <%=content_tag(:label, l(:label_number_to_display, default: 'Issue number to display in the popup'))%>
+    <%= select_tag('settings[number_to_display]',
+                 options_for_select([5, 10, 15, 20],@settings['number_to_display'])) %>
+  </p>
 </div>
