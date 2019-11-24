@@ -6,8 +6,8 @@ ja:
   label_enabled_polling: 担当チケット数のポーリングを許可（60秒）
   label_show_assigned_to_group: グループに割り当てられたチケット数も含める
   label_badge_order: チケットの表示順
-  label_badge_order_oldest: 古いものから5件
-  label_badge_order_newest: 新しいものから5件
+  label_badge_order_oldest: "古いものから %{value} 件"
+  label_badge_order_newest: "新しいものから %{value} 件"
   label_use_custom_query: カスタムクエリを利用
   invalid_query_id: 無効なカスタムクエリが設定されています
   label_number_to_display: ポップアップでの表示件数
