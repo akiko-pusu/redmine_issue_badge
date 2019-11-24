@@ -83,17 +83,17 @@ Then, you can configure and activate this plugin.
 ### 0.1.2
 
 Please note, this release is required to migrate.
-Suppoting qustom query feature is still a prototype, so feedback highly appreciate!
+Supporting custom query feature is still a prototype, so feedback highly appreciate!
 
 - Support custom query based badge number. (Related: #67, #107)
-- Enabled to change the number to display issues in popup window. (#67, #69)
+- Enabled to change the number to display issues in the popup window. (#67, #69)
 - Change the initial badge color to green. (#108)
 - Update German translation. Thank you so much, @double2ugly
 - Update zh-TW translation. Thank you so much, @Vongola
 - Bugfix: IssueBadgeUserSetting is not created correctly via post method. (#106)
 
-Thanks for suggestions and PR for thes release: @Jiangshan0000, @bviktor,
-   @koren85, @rafaelmartinsrm, @AizeLeOuf and @Vongola.
+Thanks for suggestions and PR for this release: @Jiangshan0000, @bviktor,
+   @koren85, @rafaelmartinsrm, @AizeLeOuf, and @Vongola.
 
 ### 0.1.1
 
