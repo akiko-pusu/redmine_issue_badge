@@ -4,7 +4,7 @@ class IssueBadgeController < ApplicationController
   layout 'base'
   helper :issues
   menu_item :issues
-  before_action :find_user
+  before_action :find_user, :define_limit
 
   def index
     all_issues_count = all_issues.size
@@ -33,7 +33,7 @@ class IssueBadgeController < ApplicationController
     # noinspection RubyResolve
     begin
       condition = setting.newest? ? all_issues.reverse_order : all_issues
-      @limited_issues = condition.includes(:project).limit(5)
+      @limited_issues = condition.includes(:project).limit(@limit)
     rescue ActiveRecord::RecordNotFound
       @limited_issues = []
       @error_message = 'invalid_query_id'
@@ -47,6 +47,10 @@ class IssueBadgeController < ApplicationController
     @user = User.current
   end
 
+  def define_limit
+    @limit = Setting.plugin_redmine_issue_badge['number_to_display'] || 5
+  end
+
   def setting
     IssueBadgeUserSetting.find_or_create_by_user_id(@user)
   end
@@ -56,7 +60,7 @@ class IssueBadgeController < ApplicationController
 
     condition = [@user.id]
     condition += @user.group_ids if setting.show_assigned_to_group?
-    Issue.joins(:project).visible.open.where(assigned_to_id: condition).merge(Project.active)
+    Issue.visible.open.where(assigned_to_id: condition).merge(Project.active)
   end
 
   def all_issues_based_on_query
@@ -64,6 +68,6 @@ class IssueBadgeController < ApplicationController
     query = IssueQuery.find_by!(id: query_id)
     @query_name = query.name || t(:label_query)
     @query_path = _project_issues_path(query.project, sort: 'priority:desc,updated_on:desc')
-    Issue.joins(:project).visible.where(id: query.issues)
+    Issue.visible.where(id: query.issues)
   end
 end
