@@ -4,6 +4,7 @@ require_relative '../spec_helper'
 
 describe IssueBadgeController, type: :controller do
   let(:user) { FactoryBot.create(:user, status: 1) }
+  let(:assigned_user_id) { user.id }
   let(:project) do
     FactoryBot.create(:project)
   end
@@ -25,7 +26,7 @@ describe IssueBadgeController, type: :controller do
                              project_id: project.id,
                              tracker_id: tracker.id,
                              priority_id: issue_priority.id,
-                             assigned_to_id: user.id)
+                             assigned_to_id: assigned_user_id)
     end
 
     render_views
@@ -72,6 +73,41 @@ describe IssueBadgeController, type: :controller do
         expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count + 1}<\/span>}im)
       end
     end
+
+    context 'when custom_query is selected that issues are not assigned to anyone.' do
+      let(:issue_count) { 2 }
+      let(:issue_query) { IssueQuery.first }
+
+      before do
+        query = IssueQuery.new(project: project, name: '_')
+        query.visibility = IssueQuery::VISIBILITY_PUBLIC
+        query.add_filter('assigned_to_id', '!*', [''])
+        query.save
+
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
+        setting.update(query_id: query.id)
+      end
+
+      context 'there are some issues are not assigned to anynone.' do
+        # Issues are not assigned to anynone.
+        let(:assigned_user_id) { nil }
+
+        it 'renders the _issue_badge template with issue count: 2' do
+          get :index
+          expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
+        end
+      end
+
+      context 'there are some issues are not assigned to me.' do
+        # Issues are not assigned to anynone.
+        let(:assigned_user) { user.id }
+
+        it 'renders the _issue_badge template with issue count: 0' do
+          get :index
+          expect(response.body).to match(%r{<span id="issue_badge_number" class="badge green">0<\/span>}im)
+        end
+      end
+    end
   end
 
   describe 'GET #load_badge_contents' do
@@ -114,6 +150,51 @@ describe IssueBadgeController, type: :controller do
         # from 7 to 3
         get :load_badge_contents
         expect(response.body).to match(%r{class="users" href="/issues/7">7 issue-subject:})
+      end
+    end
+
+    context 'When user select the query to find closed issues.' do
+      let(:closed_status) { FactoryBot.create(:issue_status, is_closed: true) }
+      before do
+        project.trackers << tracker
+        member = Member.new(project: project, user_id: user.id)
+        member.member_roles << MemberRole.new(role: role)
+        member.save
+        FactoryBot.create(:issue,
+                          project_id: project.id,
+                          tracker_id: tracker.id,
+                          priority_id: issue_priority.id,
+                          assigned_to_id: nil)
+        @request.session[:user_id] = user.id
+
+        query = IssueQuery.new(project: project, name: '_')
+        query.visibility = IssueQuery::VISIBILITY_PUBLIC
+        query.filters = { 'status_id' => { operator: 'c', values: [''] } }
+        query.save
+
+        setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
+        setting.query_id = query.id
+        setting.save
+      end
+
+      context 'issue is opened' do
+        it '0 closed issue should be displayed' do
+          get :load_badge_contents
+          expect(response.body).not_to match(%r{class="users" href="/issues/1">1 issue-subject:})
+        end
+      end
+
+      context 'issue is closed' do
+        before do
+          issue = Issue.first
+          issue.status = closed_status
+          issue.save
+        end
+
+        it '1 closed issue should be displayed' do
+          get :load_badge_contents
+          expect(response.body).to match(%r{class="users" href="/issues/1">1 issue-subject:})
+        end
       end
     end
   end

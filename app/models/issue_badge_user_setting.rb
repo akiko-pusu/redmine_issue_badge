@@ -4,7 +4,9 @@ class IssueBadgeUserSetting < ActiveRecord::Base # rubocop:disable Rails/Applica
   include Redmine::SafeAttributes
   belongs_to :user
   validates :user, presence: true
-  safe_attributes 'enabled', 'show_assigned_to_group'
+  safe_attributes 'enabled', 'show_assigned_to_group', 'query_id'
+
+  before_save :validate_query_id
 
   enum badge_order: { oldest: 0, newest: 1 }
   scope :enabled, -> { where(enabled: true) }
@@ -17,6 +19,13 @@ class IssueBadgeUserSetting < ActiveRecord::Base # rubocop:disable Rails/Applica
 
   def show_assigned_to_group?
     show_assigned_to_group
+  end
+
+  def validate_query_id
+    query = IssueQuery.find_by(id: query_id)
+    return if query.present? && query.visible?(user)
+
+    self.query_id = nil
   end
 
   #

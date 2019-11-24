@@ -17,13 +17,14 @@ module IssueBadge
           logger.warn "Can't save IssueBadge. #{e.message}"
         end
       end
+      @queries = IssueQuery.visible(user)
       super
     end
 
     private
 
     def badge_params
-      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group, :badge_order)
+      params.require(:issue_badge).permit(:enabled, :show_assigned_to_group, :badge_order, :query_id)
     end
 
     def put_request?
