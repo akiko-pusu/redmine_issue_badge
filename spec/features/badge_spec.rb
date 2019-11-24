@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../rails_helper'
+require_relative '../spec_helper'
 require_relative '../support/login_helper'
 
 feature 'IssueBadge', js: true do
@@ -10,15 +10,12 @@ feature 'IssueBadge', js: true do
   let(:role) { FactoryBot.create(:role) }
   let(:issue_priority) { FactoryBot.create(:priority) }
   let(:user) { FactoryBot.create(:user, :password_same_login, login: 'badge_user', language: 'en') }
-  # default: assigned_to_id = login user's id
-
-  let(:assigned_to_id) { user.id }
   let(:issues) do
     FactoryBot.create_list(:issue, 4,
                            project_id: project.id,
                            tracker_id: tracker.id,
                            priority_id: issue_priority.id,
-                           assigned_to_id: assigned_to_id)
+                           assigned_to_id: user.id)
   end
 
   context 'When anonymous' do
@@ -76,9 +73,9 @@ feature 'IssueBadge', js: true do
         expect(page).to have_selector('#issue_badge_number', text: all_issues.length)
 
         find('#issue_badge_number').click
-        expect(page).to have_css('div.contents_wrapper > .contents_wrapper_inner > div.issue_badge_content > a',
+        expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a',
                                  text: "#{issue.id} <b>HTML Subject</b>")
-        expect(page).not_to have_css('div.contents_wrapper > .contents_wrapper_inner > div.issue_badge_content > a.groups')
+        expect(page).not_to have_css('#issue_badge_contents > div.issue_badge_content > a.groups')
       end
     end
 
@@ -110,44 +107,8 @@ feature 'IssueBadge', js: true do
         expect(page).to have_selector('#issue_badge_number', text: all_issues.length + 1)
 
         find('#issue_badge_number').click
-        expect(page).to have_css('div.contents_wrapper > .contents_wrapper_inner > div.issue_badge_content > a.groups')
+        expect(page).to have_css('#issue_badge_contents > div.issue_badge_content > a.groups')
       end
-    end
-  end
-
-  context 'When authenticated select custom query' do
-    let(:assigned_to_id) { nil }
-    let(:query) { IssueQuery.first }
-    background do
-      project.trackers << tracker
-      member = Member.new(project: project, user_id: user.id)
-      member.member_roles << MemberRole.new(role: role)
-      member.save
-
-      query = IssueQuery.new(project: project, name: '_')
-      query.visibility = IssueQuery::VISIBILITY_PUBLIC
-      query.add_filter('assigned_to_id', '!*', [''])
-      query.save
-
-      log_user(user.login, user.login)
-      visit '/my/account'
-    end
-
-    scenario 'Unassigned issues are displayed' do
-      issue = issues.first
-      all_issues = Issue.visible(user).to_a
-
-      # Enable Badge
-      check 'issue_badge_enabled'
-      find("#issue_badge_query_id > option[value=\"#{query.id}\"]").select_option
-      click_on 'Save'
-
-      expect(page).to have_selector('#issue_badge_number', text: all_issues.length)
-
-      find('#issue_badge_number').click
-      expect(page).to have_css('div.contents_wrapper > .contents_wrapper_inner > div.issue_badge_content > a',
-                               text: "#{issue.id} issue-subject: #{issue.id}")
-      expect(page).not_to have_css('div.contents_wrapper > .contents_wrapper_inner > div.issue_badge_content > a.groups')
     end
   end
 

@@ -9,27 +9,21 @@ class IssueBadgeController < ApplicationController
   def index
     all_issues_count = all_issues.size
     render action: '_issue_badge', layout: false,
-           locals: { all_issues_count: all_issues_count, error_message: '',
-                     badge_color: all_issues_count.zero? ? 'green' : 'red' }
-  rescue ActiveRecord::RecordNotFound
-    render action: '_issue_badge', layout: false,
-           locals: { all_issues_count: '?', error_message: 'invalid_query_id', badge_color: 'red' }
+      locals: { all_issues_count: all_issues_count,
+                badge_color: all_issues_count.zero? ? 'green' : 'red'
+              }
   end
 
   def issues_count
-    render(plain: { status: false }.to_json) && return if User.current.anonymous?
-
     all_issues_count = all_issues.count
+    render(plain: { status: false }.to_json) && return if User.current.anonymous?
     render plain: { status: true,
                     all_issues_count: all_issues_count,
-                    badge_color: all_issues_count.zero? ? 'green' : 'red' }.to_json
-  rescue ActiveRecord::RecordNotFound
-    render plain: { status: false, error_message: 'invalid_query_id', badge_color: 'red' }.to_json
+                    badge_color: all_issues_count.zero? ? 'green' : 'red'
+                  }.to_json
   end
 
   def load_badge_contents
-    @query_id = setting.query_id if setting.try(:query_id).present?
-
     # noinspection RubyResolve
     begin
       condition = setting.newest? ? all_issues.reverse_order : all_issues
@@ -56,8 +50,6 @@ class IssueBadgeController < ApplicationController
   end
 
   def all_issues
-    return all_issues_based_on_query if setting.try(:query_id).present?
-
     condition = [@user.id]
     condition += @user.group_ids if setting.show_assigned_to_group?
     Issue.visible.open.where(assigned_to_id: condition).merge(Project.active)
