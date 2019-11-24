@@ -10,3 +10,4 @@ en:
   label_badge_order_newest: Newest 5 issues
   label_use_custom_query: Use custom queries
   invalid_query_id: Invalid custom query id is specified.
+  label_number_to_display: Issue number to display in the popup
