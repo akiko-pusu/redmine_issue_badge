@@ -1,0 +1,13 @@
+# Russian strings go here for Rails i18n
+ru:
+  title_issue_badge: Счетчик задач
+  label_issue_badge: Показать счетчик задач.
+  label_activate_for_all_users: Включить счетчик задач всем пользователям
+  label_enabled_polling: Обновлять счетчик задач каждые (60сек)
+  label_show_assigned_to_group: Включая задачи назначенные группе
+  label_badge_order: Порядок сортировки
+  label_badge_order_oldest: "Последние %{value} задач"
+  label_badge_order_newest: "Первые %{value} задач"
+  label_use_custom_query: Использовать пользовательские запросы
+  invalid_query_id: Неверный идентификатор пользовательского запроса.
+  label_number_to_display: Количество отображаемых задач
