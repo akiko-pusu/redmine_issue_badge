@@ -89,11 +89,11 @@ Supporting custom query feature is still a prototype, so feedback highly appreci
 - Enabled to change the number to display issues in the popup window. (#67, #69)
 - Change the initial badge color to green. (#108)
 - Update German translation. Thank you so much, @double2ugly
-- Update zh-TW translation. Thank you so much, @Vongola
+- Update zh-TW translation. Thank you so much, @vongola12324
 - Bugfix: IssueBadgeUserSetting is not created correctly via post method. (#106)
 
 Thanks for suggestions and PR for this release: @Jiangshan0000, @bviktor,
-   @koren85, @rafaelmartinsrm, @AizeLeOuf, and @Vongola.
+   @koren85, @rafaelmartinsrm, @AizeLeOuf, and @vongola12324.
 
 ### 0.1.1
 
