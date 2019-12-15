@@ -24,7 +24,7 @@ class IssueBadgeController < ApplicationController
                    all_issues_count: all_issues_count,
                    badge_color: all_issues_count.zero? ? 'green' : 'red', content_path: content_path }.to_json
   rescue ActiveRecord::RecordNotFound
-    render jdon: { status: false, error_message: 'invalid_query_id', badge_color: 'red' }
+    render json: { status: false, error_message: 'invalid_query_id', badge_color: 'red' }
   end
 
   def load_badge_contents
