@@ -80,6 +80,15 @@ Then, you can configure and activate this plugin.
 
 ## Changelog
 
+### 0.1.3
+
+Code refactoring and maintenance release.
+This is one of the workaround. If you still have some problems, feedback highly appreciate!
+
+- Workaround for #118.
+  - Modify issue query to prevent n+1
+  - Change the response of controller from the html to the json, and render the badge via JavaScript.
+
 ### 0.1.2
 
 Please note, this release is required to migrate.
@@ -200,8 +209,23 @@ Also you can run via rspec command like this:
 
 ```bash
 bundle exec rspec -I plugins/redmine_issue_badge/spec \
-            --format documentation plugins/redmine_issue_badge/spec/
+  --format documentation plugins/redmine_issue_badge/spec/
 ```
+
+### Using bullet
+
+Append to config/environments/development.rb initializer with the following code:
+
+```ruby
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.bullet_logger = true
+  end
+```
+
+Ref: <https://github.com/flyerhzm/bullet#configuration>
 
 ## License
 
