@@ -34,7 +34,7 @@ describe IssueBadgeController, type: :controller do
       let(:issue_count) { 0 }
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(/<span id="issue_badge_number" class="badge green">0/im)
+        expect(response.body).to match(/"all_issues_count":0/im)
       end
     end
 
@@ -43,7 +43,7 @@ describe IssueBadgeController, type: :controller do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
+        expect(response.body).to match(/"all_issues_count":4/im)
       end
     end
 
@@ -63,14 +63,14 @@ describe IssueBadgeController, type: :controller do
 
       it 'renders the _issue_badge template' do
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
+        expect(response.body).to match(/"all_issues_count":#{issue_count},"badge_color":"red"/im)
       end
 
       it 'renders the _issue_badge template with assigned to group' do
         setting = IssueBadgeUserSetting.find_or_create_by_user_id(user)
         setting.update(show_assigned_to_group: true)
         get :index
-        expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count + 1}<\/span>}im)
+        expect(response.body).to match(/"all_issues_count":#{issue_count + 1},"badge_color":"red"/im)
       end
     end
 
@@ -94,7 +94,7 @@ describe IssueBadgeController, type: :controller do
 
         it 'renders the _issue_badge template with issue count: 2' do
           get :index
-          expect(response.body).to match(%r{<span id="issue_badge_number" class="badge red">#{issue_count}<\/span>}im)
+          expect(response.body).to match(/"all_issues_count":#{issue_count},"badge_color":"red"/im)
         end
       end
 
@@ -104,7 +104,7 @@ describe IssueBadgeController, type: :controller do
 
         it 'renders the _issue_badge template with issue count: 0' do
           get :index
-          expect(response.body).to match(%r{<span id="issue_badge_number" class="badge green">0<\/span>}im)
+          expect(response.body).to match(/"all_issues_count":0,"badge_color":"green"/im)
         end
       end
     end

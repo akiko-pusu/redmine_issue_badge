@@ -1,21 +1,39 @@
 // call issue_badge
 /* eslint-disable no-unused-vars */
 /* eslint-env jquery */
+const badgeTemplate = `
+<div id="issue_badge">
+  <li class="starting_point">
+    <a style="cursor: pointer" onclick="displayBadgeContents();" id="link_issue_badge" data-content_path="">
+      <span id="issue_badge_number" class="badge red"></span>
+    </a>
+  </li>
+</div>
+`
+
 const loadBadge = (url, optionPollUrl) => {
-  baseRequest(url)
-    .then((html) => {
-      if (html.length > 0) {
-        document.getElementById('loggedas').insertAdjacentHTML('afterend', html)
-        changeBadgeLocation()
-        if (optionPollUrl) {
-          pollBadgeCount(optionPollUrl)
-        }
-      }
-    })
+  baseRequest(url, 'json').then((data) => {
+    document.getElementById('loggedas').insertAdjacentHTML('afterend', badgeTemplate)
+    changeBadgeLocation()
+    let status = document.getElementById('issue_badge_number')
+    let badgeLink = document.getElementById('link_issue_badge')
+    document.getElementById('issue_badge').style.display = 'block'
+    if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
+      status.textContent = data.all_issues_count
+      status.className = 'badge ' + data.badge_color
+      badgeLink.dataset.content_path = data.content_path
+    } else {
+      status.textContent = '?'
+    }
+    if (optionPollUrl) {
+      pollBadgeCount(optionPollUrl)
+    }
+  }).catch(() => { /* do nothing */ })
 }
 
 // Load and popup BadgeContents
-const displayBadgeContents = (url) => {
+const displayBadgeContents = () => {
+  let url = document.getElementById('link_issue_badge').dataset.content_path
   baseRequest(url).then((html) => {
     if (html.length > 0) {
       document.getElementById('link_issue_badge').insertAdjacentHTML('afterend', html)
@@ -38,9 +56,12 @@ const pollBadgeCount = (pollingUrl) => {
     let status = document.getElementById('issue_badge_number')
     baseRequest(pollingUrl, 'json')
       .then((data) => {
+        document.getElementById('issue_badge').style.display = 'block'
+        let badgeLink = document.getElementById('link_issue_badge')
         if (typeof data.all_issues_count !== 'undefined' && data.status === true) {
           status.textContent = data.all_issues_count
           status.className = 'badge ' + data.badge_color
+          badgeLink.dataset.content_path = data.content_path
         } else {
           status.textContent = '?'
           clearInterval(pollInterval)
