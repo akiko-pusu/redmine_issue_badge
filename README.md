@@ -200,8 +200,23 @@ Also you can run via rspec command like this:
 
 ```bash
 bundle exec rspec -I plugins/redmine_issue_badge/spec \
-            --format documentation plugins/redmine_issue_badge/spec/
+  --format documentation plugins/redmine_issue_badge/spec/
 ```
+
+### Using bullet
+
+Append to config/environments/development.rb initializer with the following code:
+
+```ruby
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.bullet_logger = true
+  end
+```
+
+Ref: <https://github.com/flyerhzm/bullet#configuration>
 
 ## License
 
