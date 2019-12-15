@@ -1,7 +1,7 @@
 <div id="issue_badge_contents" class="notifications arrow_box">
   <div class="header" id="issue_badge_contents_header">
-    <% if @query_id.present? %>
-      <%= @query_name %>
+    <% if @query.present? %>
+      <%= @query.name %>
     <% else %>
       <%= l(:label_assigned_to_me_issues) %>
     <% end %>
@@ -43,8 +43,8 @@
 
   <% if @error_message.blank? %>
     <div class="footer">
-      <% if @query_id.present? %>
-        <%= link_to @query_path do %>
+      <% if @query.present? %>
+        <%= link_to _project_issues_path(@query.project, { query_id: @query.id })do %>
           <%= l(:label_query) %>
         <% end %>
       <% else %>
