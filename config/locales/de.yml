@@ -8,3 +8,4 @@ de:
   label_badge_order: Liste sortieren
   label_badge_order_oldest: "nach den ältesten %{value} Tickets"
   label_badge_order_newest: "nach den neuesten %{value} Tickets"
+  label_use_custom_query: Benutzerdefinierte Abfrage
