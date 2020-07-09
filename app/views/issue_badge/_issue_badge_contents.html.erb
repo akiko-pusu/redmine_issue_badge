@@ -43,12 +43,12 @@
 
   <% if @error_message.blank? %>
     <div class="footer">
-      <% if @query.present? %>
-        <%= link_to _project_issues_path(@query.project, { query_id: @query.id })do %>
+      <% if @query.present? && @query&.id.present? %>
+        <%= link_to _project_issues_path(@query.project, { query_id: @query.id }), title: @query.name do %>
           <%= l(:label_query) %>
         <% end %>
       <% else %>
-        <%= link_to issues_path(set_filter: 1, assigned_to_id: 'me', sort: 'priority:desc,updated_on:desc') do %>
+        <%= link_to issues_path(set_filter: 1, assigned_to_id: 'me', sort: 'priority:desc,updated_on:desc'), title: t(:label_assigned_to_me_issues) do %>
           <%= l(:label_assigned_to_me_issues) %>
         <% end %>
       <% end %>
