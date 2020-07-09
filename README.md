@@ -80,6 +80,13 @@ Then, you can configure and activate this plugin.
 
 ## Changelog
 
+### 0.1.4
+
+Code refactoring and maintenance release.
+
+- Bugfix: The link to assigned to me is not displayed. (#136)
+- Update Portuguese Brazil translation. (contributed by @adrianobr)
+
 ### 0.1.3
 
 Code refactoring and maintenance release.

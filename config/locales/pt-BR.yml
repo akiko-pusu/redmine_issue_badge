@@ -3,5 +3,11 @@ pt-BR:
   title_issue_badge: Tarefas Badge
   label_issue_badge: Mostar o número de tarefas atribuídos com badge.
   label_activate_for_all_users: Mostrar tarefas para todos os usuários
-  label_enabled_polling: Habilitar atualização (Intervalo de 60 sec.）
+  label_enabled_polling: Habilitar atualização (Intervalo de 60 sec.
   label_show_assigned_to_group: Incluir as tarefas associadas aos meus grupos
+  label_badge_order: Ordem de listagem
+  label_badge_order_oldest: "Antigas %{value} tarefas"
+  label_badge_order_newest: "Novas %{value} tarefas"
+  label_use_custom_query: Usar consultas personalizadas
+  invalid_query_id: Inválida consulta personálizada.
+  label_number_to_display: Número da tarefa exibida no pop-up
