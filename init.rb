@@ -20,9 +20,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 require 'redmine'
-require 'issue_badge/application_hooks'
-require 'issue_badge/my_account_hooks'
-require 'issue_badge/my_controller_patch'
+require_dependency File.expand_path('../lib/issue_badge/application_hooks', __FILE__)
+require_dependency File.expand_path('../lib/issue_badge/my_account_hooks', __FILE__)
+require_dependency File.expand_path('../lib/issue_badge/my_controller_patch', __FILE__)
 
 # NOTE: Keep error message for a while to support Redmine3.x users.
 def issue_badge_version_message(original_message = nil)
@@ -41,10 +41,10 @@ Redmine::Plugin.register :redmine_issue_badge do
     name 'Redmine Issue Badge plugin'
     author 'Akiko Takano'
     description 'Plugin to show the number of assigned issues with badge on top menu.'
-    version '0.1.4'
+    version '1.0.0'
     url 'https://github.com/akiko-pusu/redmine_issue_badge'
     author_url 'http://twitter.com/akiko_pusu'
-    requires_redmine version_or_higher: '4.0'
+    requires_redmine version_or_higher: '5.0'
 
     settings partial: 'settings/redmine_issue_badge',
              default: {
@@ -53,7 +53,8 @@ Redmine::Plugin.register :redmine_issue_badge do
                'number_to_display' => 5
              }
 
-    Rails.configuration.to_prepare do
+    zeitwerk_enabled = Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
+    Rails.configuration.__send__(zeitwerk_enabled ? :after_initialize : :to_prepare) do
       require_dependency 'my_controller'
       MyController.prepend IssueBadge::MyControllerPatch unless MyController.included_modules.include?(IssueBadge::MyControllerPatch)
     end
